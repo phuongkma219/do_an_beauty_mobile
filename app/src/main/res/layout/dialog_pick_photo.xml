@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.hola360.lwac.ui.pickphoto.data.PickImageStatus" />
+
+        <variable
+            name="viewModel"
+            type="com.phuong.myspa.ui.pickphoto.PickPhotoViewModel" />
+
+        <variable
+            name="mAdapter"
+            type="com.phuong.myspa.ui.pickphoto.PhotoAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvTbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dp_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{()-> viewModel.onClose()}"
+                    android:src="@drawable/ic_close_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivClose"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/dp_24"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    app:layout_constraintEnd_toEndOf="@id/view">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAlbum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_centerVertical="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@{viewModel.isAlbum?@drawable/ic_chevron_down:@drawable/ic_chevron_up}"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:lines="1"
+                        android:onClick="@{()->viewModel.loadingAlbum()}"
+                        android:orientation="horizontal"
+                        android:text="@string/all_images"
+                        />
+                </RelativeLayout>
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="48dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_done"
+                    android:visibility="@{mAdapter.liveSelect.empty()? View.GONE:View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcPhoto"
+            android:visibility="@{viewModel.isLoading() || viewModel.isSaving()  ?View.GONE:View.VISIBLE}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvTbar" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.isLoading() || viewModel.isSaving()  ?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/rotate_loading_anim" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:fontFamily="@font/sf_pro_medium"
+                android:text="@string/please_wait"
+                android:textAppearance="?textAppearanceBody2"
+                android:textColor="@color/accent_primary" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

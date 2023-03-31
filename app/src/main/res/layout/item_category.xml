@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.phuong.myspa.data.api.model.Category" />
+        <variable
+            name="itemPosition"
+            type="Integer" />
+        <variable
+            name="itemListener"
+            type="com.phuong.myspa.ui.home.HomeAdapter.IOnClickItem" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="@dimen/dp_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> itemListener.onClickItemCategory(item,itemPosition)}"
+        >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:loadImageFromUrl="@{item.avatar}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:shapeAppearanceOverlay="@style/roundedImage4"
+            android:scaleType="centerCrop"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp_6"
+            style="@style/RegularBody1"
+            android:text="@{item.name.toString()}"
+            android:textColor="@color/accent_primary"
+            app:layout_constraintTop_toBottomOf="@+id/ivImage"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

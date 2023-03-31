@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog"
+        android:minHeight="170dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llTitle"
+                android:layout_width="match_parent"
+                android:background="@color/accent_primary"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:text="@string/confirm"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:fontFamily="@font/sf_pro_semibold"  />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_18"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:layout_marginStart="@dimen/dp_16"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:fontFamily="@font/sf_pro_regular"
+                android:textColor="@color/text_back"
+                android:textSize="@dimen/sp_18"
+                android:text="Infor user not saved, are you sure to exit?"
+                />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:text="@string/cancel"
+                    android:backgroundTint="@color/gray_light"
+                    android:textAllCaps="true"
+                  />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ok"
+                    android:textAllCaps="true"
+                    android:backgroundTint="@color/md_red_200"
+                    android:textColor="@color/white" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.phuong.myspa.data.api.model.shop.ShopInfor" />
+        <variable
+            name="itemPosition"
+            type="Integer" />
+        <variable
+            name="itemListener"
+            type="com.phuong.myspa.ui.detail_category.DetailCategoryAdapter.IOnItemClickShop" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:paddingEnd="@dimen/dp_12"
+        android:background="@color/white"
+        android:onClick="@{() -> itemListener.onItemClick(item,itemPosition)}"
+        >
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="@dimen/dp_64"
+        android:layout_height="@dimen/dp_64"
+        android:scaleType="centerCrop"
+        android:loadImageFromUrl="@{item.avatar}"
+        app:shapeAppearanceOverlay="@style/roundedImage6"
+        android:layout_marginStart="@dimen/dp_16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:lines="1"
+            android:text="@{item.name}"
+            android:singleLine="true"
+            style="@style/RegularBody1"
+            android:textColor="@color/text_back"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="@{item.address}"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:lines="2"
+            style="@style/RegularBody1"
+            android:textColor="@color/gray_light"
+            />
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_marginTop="@dimen/dp_4"
+            android:setRate="@{item.rate}"
+            android:numStars="5"
+            app:layout_constraintTop_toBottomOf="@id/tvAddress"
+            app:layout_constraintStart_toStartOf="@id/tvName"
+            android:theme="@style/RatingBar"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_12"
+            app:layout_constraintTop_toBottomOf="@id/ratingBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/background_guideline"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="data"
+            type="com.phuong.myspa.data.Advertisement" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_banner"
+            app:shapeAppearanceOverlay="@style/roundedImage6"
+            android:scaleType="fitXY"
+            android:loadImageFromUrl="@{data.linkImg}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_banner"/>
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/splashFragment"
+    android:id="@+id/nav_main">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.phuong.myspa.ui.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment android:id="@+id/confirmFragment"
+        android:name="com.phuong.myspa.ui.splash.ConfirmFragment"
+        tools:layout="ConfirmFragment"/>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.phuong.myspa.ui.main.MainFragment"
+        android:label="MainFragment" />
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/policyAndTermFragment"
+        android:name="com.phuong.myspa.ui.splash.PolicyAndTermFragment"
+        android:label="PolicyAndTermFragment">
+        <argument
+            android:name="param"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <action
+        android:id="@+id/action_confirmFragment_to_policyAndTermFragment"
+        app:destination="@id/policyAndTermFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.phuong.myspa.ui.login.LoginFragment"
+        android:label="LoginFragment" />
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.phuong.myspa.ui.login.SignUpFragment"
+        android:label="SignUpFragment" />
+    <action
+        android:id="@+id/action_global_signUpFragment"
+        app:destination="@id/signUpFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/detailCategoryFragment"
+        android:name="com.phuong.myspa.ui.detail_category.DetailCategoryFragment"
+        android:label="DetailCategoryFragment" >
+        <argument android:name="category"
+            app:argType="com.phuong.myspa.data.api.model.Category"
+            app:nullable="false"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_detailCategoryFragment"
+        app:destination="@id/detailCategoryFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.phuong.myspa.ui.detail_shop.ShopFragment"
+        android:label="DetailShopFragment" >
+        <argument android:name="shop"
+            app:argType="com.phuong.myspa.data.api.model.shop.ShopInfor"
+            app:nullable="false"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_shopFragment"
+        app:destination="@id/shopFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/getAddressFragment"
+        android:name="com.phuong.myspa.ui.shop_service.GetAddressFragment"
+        android:label="GetAddressFragment" />
+    <action
+        android:id="@+id/action_global_getAddressFragment"
+        app:destination="@id/getAddressFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/updateUserFragment"
+        android:name="com.phuong.myspa.ui.updateUser.UpdateUserFragment"
+        android:label="UpdateUserFragment" />
+
+    <action
+        android:id="@+id/action_global_updateUserFragment"
+        app:destination="@id/updateUserFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/settingFragment2"
+        android:name="com.phuong.myspa.ui.setting.SettingFragment"
+        android:label="SettingFragment" />
+</navigation>
