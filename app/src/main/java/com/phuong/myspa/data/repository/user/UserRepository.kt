@@ -3,14 +3,11 @@ package com.phuong.myspa.data.repository.user
 import com.phuong.myspa.MyApp
 import com.phuong.myspa.data.api.RemoteServices
 import com.phuong.myspa.data.api.model.remote.ApiResponse
-import com.phuong.myspa.data.api.model.shop.Shop
-import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.data.api.model.user.User
 import com.phuong.myspa.utils.Constants
 import com.phuong.myspa.utils.SharedPreferenceUtils
-import com.phuong.soundeditor23.di.AppContext
-import com.phuong.soundeditor23.di.DefaultDispatcher
-import com.phuong.soundeditor23.di.IoDispatcher
+import com.phuong.myspa.di.AppContext
+import com.phuong.myspa.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

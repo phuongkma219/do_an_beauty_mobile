@@ -1,4 +1,4 @@
-package com.phuong.soundeditor23.di
+package com.phuong.myspa.di
 
 import javax.inject.Qualifier
 

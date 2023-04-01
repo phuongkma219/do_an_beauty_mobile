@@ -9,7 +9,7 @@ import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.data.repository.detail_category.DetailCategoryRepository
 import com.phuong.myspa.utils.Constants
-import com.phuong.soundeditor23.di.IoDispatcher
+import com.phuong.myspa.di.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch

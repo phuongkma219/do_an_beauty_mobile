@@ -1,11 +1,9 @@
 package com.phuong.myspa.data.repository.shop
 
 import com.phuong.myspa.data.api.RemoteServices
-import com.phuong.myspa.data.api.model.QueryCategory
 import com.phuong.myspa.data.api.model.remote.ApiResponse
-import com.phuong.myspa.data.api.model.shop.DataShop
 import com.phuong.myspa.data.api.model.shop.Shop
-import com.phuong.soundeditor23.di.IoDispatcher
+import com.phuong.myspa.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

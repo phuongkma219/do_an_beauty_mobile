@@ -5,7 +5,7 @@ import com.phuong.myspa.base.BaseLoadingDataViewModel
 import com.phuong.myspa.data.api.model.login.UserSignUp
 import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.repository.signUp.SignUpUseCase
-import com.phuong.soundeditor23.di.IoDispatcher
+import com.phuong.myspa.di.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch

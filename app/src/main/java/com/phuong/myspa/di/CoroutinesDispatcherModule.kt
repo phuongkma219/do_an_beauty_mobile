@@ -1,4 +1,4 @@
-package com.phuong.soundeditor23.di
+package com.phuong.myspa.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

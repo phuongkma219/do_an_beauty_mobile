@@ -1,4 +1,4 @@
-package com.phuong.soundeditor23.di
+package com.phuong.myspa.di
 
 import android.content.Context
 import com.phuong.myspa.MyApp

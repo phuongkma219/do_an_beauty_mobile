@@ -1,6 +1,5 @@
 package com.phuong.myspa.ui.pickphoto
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.hola360.lwac.ui.pickphoto.data.PickImageStatus
 import com.hola360.lwac.ui.pickphoto.data.PickModelDataType
@@ -10,7 +9,7 @@ import com.phuong.myspa.data.PhotoModel
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.data.repository.MediaStoreRepository
-import com.phuong.soundeditor23.di.AppContext
+import com.phuong.myspa.di.AppContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

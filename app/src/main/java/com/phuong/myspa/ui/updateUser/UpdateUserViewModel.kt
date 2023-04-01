@@ -1,28 +1,22 @@
 package com.phuong.myspa.ui.updateUser
 
-import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.phuong.myspa.base.BaseLoadingDataViewModel
 import com.phuong.myspa.data.api.model.remote.ApiResponse
-import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.data.api.model.user.User
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.data.repository.user.GetMyUserUseCase
 import com.phuong.myspa.data.repository.user.UserRepository
 import com.phuong.myspa.utils.Constants
-import com.phuong.soundeditor23.di.IoDispatcher
+import com.phuong.myspa.di.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import retrofit2.http.Part
 import java.io.File
 import javax.inject.Inject
 
