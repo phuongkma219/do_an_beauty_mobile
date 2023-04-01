@@ -125,4 +125,15 @@
         android:id="@+id/settingFragment2"
         android:name="com.phuong.myspa.ui.setting.SettingFragment"
         android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.phuong.myspa.ui.search.SearchFragment"
+        android:label="SearchFragment" />
+    <action
+        android:id="@+id/action_global_searchFragment"
+        app:destination="@id/searchFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
 </navigation>

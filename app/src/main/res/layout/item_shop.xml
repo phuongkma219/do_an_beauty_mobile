@@ -14,11 +14,19 @@
             type="com.phuong.myspa.ui.detail_category.DetailCategoryAdapter.IOnItemClickShop" />
 
     </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_12"
+        app:cardCornerRadius="@dimen/dp_6"
+        >
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_6"
         android:paddingEnd="@dimen/dp_12"
         android:background="@color/white"
         android:onClick="@{() -> itemListener.onItemClick(item,itemPosition)}"
@@ -86,4 +94,6 @@
             android:background="@color/background_guideline"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
 </layout>

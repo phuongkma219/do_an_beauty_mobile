@@ -13,79 +13,89 @@
             name="itemListener"
             type="com.phuong.myspa.ui.shop_service.ShopServiceAdapter.IOnItemClickService" />
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp_16"
-        android:paddingEnd="@dimen/dp_16"
-        android:paddingTop="@dimen/dp_12"
-        android:paddingBottom="@dimen/dp_12"
+        app:cardElevation="@dimen/dp_8"
+
         android:layout_marginTop="@dimen/dp_12"
         android:layout_marginStart="@dimen/dp_12"
         android:layout_marginEnd="@dimen/dp_12"
-        android:onClick="@{() -> itemListener.onItemClick(item,itemPosition)}"
-        android:background="@drawable/bg_item_service"
+        app:cardCornerRadius="@dimen/dp_6"
         >
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{item.name}"
-            style="@style/SemiBoldBody1"
-            android:layout_marginTop="@dimen/dp_12"
-            android:textSize="@dimen/sp_18"
-            android:textColor="@color/text_back"
-           app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{item.time}"
-            style="@style/RegularBody1"
-            android:textColor="@color/color_description"
-            android:textSize="@dimen/sp_18"
-            android:layout_marginTop="@dimen/dp_12"
-            app:layout_constraintTop_toBottomOf="@id/tvName"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSeeDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/see_detail"
-            style="@style/MediumBody1"
-            android:textColor="#0194F3"
-            android:layout_marginTop="@dimen/dp_12"
-            app:layout_constraintTop_toBottomOf="@id/tvTime"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/dp_12"
-            android:background="@color/gray_dark"
-            app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
-            />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_16"
-            android:text="@{item.price}"
-            style="@style/SemiBoldBody1"
-            android:textColor="#FF5E1F"
-            android:textSize="@dimen/sp_18"
-            app:layout_constraintBottom_toBottomOf="@id/btnSelect"
-            app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select"
-            android:onClick="@{() -> itemListener.onSelectService(item,itemPosition)}"
-            app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
-            android:layout_marginTop="@dimen/dp_16"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:paddingStart="@dimen/dp_12"
+            android:paddingEnd="@dimen/dp_12"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_8"
+            android:onClick="@{() -> itemListener.onItemClick(item,itemPosition)}"
+            android:background="@drawable/bg_item_service"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.name}"
+                style="@style/SemiBoldBody1"
+                android:layout_marginTop="@dimen/dp_12"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.time}"
+                style="@style/RegularBody1"
+                android:textColor="@color/color_description"
+                android:textSize="@dimen/sp_18"
+                android:layout_marginTop="@dimen/dp_12"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSeeDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/see_detail"
+                style="@style/MediumBody1"
+                android:textColor="#0194F3"
+                android:layout_marginTop="@dimen/dp_12"
+                app:layout_constraintTop_toBottomOf="@id/tvTime"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@color/gray_dark"
+                app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                setPrice="@{item.price}"
+                style="@style/SemiBoldBody1"
+                android:textColor="#FF5E1F"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintBottom_toBottomOf="@id/btnSelect"
+                app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select"
+                android:backgroundTint="@color/accent_primary"
+                android:onClick="@{() -> itemListener.onSelectService(item,itemPosition)}"
+                app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
+                android:layout_marginTop="@dimen/dp_16"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </layout>

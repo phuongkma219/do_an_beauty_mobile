@@ -43,7 +43,7 @@ fun TextView.setTime(time:String){
 }
 @BindingAdapter("setPrice")
 fun TextView.setPrice(time:String){
-    text = "Price : $time"
+    text = "Price : $time $"
 }
 @BindingAdapter("android:setRate")
 fun RatingBar.setRate(rate:Double){

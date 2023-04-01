@@ -27,6 +27,7 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
         mAdapter = FragmentPageAdapter(requireActivity().supportFragmentManager,requireActivity().lifecycle)
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Infor"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Service"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Comment"))
         mAdapter.setData(args.shop)
         binding.viewPager.adapter = mAdapter
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
