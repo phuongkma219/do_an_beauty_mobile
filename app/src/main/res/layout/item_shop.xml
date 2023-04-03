@@ -11,7 +11,7 @@
             type="Integer" />
         <variable
             name="itemListener"
-            type="com.phuong.myspa.ui.detail_category.DetailCategoryAdapter.IOnItemClickShop" />
+            type="com.phuong.myspa.ui.detail_category.ShopAdapter.IOnItemClickShop" />
 
     </data>
     <androidx.cardview.widget.CardView
@@ -20,15 +20,12 @@
         android:layout_marginTop="@dimen/dp_8"
         android:layout_marginStart="@dimen/dp_12"
         android:layout_marginEnd="@dimen/dp_12"
-        app:cardCornerRadius="@dimen/dp_6"
-        >
-
-
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/dp_6">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/dp_12"
-        android:background="@color/white"
+        android:background="?selectableItemBackground"
         android:onClick="@{() -> itemListener.onItemClick(item,itemPosition)}"
         >
     <com.google.android.material.imageview.ShapeableImageView
@@ -38,7 +35,7 @@
         android:scaleType="centerCrop"
         android:loadImageFromUrl="@{item.avatar}"
         app:shapeAppearanceOverlay="@style/roundedImage6"
-        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_12"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -50,8 +47,9 @@
             android:layout_marginStart="@dimen/dp_8"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivAvatar"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivMoreAction"
             android:lines="1"
+            android:layout_marginEnd="@dimen/dp_8"
             android:text="@{item.name}"
             android:singleLine="true"
             style="@style/RegularBody1"
@@ -66,8 +64,9 @@
             android:text="@{item.address}"
             app:layout_constraintTop_toBottomOf="@id/tvName"
             app:layout_constraintStart_toEndOf="@id/ivAvatar"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivMoreAction"
             android:lines="2"
+            android:layout_marginEnd="@dimen/dp_8"
             style="@style/RegularBody1"
             android:textColor="@color/gray_light"
             />
@@ -92,6 +91,17 @@
             app:layout_constraintTop_toBottomOf="@id/ratingBar"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/background_guideline"/>
+        <ImageView
+            android:id="@+id/ivMoreAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:src="@drawable/baseline_more_vert_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp_4"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -1,5 +1,6 @@
 package com.phuong.myspa.ui.detail_category
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
     private val args :DetailCategoryFragmentArgs by navArgs()
-    private val mAdapter by lazy { DetailCategoryAdapter() }
+    private val mAdapter by lazy { ShopAdapter(false) }
     private val mViewModel by viewModels<DetailCategoryViewModel>()
     private var firstVisibleItem = 0
     private var visibleItemCount: Int = 0
@@ -48,9 +49,13 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
         })
         }
         binding.rvShop.adapter = mAdapter
-        mAdapter.listener = object :DetailCategoryAdapter.IOnItemClickShop{
+        mAdapter.listener = object :ShopAdapter.IOnItemClickShop{
             override fun onItemClick(item: ShopInfor, position: Int) {
                 findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item))
+            }
+
+            override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {
+
             }
 
         }

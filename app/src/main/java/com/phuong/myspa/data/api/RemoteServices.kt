@@ -10,6 +10,7 @@ import com.phuong.myspa.data.api.model.login.UserSignUp
 import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.api.model.shop.DataShop
 import com.phuong.myspa.data.api.model.shop.Shop
+import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.data.api.model.user.User
 import okhttp3.MultipartBody
@@ -50,11 +51,11 @@ interface RemoteServices {
    @POST("/v1/users/me/update")
    suspend fun updateUser(@Header("Authorization") token: String,@Body user: User):ApiResponse<User>
 
-   @GET("/v1/shops/add_favorite")
+   @POST("/v1/shops/add_favorite")
    suspend fun addFavorite(@Header("Authorization") token: String,@Body favorite :FavoriteDT0):ApiResponse<Any>
-    @GET("/v1/shops/delete_favorite")
+    @POST("/v1/shops/delete_favorite")
     suspend fun deleteFavorite(@Header("Authorization") token: String,@Body favorite :FavoriteDT0):ApiResponse<Any>
 
     @GET("/v1/shops/get_list_favorite")
-    suspend fun getListFavorite(@Header("Authorization") token: String,@Path("id") userId: String):ApiResponse<Any>
+    suspend fun getListFavorite(@Header("Authorization") token: String):ApiResponse<MutableList<ShopInfor>>
 }
