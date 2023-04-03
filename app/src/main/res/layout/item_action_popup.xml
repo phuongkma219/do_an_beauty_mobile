@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="item"
+            type="com.phuong.myspa.ui.popup.ActionModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/myLayoutRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="@dimen/dp_4"
+            android:layout_weight="0"
+            android:iconForAction="@{item}" />
+
+        <TextView
+            android:id="@+id/myTextViewActionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_8"
+            android:layout_weight="1"
+            android:lines="1"
+            android:fontFamily="@font/sf_pro_regular"
+            android:textColor="@color/text_back"
+            android:text="@{item.title}"
+            android:textAppearance="?textAppearanceBody1"/>
+
+    </LinearLayout>
+
+
+</layout>

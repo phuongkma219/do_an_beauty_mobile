@@ -7,6 +7,8 @@ import com.phuong.myspa.data.api.RemoteServices
 import com.phuong.myspa.data.api.model.Category
 import com.phuong.myspa.data.api.model.FavoriteDT0
 import com.phuong.myspa.data.api.model.remote.ApiResponse
+import com.phuong.myspa.data.api.model.shop.Shop
+import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.model.user.User
 import com.phuong.myspa.di.AppContext
 import com.phuong.myspa.di.IoDispatcher
@@ -23,14 +25,15 @@ class FavoriteRepository  @Inject constructor(@IoDispatcher private val dispatch
 ) {
     suspend fun addFavorite(idShop:String): ApiResponse<Any> = withContext(dispatcher){
         val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
-        val jsonString = "{ \"shop_id\":\"$idShop\"}";
-        val json = JsonParser.parseString(jsonString).asJsonObject
-        provideRemoteAPI.addFavorite(token)
+        provideRemoteAPI.addFavorite(token, FavoriteDT0((idShop)))
     }
     suspend fun deleteFavorite(idShop:String): ApiResponse<Any> = withContext(dispatcher){
         val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
-        val jsonObject = JsonParser.parseString("shop_id : $idShop").asJsonObject
         provideRemoteAPI.deleteFavorite(token,FavoriteDT0((idShop)))
+    }
+    suspend fun getListFavorite(): ApiResponse<MutableList<ShopInfor>> = withContext(dispatcher){
+        val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+        provideRemoteAPI.getListFavorite(token)
     }
 
 }

@@ -83,5 +83,6 @@
     <string name="plase_enter_your_first_name">Please enter your first name</string>
     <string name="there_s_nothing_here">There \'s nothing here.</string>
     <string name="search">Search</string>
+    <string name="action_delete">Delete</string>
 
 </resources>

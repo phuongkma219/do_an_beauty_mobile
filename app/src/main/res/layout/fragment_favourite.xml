@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.phuong.myspa.ui.detail_category.DetailCategoryViewModel" />
+            type="com.phuong.myspa.ui.favorite.FavoriteViewModel" />
         <import type="android.view.View"/>
     </data>
 
@@ -21,6 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             style="@style/SemiBoldBody1"
+            app:title="Favorite"
             app:titleTextColor="@color/text_back"
             android:elevation="@dimen/dp_6" />
         <androidx.recyclerview.widget.RecyclerView
@@ -30,15 +31,7 @@
             android:background="@drawable/splash"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintBottom_toBottomOf="parent"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="@string/there_s_nothing_here"
-            style="@style/SemiBoldH5"
-            android:gravity="center"
-            android:textColor="@color/text_back"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <include
             android:id="@+id/layoutLoading"
             android:layout_width="match_parent"
@@ -47,11 +40,14 @@
             android:visibility="@{viewModel.isLoading()? View.VISIBLE:View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintBottom_toBottomOf="parent"/>
-        <include
-            android:id="@+id/layoutNoInternet"
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            layout="@layout/no_internet_layout"
+            android:background="@color/white"
+            android:text="@string/there_s_nothing_here"
+            style="@style/SemiBoldH5"
+            android:gravity="center"
+            android:textColor="@color/text_back"
             android:visibility="@{viewModel.isEmpty()? View.VISIBLE:View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintBottom_toBottomOf="parent"/>

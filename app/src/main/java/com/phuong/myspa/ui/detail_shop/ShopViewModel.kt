@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ShopViewModel  @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher, private val shopUseCase: ShopUseCase)
+class ShopViewModel  @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher,
+                                         private val shopUseCase: ShopUseCase)
     : BaseLoadingDataViewModel<ApiResponse<Shop>>() {
 
     fun getDetailShop(shopId: String) {

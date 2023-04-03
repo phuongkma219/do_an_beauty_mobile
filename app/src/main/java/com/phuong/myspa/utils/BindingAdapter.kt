@@ -11,6 +11,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.phuong.myspa.R
 import com.phuong.myspa.data.PhotoModel
 import com.phuong.myspa.data.api.model.shop.ShopInfor
+import com.phuong.myspa.ui.popup.ActionModel
 
 @BindingAdapter("android:loadImageFromUrl")
 fun ImageView.loadImageFromUrl(url:String) {
@@ -61,4 +62,14 @@ fun ShapeableImageView.bindThumbnailFile(photoModel: PhotoModel?) {
             .placeholder(R.drawable.ic_album_detail)
             .error(R.drawable.ic_album_detail).into(this)
     }
+}
+@BindingAdapter("android:iconForAction")
+fun ImageView.iconForAction(actionModel: ActionModel) {
+    if (actionModel.icon <0) {
+        visibility = View.GONE
+    } else {
+        visibility = View.VISIBLE
+        setImageResource(actionModel.icon)
+    }
+
 }
