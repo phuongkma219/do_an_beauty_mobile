@@ -15,6 +15,7 @@ import com.phuong.myspa.ui.detail_category.ShopAdapter
 import com.phuong.myspa.ui.popup.ActionAdapter
 import com.phuong.myspa.ui.popup.ListActionPopup
 import com.phuong.myspa.utils.Constants
+import com.phuong.myspa.utils.ToastUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,8 +37,8 @@ class FavoriteFragment : AbsBaseFragment<FragmentFavouriteBinding>(){
             override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {
                 listActionPopup.showPopup(view,Constants.actionsPopup,object :ActionAdapter.OnActionClickListener{
                     override fun onItemActionClick(position: Int) {
-                        mAdapter.notifyItemRemoved(position)
-
+                        mAdapter.deleteItem(position)
+                        mViewModel.deleteFavorite(item._id)
                     }
 
                 })
@@ -56,6 +57,18 @@ class FavoriteFragment : AbsBaseFragment<FragmentFavouriteBinding>(){
                 mAdapter.submit(body)
             }
         }
+        mViewModel.isSuccess.observe(viewLifecycleOwner){
+            if (it.loadingStatus == LoadingStatus.Success){
+                val body = (it as DataResponse.DataSuccess).body
+                if (body){
+                    ToastUtils.getInstance(requireContext()).showToast("Delete success!")
+                }
+                else{
+                    ToastUtils.getInstance(requireContext()).showToast("Error.Please try again later")
+                }
+            }
+        }
     }
+
 
 }

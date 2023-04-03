@@ -1,9 +1,12 @@
 package com.phuong.myspa.ui.detail_category
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.phuong.myspa.base.BaseLoadingDataViewModel
 import com.phuong.myspa.data.api.model.QueryCategory
+import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.api.model.shop.DataShop
+import com.phuong.myspa.data.api.model.shop.Shop
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
@@ -26,6 +29,7 @@ class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispa
                 if (dataVM == null) {
                     dataMutableLiveData.value!!.loadingStatus = LoadingStatus.Loading
                 } else {
+                    dataVM = null
                     dataMutableLiveData.value!!.loadingStatus = LoadingStatus.Refresh
                 }
             } else {
@@ -37,8 +41,8 @@ class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispa
                         if (dataMutableLiveData.value!!.loadingStatus == LoadingStatus.Refresh) {
                             0
                         } else {
-                            if (dataVM!!.data.isNotEmpty()) {
-                                dataVM!!.next_page
+                            if (dataVM!!.list_shop != null) {
+                               getPage()
                             } else {
                                 0
                             }
@@ -48,17 +52,25 @@ class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispa
                     }
                 val responseData = detailCategoryRepository.getShopsByCategory(params,requestPage.toString())
                 if (responseData.success == true){
-                    dataVM = responseData.data
-                    val shops = responseData.data!!.list_shop
-                    shops.forEach{ sh ->
+                    val shops = responseData.data?.list_shop
+                    if (shops?.size != 0 ){
+                        dataVM = responseData.data
+                        shops?.forEach{ sh ->
                         sh.avatar = Constants.BASE_URL +  sh.avatar.replace("\\", "/")
                     }
-                    dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop))
+                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop!!))
+                    }
+                    else{
+                        dataMutableLiveData.postValue(DataResponse.DataIdle())
+                        dataVM = null
+                    }
+
                 }
-                else{
-                    dataMutableLiveData.postValue(DataResponse.DataError())
-                }
+
             }
         }
+    }
+    fun getPage():Int {
+       return dataVM!!.next_page.replace("get_list?page=", "").toInt()
     }
 }

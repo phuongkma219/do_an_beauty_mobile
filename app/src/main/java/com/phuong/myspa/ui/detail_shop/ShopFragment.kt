@@ -13,8 +13,11 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
+import com.phuong.myspa.data.api.response.DataResponse
+import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentShopBinding
 import com.phuong.myspa.ui.favorite.FavoriteViewModel
+import com.phuong.myspa.utils.ToastUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
@@ -52,11 +55,19 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
-
             }
         })
         favoriteViewModel.isSuccess.observe(viewLifecycleOwner){
-            Log.d("kkk", "initView: ${it.loadingStatus}")
+            if (it.loadingStatus == LoadingStatus.Success){
+                val body = (it as DataResponse.DataSuccess).body
+                if (body){
+                    ToastUtils.getInstance(requireContext()).showToast("Add to favorite")
+                }
+                else{
+                    ToastUtils.getInstance(requireContext()).showToast("Error.Please try again later")
+                }
+            }
+
         }
     }
 

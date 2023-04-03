@@ -29,4 +29,7 @@ class ViewPagerAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle):
             }
         }
     }
+    fun refreshFragment(position: Int){
+        notifyItemChanged(position)
+    }
 }

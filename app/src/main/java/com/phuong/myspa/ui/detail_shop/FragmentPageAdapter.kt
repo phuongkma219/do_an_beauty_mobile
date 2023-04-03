@@ -28,4 +28,7 @@ class FragmentPageAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle)
             CommentFragment()
         }
     }
+    fun refreshFragment(position: Int){
+        notifyItemChanged(position)
+    }
 }

@@ -27,4 +27,18 @@ class ShopAdapter(private val showAction :Boolean): BaseAdapter<ShopInfor>(R.lay
             (listener as IOnItemClickShop).onItemMoreAction(it,list[position],position)
         }
     }
+    fun submitList(isAddMore: Boolean, newData: MutableList<ShopInfor>) {
+        if (isAddMore) {
+            this.list.addAll(newData)
+            notifyItemInserted(list.size)
+        } else {
+            this.list = newData.toMutableList()
+            notifyDataSetChanged()
+        }
+
+    }
+    fun deleteItem(position:Int){
+        list.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }

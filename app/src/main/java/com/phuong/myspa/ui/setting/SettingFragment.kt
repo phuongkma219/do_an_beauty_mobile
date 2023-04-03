@@ -10,6 +10,7 @@ import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentSettingBinding
+import com.phuong.myspa.ui.login.LoginFragmentDirections
 import com.phuong.myspa.ui.login.SignUpFragmentDirections
 import com.phuong.myspa.ui.main.MainFragment
 import com.phuong.myspa.ui.updateUser.UpdateUserViewModel
@@ -68,7 +69,7 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
         }
         binding.btnLogOut.setOnClickListener {
             SharedPreferenceUtils.getInstance(requireContext()).clearData()
-            requireActivity().finish()
+            findNavController().navigate(SettingFragmentDirections.actionGlobalLoginFragment())
         }
 
     }

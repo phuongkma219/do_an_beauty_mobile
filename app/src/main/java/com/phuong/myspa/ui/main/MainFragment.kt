@@ -15,7 +15,9 @@ class MainFragment : AbsBaseFragment<FragmentMainBinding>() {
     override fun getLayout(): Int = R.layout.fragment_main
 
     override fun initView() {
-        binding.viewPager.adapter = ViewPagerAdapter(requireActivity().supportFragmentManager,requireActivity().lifecycle)
+        val mAdapter =
+            ViewPagerAdapter(requireActivity().supportFragmentManager,requireActivity().lifecycle)
+        binding.viewPager.adapter = mAdapter
         binding.navBottom.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.homeFragment -> {
@@ -39,6 +41,7 @@ class MainFragment : AbsBaseFragment<FragmentMainBinding>() {
                         binding.navBottom.menu.findItem(R.id.homeFragment)
                     }
                     1 -> {
+                        mAdapter.refreshFragment(position)
                         binding.navBottom.menu.findItem(R.id.favoriteFragment)
                     }
                     2 -> {

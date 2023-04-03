@@ -1,5 +1,6 @@
 package com.phuong.myspa.ui.detail_category
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -43,7 +44,9 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
                 totalItemCount = mLayoutManager!!.itemCount
                 firstVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
                 if (dy > 0 && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
-                    mViewModel.fetchData(QueryCategory(mutableListOf(args.category._id)), true)
+                    if (mViewModel.dataVM != null){
+                        mViewModel.fetchData(QueryCategory(mutableListOf(args.category._id)), true)
+                    }
                 }
             }
         })
@@ -59,6 +62,9 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
             }
 
         }
+        binding.swipeRefresh.setOnRefreshListener {
+            mViewModel.fetchData(QueryCategory(mutableListOf(args.category._id)),false)
+        }
     }
 
     override fun initViewModel() {
@@ -67,7 +73,10 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
         mViewModel.dataLiveData.observe(viewLifecycleOwner){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
-                mAdapter.submit(body)
+                if(binding.swipeRefresh.isRefreshing){
+                    binding.swipeRefresh.isRefreshing = false
+                }
+                mAdapter.submitList(mViewModel.getPage()>0,body)
             }
         }
     }
