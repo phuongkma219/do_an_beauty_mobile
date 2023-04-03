@@ -44,7 +44,6 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideGsonConverterFactory(): GsonConverterFactory {
-        GsonBuilder().setLenient().setLenient()
         return GsonConverterFactory.create()
     }
 

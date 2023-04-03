@@ -18,6 +18,4 @@ data class User(
     val updated_at: String?= null,
     val username: String?= null,
     val birthday: Any? = null,
-){
-
-}
+)
