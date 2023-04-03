@@ -25,7 +25,7 @@ class FavoriteRepository  @Inject constructor(@IoDispatcher private val dispatch
         val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
         val jsonString = "{ \"shop_id\":\"$idShop\"}";
         val json = JsonParser.parseString(jsonString).asJsonObject
-        provideRemoteAPI.addFavorite(token, FavoriteDT0((idShop)))
+        provideRemoteAPI.addFavorite(token)
     }
     suspend fun deleteFavorite(idShop:String): ApiResponse<Any> = withContext(dispatcher){
         val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
