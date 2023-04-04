@@ -2,8 +2,8 @@ package com.phuong.myspa.data.api.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
-@Parcelize
 data class Category(
     val __v: Int,
     val _id: String,
@@ -11,4 +11,4 @@ data class Category(
     val created_at: String,
     val name: String,
     val updated_at: String
-): Parcelable
+): Serializable

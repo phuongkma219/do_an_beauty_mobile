@@ -15,7 +15,7 @@ class GetMyUserUseCase  @Inject constructor(private val userRepository: UserRepo
     BaseUseCase<Any, ApiResponse<User>>() {
     override suspend fun execute(param: Any): Flow<DataResponse<ApiResponse<User>>> = flow{
         val data = userRepository.getMyUser()
-        if (data.success == true) {
+        if (data?.success == true) {
             data.data?.avatar =  Constants.BASE_URL + data.data?.avatar?.replace("\\", "/")
             emit(DataResponse.DataSuccess(data))
         } else {

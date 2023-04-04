@@ -13,7 +13,7 @@ class SignUpUseCase @Inject constructor(private val signUpRepository: SignUpRepo
     BaseUseCase<UserSignUp, ApiResponse<Any>>() {
     override suspend fun execute(param: UserSignUp): Flow<DataResponse< ApiResponse<Any>>> = flow{
         val data = signUpRepository.userRegister(param)
-        if (data.success == true) {
+        if (data?.success == true) {
             emit(DataResponse.DataSuccess(data))
         } else {
             emit(DataResponse.DataError(data))

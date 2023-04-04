@@ -30,8 +30,6 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
 
 
     override fun initView() {
-        mViewModel = ViewModelProvider(requireActivity())[ShopViewModel::class.java]
-        mViewModel.getDetailShop(args.shop._id)
        setUpToolBar()
         mAdapter = FragmentPageAdapter(requireActivity().supportFragmentManager,requireActivity().lifecycle)
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Infor"))
@@ -69,6 +67,13 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
             }
 
         }
+    }
+
+    override fun initViewModel() {
+        super.initViewModel()
+        mViewModel = ViewModelProvider(requireActivity())[ShopViewModel::class.java]
+        mViewModel.getDetailShop(args.shop._id)
+        binding.viewModel = mViewModel
     }
 
     private fun setUpToolBar() {

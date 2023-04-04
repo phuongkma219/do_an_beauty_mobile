@@ -41,7 +41,7 @@ class UpdateUserViewModel @Inject constructor(
 
              try {
                  val data =   userRepository.uploadAvatar(idUser, path!!)
-                 if (data.success == true){
+                 if (data?.success == true){
                      val path = Constants.BASE_URL + data.data?.filename?.replace("\\", "/")
                      isUploadAvt.postValue(DataResponse.DataSuccess(path))
                  }
@@ -64,7 +64,7 @@ class UpdateUserViewModel @Inject constructor(
             updateUser.postValue(DataResponse.DataLoading(LoadingStatus.Loading))
             val data = userRepository.updateUser(user)
            try {
-               if (data.success == true){
+               if (data?.success == true){
                    updateUser.postValue(DataResponse.DataSuccess(data.data!!))
                }
               

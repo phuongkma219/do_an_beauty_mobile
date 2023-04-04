@@ -14,7 +14,7 @@ class LoginUseCase @Inject constructor( private val loginRepository: LoginReposi
     BaseUseCase<UserDTO, UserLogin>() {
     override suspend fun execute(param: UserDTO): Flow<DataResponse<UserLogin>> = flow{
         val data = loginRepository.loginUser(param)
-        if (data.success == true) {
+        if (data?.success == true) {
             data.data?.user?.avatar = Constants.BASE_URL +  data.data?.user?.avatar?.replace("\\", "/")
             emit(DataResponse.DataSuccess(data.data!!))
         } else {

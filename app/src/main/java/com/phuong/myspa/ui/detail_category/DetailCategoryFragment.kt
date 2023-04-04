@@ -33,6 +33,9 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
             findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalMainFragment())
 
         }
+        binding.layoutNoInternet.btRetry.setOnClickListener {
+            mViewModel.fetchData(QueryCategory(mutableListOf(args.category._id)),false)
+        }
         mLayoutManager = LinearLayoutManager(requireContext())
         binding.rvShop.setHasFixedSize(true)
         binding.rvShop.apply {

@@ -33,13 +33,4 @@ object CacheUtils {
             null
         }
     }
-
-    fun checkDataResponse(context: Context, response: ApiResponse<MutableList<Category>>?): ApiResponse<MutableList<Category>>? {
-        return if(response == null) {
-            readSaveCache(context)
-        } else {
-            writeSaveCache(context, response)
-            response
-        }
-    }
 }

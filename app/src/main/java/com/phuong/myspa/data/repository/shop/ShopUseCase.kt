@@ -13,7 +13,7 @@ class ShopUseCase  @Inject constructor(private val shopRepository: ShopRepositor
     BaseUseCase<String, ApiResponse<Shop>>() {
     override suspend fun execute(param: String): Flow<DataResponse<ApiResponse<Shop>>> = flow{
         val data = shopRepository.getDetailShop(param)
-        if (data.success == true) {
+        if (data?.success == true) {
             data.data?.infor?.avatar =  Constants.BASE_URL + data.data?.infor?.avatar?.replace("\\", "/")
             data.data?.service?.forEach {
                it.avatar =  Constants.BASE_URL + it.avatar.replace("\\", "/")

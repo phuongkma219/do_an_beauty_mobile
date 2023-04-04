@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,6 +25,7 @@ import java.io.IOException
 class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapReadyCallback {
     private var data: ShopInfor? = null
     private lateinit var mMap: GoogleMap
+    private  var supportMapFragment: SupportMapFragment ? = null
     override fun initView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             data = arguments?.getParcelable(DATA, ShopInfor::class.java)
@@ -35,20 +37,25 @@ class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapRead
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${data!!.phone_number}"))
             startActivity(intent)
         }
-        val map =childFragmentManager
+        supportMapFragment =childFragmentManager
             .findFragmentById(R.id.ggMap) as SupportMapFragment
-        map.getMapAsync(this)
+        supportMapFragment!!.getMapAsync(this)
     }
     override fun getLayout(): Int = R.layout.fragment_detail_shop
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        try {
+            val shop = getLocationFromAddress(requireContext(),data!!.address)
+            mMap.addMarker(MarkerOptions().position(shop).title(data!!.name))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
+            mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        }
+        catch (e:Exception){
+            supportMapFragment!!.requireView().visibility = View.INVISIBLE
+        }
 
-        // Add a marker in Sydney and move the camera
-        val shop = getLocationFromAddress(requireContext(),data!!.address)
-        mMap.addMarker(MarkerOptions().position(shop).title(data!!.name))
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
-        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE;
+
     }
     fun getLocationFromAddress(context: Context, strAddress: String): LatLng? {
         val coder = Geocoder(context)

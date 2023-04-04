@@ -51,7 +51,7 @@ class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispa
                         0
                     }
                 val responseData = detailCategoryRepository.getShopsByCategory(params,requestPage.toString())
-                if (responseData.success == true){
+                if (responseData?.success == true){
                     val shops = responseData.data?.list_shop
                     if (shops?.size != 0 ){
                         dataVM = responseData.data
@@ -64,6 +64,10 @@ class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispa
                         dataMutableLiveData.postValue(DataResponse.DataIdle())
                         dataVM = null
                     }
+
+                }
+                else{
+                    dataMutableLiveData.postValue(DataResponse.DataError())
 
                 }
 

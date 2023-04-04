@@ -25,7 +25,7 @@ class FavoriteViewModel @Inject constructor(@IoDispatcher private val dispatcher
     fun addFavorite(shopId : String){
         viewModelScope.launch (dispatcher){
            val data = favoriteRepository.addFavorite(shopId)
-            if (data.success == true){
+            if (data?.success == true){
                 isSuccess.postValue(DataResponse.DataSuccess(true))
             }
             else{
@@ -36,7 +36,7 @@ class FavoriteViewModel @Inject constructor(@IoDispatcher private val dispatcher
     fun deleteFavorite(shopId : String){
         viewModelScope.launch (dispatcher){
             val data = favoriteRepository.deleteFavorite(shopId)
-            if (data.success == true){
+            if (data?.success == true){
                 isSuccess.postValue(DataResponse.DataSuccess(true))
             }
             else{
@@ -48,7 +48,7 @@ class FavoriteViewModel @Inject constructor(@IoDispatcher private val dispatcher
         viewModelScope.launch (dispatcher){
             dataMutableLiveData.postValue(DataResponse.DataLoading(LoadingStatus.Loading))
             val data = favoriteRepository.getListFavorite()
-            if (data.success == true){
+            if (data?.success == true){
                 data.data.let {
                     it?.forEach {
                     it?.avatar =  Constants.BASE_URL + it?.avatar?.replace("\\", "/")

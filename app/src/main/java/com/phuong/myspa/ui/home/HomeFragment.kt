@@ -14,6 +14,7 @@ import com.phuong.myspa.databinding.FragmentHomeBinding
 import com.phuong.myspa.ui.detail_category.DetailCategoryFragmentDirections
 import com.phuong.myspa.ui.main.MainFragment
 import com.phuong.myspa.ui.setting.SettingFragmentDirections
+import com.phuong.myspa.utils.CacheUtils
 import com.phuong.myspa.utils.DataUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,6 +50,9 @@ class HomeFragment:AbsBaseFragment<FragmentHomeBinding>() {
         }
         binding.ivSearch.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionGlobalSearchFragment())
+        }
+        binding.ivMap.setOnClickListener {
+
         }
 
     }

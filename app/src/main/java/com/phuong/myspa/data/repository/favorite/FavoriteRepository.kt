@@ -18,22 +18,58 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class FavoriteRepository  @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher,
                                               private val provideRemoteAPI: RemoteServices,@AppContext private val app: MyApp
 ) {
-    suspend fun addFavorite(idShop:String): ApiResponse<Any> = withContext(dispatcher){
-        val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
-        provideRemoteAPI.addFavorite(token, FavoriteDT0((idShop)))
+    suspend fun addFavorite(idShop:String): ApiResponse<Any>
+    ?{
+        return try {
+             withContext(dispatcher){
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+                provideRemoteAPI.addFavorite(token, FavoriteDT0((idShop)))
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
     }
-    suspend fun deleteFavorite(idShop:String): ApiResponse<Any> = withContext(dispatcher){
-        val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
-        provideRemoteAPI.deleteFavorite(token,FavoriteDT0((idShop)))
+
+    suspend fun deleteFavorite(idShop:String): ApiResponse<Any>
+    ?{
+        return try {
+            withContext(dispatcher){
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+                provideRemoteAPI.deleteFavorite(token,FavoriteDT0((idShop)))
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
     }
-    suspend fun getListFavorite(): ApiResponse<MutableList<ShopInfor>> = withContext(dispatcher){
-        val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
-        provideRemoteAPI.getListFavorite(token)
+    suspend fun getListFavorite(): ApiResponse<MutableList<ShopInfor>>
+    ?{
+        return try {
+            withContext(dispatcher){
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+                provideRemoteAPI.getListFavorite(token)
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
     }
+
 
 }

@@ -6,10 +6,22 @@ import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher, private val provideRemoteAPI: RemoteServices) {
-    suspend fun getListCategory(): ApiResponse<MutableList<Category>> = withContext(dispatcher){
-        provideRemoteAPI.getListCategory()
+    suspend fun getListCategory(): ApiResponse<MutableList<Category>> ?{
+        return try {
+            withContext(dispatcher){
+                provideRemoteAPI.getListCategory()
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
     }
+
 }

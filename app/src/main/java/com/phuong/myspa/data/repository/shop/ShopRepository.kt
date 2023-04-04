@@ -6,10 +6,23 @@ import com.phuong.myspa.data.api.model.shop.Shop
 import com.phuong.myspa.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class ShopRepository  @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher, private val provideRemoteAPI: RemoteServices) {
-    suspend fun getDetailShop(shopId: String): ApiResponse<Shop> = withContext(dispatcher){
-        provideRemoteAPI.getDetailShop(shopId)
+    suspend fun getDetailShop(shopId: String): ApiResponse<Shop>
+    ?{
+        return try {
+             withContext(dispatcher){
+                provideRemoteAPI.getDetailShop(shopId)
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
     }
+
 }
