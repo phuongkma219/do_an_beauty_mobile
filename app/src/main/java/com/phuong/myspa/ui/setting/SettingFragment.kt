@@ -46,9 +46,13 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
     }
 
     private fun setViewOnClick() {
-        binding.layoutUser.setOnClickListener {
+        binding.btnEditProfile.setOnClickListener {
                 findNavController().navigate(SettingFragmentDirections.actionGlobalUpdateUserFragment())
         }
+//        binding.layoutUser.setOnClickListener {
+//            findNavController().navigate(SettingFragmentDirections.actionGlobalUpdateUserFragment())
+//        }
+
         binding.tvPrivacyPolicy.setOnClickListener {
             val action = SignUpFragmentDirections.actionConfirmFragmentToPolicyAndTermFragment().setParam(2)
             (parentFragment?.parentFragment as MainFragment).findNavController()

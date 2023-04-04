@@ -84,5 +84,6 @@
     <string name="there_s_nothing_here">There \'s nothing here.</string>
     <string name="search">Search</string>
     <string name="action_delete">Delete</string>
+    <string name="edit_profile">Edit profile</string>
 
 </resources>
