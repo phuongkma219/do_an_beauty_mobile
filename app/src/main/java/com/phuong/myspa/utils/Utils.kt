@@ -8,6 +8,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.*
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -342,6 +343,13 @@ object Utils {
         }
     }
 
+    fun getScreenWidth(): Int {
+        return Resources.getSystem().displayMetrics.widthPixels
+    }
+
+    fun getScreenHeight(): Int {
+        return Resources.getSystem().displayMetrics.heightPixels
+    }
 
 }
 

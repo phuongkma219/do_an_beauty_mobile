@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">My Spa</string>
-    <string name="recommend_beauty_place">Recommend beauty place</string>
-    <string name="agree_and_continue">AGREE AND CONTINUE</string>
-    <string name="agree_term_of_service_and_policy">By get started to use this app,
+    <string name="app_name" translatable="false">My Spa</string>
+    <string name="recommend_beauty_place" translatable="false">Recommend beauty place</string>
+    <string name="agree_and_continue" translatable="false">AGREE AND CONTINUE</string>
+    <string name="agree_term_of_service_and_policy" translatable="false">By get started to use this app,
         you agree to \nour <font color="#303030" textStyle="bold">Term of service</font> and <font color="#303030" textStyle="bold">Privacy Policy.</font></string>
-    <string name="term_of_service">Term of service</string>
-    <string name="privacy_policy">Privacy policy</string>
+    <string name="term_of_service" translatable="false">Term of service</string>
+    <string name="privacy_policy" translatable="false">Privacy policy</string>
     <string name="version_1_0">Version 1.0</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
@@ -24,7 +24,6 @@
     <string name="personal">Personal</string>
     <string name="setting">Setting</string>
     <string name="general">General</string>
-    <string name="check_update">Check Update</string>
     <string name="share_app">Share app</string>
     <string name="rate_us">Rate us</string>
     <string name="contact_us">Contact Us</string>
@@ -44,15 +43,13 @@
     <string name="phone_number_has_been_exist">Phone number has been exist</string>
     <string name="user_name">User name</string>
     <string name="log_out">Log out</string>
-    <string name="update_information">Update information</string>
+    <string name="update_information" translatable="false">Update information</string>
     <string name="mobile_number_must_have_10_digits">Mobile number must have 10 digits</string>
     <string name="no_internet_title">No Internet</string>
     <string name="no_internet_des">" You’re offline. Please check your internet         connection an try again."</string>
     <string name="tap_to_retry">Tap to retry</string>
     <string name="description">Description</string>
     <string name="business_hours">Business hours</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="see_detail">See detail</string>
     <string name="contact_partner">Contact Partner</string>
     <string name="select">Select</string>
@@ -85,5 +82,12 @@
     <string name="search">Search</string>
     <string name="action_delete">Delete</string>
     <string name="edit_profile">Edit profile</string>
+    <string name="change_language">Language</string>
+    <string name="english">English</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="change_avatar">Change Avatar</string>
+    <string name="do_you_want_to_confirm_avatar_change">Do you want to confirm avatar change?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

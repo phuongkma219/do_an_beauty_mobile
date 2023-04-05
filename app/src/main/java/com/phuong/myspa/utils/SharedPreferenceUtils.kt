@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.phuong.myspa.data.api.model.login.UserLogin
+import org.intellij.lang.annotations.Language
 
 
 class SharedPreferenceUtils private constructor(context: Context) {
     private val PREFERENCE_NAME = "MY_SPA"
+    private val LANGUAGE ="LANGUAGE"
     private val DATA = "DATA"
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
@@ -41,29 +43,12 @@ class SharedPreferenceUtils private constructor(context: Context) {
     fun getBooleanValueWithTrueDefault(key: String): Boolean {
         return sharedPreferences.getBoolean(key, true)
     }
-
-    fun putIntValue(key: String?, value: Int) {
+    fun writeLanguageCode(language: String){
         val editor = sharedPreferences.edit()
-        editor.putInt(key, value).apply()
-        editor.commit()
+        editor.putString(LANGUAGE, language).apply()
     }
-
-    fun getIntValue(key: String?,defValue:Int?): Int {
-        if (defValue==null){
-            return sharedPreferences.getInt(key, 0)
-
-        }
-        return sharedPreferences.getInt(key, defValue)
-
-    }
-
-    fun putLongValue(key: String?, value: Long) {
-        val editor = sharedPreferences.edit()
-        editor.putLong(key, value).apply()
-    }
-
-    fun getLongValue(key: String?): Long {
-        return sharedPreferences.getLong(key, 0L)
+    fun readLanguageCode(): String {
+        return sharedPreferences.getString(LANGUAGE, "en")!!
     }
     fun putData(data : UserLogin){
         val editor = sharedPreferences.edit()
