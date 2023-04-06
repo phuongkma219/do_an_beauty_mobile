@@ -89,5 +89,8 @@
     <string name="do_you_want_to_confirm_avatar_change">Do you want to confirm avatar change?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="phone_admin">0987612345</string>
+    <string name="admin_gmail">admin@gmail.com</string>
+    <string name="admin_facebook">admin@facebook.com</string>
 
 </resources>

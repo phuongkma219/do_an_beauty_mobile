@@ -82,4 +82,7 @@
     <string name="do_you_want_to_confirm_avatar_change">Bạn có muốn thay đổi avatar?</string>
     <string name="yes">Đông ý</string>
     <string name="no">Không</string>
+    <string name="phone_admin">0987612345</string>
+    <string name="admin_gmail">admin@gmail.com</string>
+    <string name="admin_facebook">admin@facebook.com</string>
 </resources>

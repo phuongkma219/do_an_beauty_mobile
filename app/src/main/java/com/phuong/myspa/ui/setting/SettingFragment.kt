@@ -56,6 +56,9 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
             val languageDialog = LanguageDialog.onCreate()
             languageDialog.show(childFragmentManager,LanguageDialog.TAG)
         }
+        binding.tvContactUs.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionGlobalContactUsFragment())
+        }
 
         binding.tvPrivacyPolicy.setOnClickListener {
             val action = SignUpFragmentDirections.actionConfirmFragmentToPolicyAndTermFragment().setParam(2)
