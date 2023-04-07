@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.phuong.myspa.ui.updateUser.UpdateUserViewModel" />
+        <import type="android.view.View" />
+        <variable
+            name="item"
+            type="com.phuong.myspa.data.api.model.user.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="@dimen/dp_2"
+            app:title="@string/update_user"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_arrow_left"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="@dimen/dp_24"
+            android:scaleType="centerCrop"
+            app:strokeWidth="@dimen/dp_1"
+            app:strokeColor="@color/accent_primary"
+            app:shapeAppearanceOverlay="@style/circle"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            android:src="@drawable/logo"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:scaleType="centerCrop"
+            app:strokeWidth="@dimen/dp_1"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:shapeAppearanceOverlay="@style/circle"
+            app:strokeColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+            app:layout_constraintEnd_toEndOf="@id/ivAvatar"/>
+        <LinearLayout
+            android:id="@+id/llEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ivAvatar"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_marginBottom="@dimen/dp_6"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_user"
+                android:fontFamily="@font/ribeye"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/accent_primary"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textLayoutFirstName"
+                android:layout_marginTop="@dimen/dp_12"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/accent_primary"
+                app:hintTextColor="@color/accent_primary"
+                android:textColorHint="@color/text_back"
+                app:endIconMode="clear_text">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/first_name"
+                    android:text="@{item.first_name}"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textCursorDrawable="@color/accent_primary"
+                    android:textColorHint="@color/accent_primary"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textLayoutLastName"
+                android:layout_marginTop="@dimen/dp_12"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="1dp"
+                app:hintTextColor="@color/accent_primary"
+                android:textColorHint="@color/gray_dark"
+                app:boxStrokeColor="@color/accent_primary">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:textCursorDrawable="@color/accent_primary"
+                    android:hint="@string/last_name"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:text="@{item.last_name}"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textLayoutPhone"
+                android:layout_marginTop="@dimen/dp_12"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="1dp"
+                app:hintTextColor="@color/accent_primary"
+                android:textColorHint="@color/gray_dark"
+                app:boxStrokeColor="@color/accent_primary">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textCursorDrawable="@color/accent_primary"
+                    android:hint="@string/mobile_number"
+                    android:text="@{item.phone_number}"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textLayoutBirDay"
+                android:layout_marginTop="@dimen/dp_12"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="1dp"
+                app:hintTextColor="@color/accent_primary"
+                android:textColorHint="@color/gray_dark"
+                app:boxStrokeColor="@color/accent_primary">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtBirDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:textCursorDrawable="@color/accent_primary"
+                    android:hint="@string/birthday"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_12"
+                android:orientation="horizontal"
+                android:layout_weight="3"
+                >
+                <RadioButton
+                    android:id="@+id/radioButton_male"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_female"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female" />
+                <RadioButton
+                    android:id="@+id/radioButton_other"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlLoading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#80A7A7A7"
+            android:visibility="@{viewModel.isLoading()? View.VISIBLE:View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"
+            >
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.CubeGrid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:SpinKit_Color="@color/accent_primary" />
+        </RelativeLayout>
+        <include
+            android:id="@+id/layoutNoInternet"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            layout="@layout/no_internet_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="@{viewModel.isEmpty()? View.VISIBLE:View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

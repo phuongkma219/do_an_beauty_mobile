@@ -49,9 +49,9 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
         binding.btnEditProfile.setOnClickListener {
                 findNavController().navigate(SettingFragmentDirections.actionGlobalUpdateUserFragment())
         }
-//        binding.layoutUser.setOnClickListener {
-//            findNavController().navigate(SettingFragmentDirections.actionGlobalUpdateUserFragment())
-//        }
+        binding.layoutUser.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionGlobalInforUserFragment())
+        }
         binding.tvLanguage.setOnClickListener {
             val languageDialog = LanguageDialog.onCreate()
             languageDialog.show(childFragmentManager,LanguageDialog.TAG)

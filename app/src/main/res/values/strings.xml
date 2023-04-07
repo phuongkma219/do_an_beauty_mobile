@@ -92,5 +92,12 @@
     <string name="phone_admin">0987612345</string>
     <string name="admin_gmail">admin@gmail.com</string>
     <string name="admin_facebook">admin@facebook.com</string>
+    <string name="infor">Infor</string>
+    <string name="service">Service</string>
+    <string name="comment">Comment</string>
+    <string name="delete_success">Delete success!</string>
+    <string name="error_please_try_again">Error.Please try again later</string>
+    <string name="add_to_favorite">Add to favarite</string>
+    <string name="compelete">Compelete!!</string>
 
 </resources>

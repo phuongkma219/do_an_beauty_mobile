@@ -85,4 +85,12 @@
     <string name="phone_admin">0987612345</string>
     <string name="admin_gmail">admin@gmail.com</string>
     <string name="admin_facebook">admin@facebook.com</string>
+    <string name="infor">Thông tin</string>
+    <string name="service">Dịch vụ</string>
+    <string name="comment">Bình luận</string>
+    <string name="delete_success">Xoá thành công!</string>
+    <string name="error_please_try_again">Lỗi. Vui lòng thử lại sau</string>
+    <string name="add_to_favorite">Thêm vào yêu thích</string>
+    <string name="compelete">Thành !!</string>
+
 </resources>
