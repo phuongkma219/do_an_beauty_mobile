@@ -78,9 +78,10 @@ class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirm
                 ToastUtils.getInstance(requireContext()).showToast("Select day")
             }
             if (hours!= null && minute!= null &&day != null && month != null){
-                val content = shopInfor?.name +" : "+ shopService?.name
+                val content = shopInfor?.name +" : "+ shopService?.name +
+                        "\n" + shopInfor?.address
                 Utils.startAlarm(requireContext(),minute!!,hours!!,day!!,month!!,content)
-
+                dismiss()
             }
             else{
                 ToastUtils.getInstance(requireContext()).showToast("Error")

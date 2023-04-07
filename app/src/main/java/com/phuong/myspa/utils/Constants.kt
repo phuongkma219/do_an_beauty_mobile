@@ -5,7 +5,7 @@ import com.phuong.myspa.R
 import com.phuong.myspa.ui.popup.ActionModel
 
 object Constants {
-     const val BASE_URL = "https://a59b-2402-800-61c3-9978-755f-cfaa-39ab-13c1.ngrok.ios"
+     const val BASE_URL = "https://2437-2402-800-61c3-b5e0-4cf9-9222-cd13-3069.ngrok.io"
      const val PREFIX_TOKEN = "Bearer "
      const val TITLE_NOTIFY = "My Spa"
      const val KEY_NOTIFICATION_ID = "ID_Notification"

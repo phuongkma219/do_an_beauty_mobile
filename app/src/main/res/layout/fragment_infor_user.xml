@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:elevation="@dimen/dp_2"
-            app:title="@string/update_user"
+            app:title="@string/infor"
             android:background="@color/white"
             app:navigationIcon="@drawable/ic_arrow_left"/>
 
@@ -67,7 +67,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/update_user"
+                android:text="@string/infor"
                 android:fontFamily="@font/ribeye"
                 android:textSize="@dimen/sp_20"
                 android:textColor="@color/accent_primary"/>
@@ -90,7 +90,6 @@
                     android:drawablePadding="10dp"
                     android:hint="@string/first_name"
                     android:text="@{item.first_name}"
-                    android:enabled="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:textCursorDrawable="@color/accent_primary"
@@ -118,7 +117,6 @@
                     android:drawablePadding="10dp"
                     android:textCursorDrawable="@color/accent_primary"
                     android:hint="@string/last_name"
-                    android:enabled="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:text="@{item.last_name}"
@@ -142,7 +140,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
-                    android:enabled="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:textCursorDrawable="@color/accent_primary"
@@ -170,17 +167,25 @@
                     android:drawablePadding="10dp"
                     android:textCursorDrawable="@color/accent_primary"
                     android:hint="@string/birthday"
-                    android:enabled="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:imeOptions="actionNext"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender"
+                style="@style/RegularBody1"
+                android:layout_marginTop="@dimen/dp_12"
+                android:textColor="@color/text_back"
+                />
+
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_8"
                 android:orientation="horizontal"
                 android:layout_weight="3"
                 >

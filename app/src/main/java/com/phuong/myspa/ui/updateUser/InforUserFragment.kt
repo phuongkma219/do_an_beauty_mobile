@@ -2,6 +2,7 @@ package com.phuong.myspa.ui.updateUser
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.response.DataResponse
@@ -21,6 +22,10 @@ class InforUserFragment : AbsBaseFragment<FragmentInforUserBinding>() {
     }
 
     override fun initView() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
     }
 
     override fun initViewModel() {

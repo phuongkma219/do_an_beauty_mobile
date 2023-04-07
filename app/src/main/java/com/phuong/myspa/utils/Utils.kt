@@ -315,7 +315,6 @@ object Utils {
     fun startAlarm(context: Context,minute:Int,hour:Int,day:Int,month:Int,content:String) {
         val alarmReceiverIntent = Intent(context, AlarmReceiver::class.java)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        Log.d("kkk", "startAlarm: $content")
         val calendar: Calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, 2023)
         calendar.set(Calendar.MONTH, month)
