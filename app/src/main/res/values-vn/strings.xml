@@ -93,4 +93,12 @@
     <string name="add_to_favorite">Thêm vào yêu thích</string>
     <string name="compelete">Thành !!</string>
     <string name="gender">Giới tính</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="time">Time</string>
+    <string name="price">Price</string>
+    <string name="just_finished">vừa xong</string>
+    <string name="days_ago">ngày trước</string>
+    <string name="at">lúc</string>
+    <string name="hours">giờ</string>
+    <string name="minute">phút</string>
 </resources>

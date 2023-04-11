@@ -37,6 +37,10 @@ class ShopAdapter(private val showAction :Boolean): BaseAdapter<ShopInfor>(R.lay
         }
 
     }
+    fun clearData(){
+        list.clear()
+        notifyDataSetChanged()
+    }
     fun deleteItem(position:Int){
         list.removeAt(position)
         notifyItemRemoved(position)

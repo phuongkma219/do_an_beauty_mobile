@@ -100,5 +100,13 @@
     <string name="add_to_favorite">Add to favarite</string>
     <string name="compelete">Compelete!!</string>
     <string name="gender">Gender</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="time">Time</string>
+    <string name="price">Price</string>
+    <string name="just_finished">just finished</string>
+    <string name="days_ago">days ago</string>
+    <string name="at">at</string>
+    <string name="hours">hours</string>
+    <string name="minute">minute</string>
 
 </resources>

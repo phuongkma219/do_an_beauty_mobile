@@ -25,7 +25,7 @@ class FragmentPageAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle)
             ServiceFragment.newInstance(data!!)
         }
         else{
-            CommentFragment()
+            CommentFragment.newInstance(data!!)
         }
     }
     fun refreshFragment(position: Int){

@@ -76,10 +76,14 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
         mViewModel.dataLiveData.observe(viewLifecycleOwner){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
-                if(binding.swipeRefresh.isRefreshing){
-                    binding.swipeRefresh.isRefreshing = false
-                }
                 mAdapter.submitList(mViewModel.getPage()>0,body)
+            }
+            if (it.loadingStatus == LoadingStatus.Refresh){
+                mAdapter.clearData()
+
+            }
+            if(binding.swipeRefresh.isRefreshing){
+                binding.swipeRefresh.isRefreshing = false
             }
         }
     }

@@ -1,28 +1,29 @@
-package com.phuong.myspa.ui.detail_category
+package com.phuong.myspa.ui.comment
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.phuong.myspa.base.BaseLoadingDataViewModel
-import com.phuong.myspa.data.api.model.QueryCategory
-import com.phuong.myspa.data.api.model.remote.ApiResponse
+import com.phuong.myspa.data.api.model.comment.Comment
+import com.phuong.myspa.data.api.model.comment.DataComment
+import com.phuong.myspa.data.api.model.comment.UploadComment
 import com.phuong.myspa.data.api.model.shop.DataShop
-import com.phuong.myspa.data.api.model.shop.Shop
-import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
-import com.phuong.myspa.data.repository.detail_category.DetailCategoryRepository
-import com.phuong.myspa.utils.Constants
+import com.phuong.myspa.data.repository.comment.CommentRepository
 import com.phuong.myspa.di.IoDispatcher
+import com.phuong.myspa.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 @HiltViewModel
-class DetailCategoryViewModel @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher
-,private val detailCategoryRepository: DetailCategoryRepository) :BaseLoadingDataViewModel<MutableList<ShopInfor>>() {
-    var dataVM : DataShop? = null
-    fun fetchData(params:QueryCategory,isLoadMore:Boolean){
+class CommentViewModel @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher
+                                           , private val commentRepository : CommentRepository,
+):BaseLoadingDataViewModel<MutableList<Comment>>() {
+    var dataVM : DataComment? = null
+    var isComment = MutableLiveData<DataResponse<Boolean>>(DataResponse.DataIdle())
+    fun fetchData(id:String,isLoadMore:Boolean){
         if (dataMutableLiveData.value!!.loadingStatus != LoadingStatus.Loading && dataMutableLiveData.value!!.loadingStatus != LoadingStatus.LoadingMore
             && dataMutableLiveData.value!!.loadingStatus != LoadingStatus.Refresh){
             if (!isLoadMore) {
@@ -41,8 +42,8 @@ class DetailCategoryViewModel @Inject constructor(@IoDispatcher private val disp
                         if (dataMutableLiveData.value!!.loadingStatus == LoadingStatus.Refresh) {
                             0
                         } else {
-                            if (dataVM!!.shops != null) {
-                               getPage()
+                            if (dataVM!!.comments != null) {
+                                getPage(id)
                             } else {
                                 0
                             }
@@ -50,15 +51,15 @@ class DetailCategoryViewModel @Inject constructor(@IoDispatcher private val disp
                     } else {
                         0
                     }
-                val responseData = detailCategoryRepository.getShopsByCategory(params,requestPage.toString())
+                val responseData = commentRepository.getComments(id,requestPage.toString())
                 if (responseData?.success == true){
-                    val shops = responseData.data?.shops
-                    if (shops?.size != 0 ){
+                    val comments = responseData.data?.comments
+                    if (comments?.size != 0 ){
                         dataVM = responseData.data
-                        shops?.forEach{ sh ->
-                        sh.avatar = Constants.BASE_URL +  sh.avatar.replace("\\", "/")
-                    }
-                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.shops!!))
+                        comments?.forEach{ sh ->
+                            sh.user?.avatar = Constants.BASE_URL +  sh.user?.avatar?.replace("\\", "/")
+                        }
+                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.comments!!))
                     }
                     else{
                         dataMutableLiveData.postValue(DataResponse.DataIdle())
@@ -74,7 +75,19 @@ class DetailCategoryViewModel @Inject constructor(@IoDispatcher private val disp
             }
         }
     }
-    fun getPage():Int {
-       return dataVM!!.next_page.replace("get_list?page=", "").toInt()
+    fun getPage(id:String):Int {
+        return dataVM!!.next_page.replace("comments_shop/$id?page=", "").toInt()
+    }
+    fun uploadComment(content:UploadComment){
+        isComment.value!!.loadingStatus = LoadingStatus.Loading
+        viewModelScope.launch(dispatcher) {
+          val response =  commentRepository.uploadComment(content)
+            if (response?.success == true){
+                isComment.postValue(DataResponse.DataSuccess(true))
+            }else{
+                isComment.postValue(DataResponse.DataError())
+            }
+
+        }
     }
 }
