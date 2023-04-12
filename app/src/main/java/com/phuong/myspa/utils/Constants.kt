@@ -9,6 +9,7 @@ object Constants {
      const val PREFIX_TOKEN = "Bearer "
      const val TITLE_NOTIFY = "My Spa"
      const val KEY_NOTIFICATION_ID = "ID_Notification"
+     const val NOTIFICATION_ID = "NOTIFICATION_ID"
      const val ACTION_ALARM = "ACTION_ALARM"
      val actionsPopup by lazy {
           val titles = arrayListOf(
