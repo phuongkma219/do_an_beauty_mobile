@@ -32,9 +32,9 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
     override fun initView() {
        setUpToolBar()
         mAdapter = FragmentPageAdapter(requireActivity().supportFragmentManager,requireActivity().lifecycle)
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Infor"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Service"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Comment"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.infor)))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.service)))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.comment)))
         mAdapter.setData(args.shop)
         binding.viewPager.adapter = mAdapter
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
@@ -59,10 +59,10 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 if (body){
-                    ToastUtils.getInstance(requireContext()).showToast("Add to favorite")
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.add_to_favorite))
                 }
                 else{
-                    ToastUtils.getInstance(requireContext()).showToast("Error.Please try again later")
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
                 }
             }
 

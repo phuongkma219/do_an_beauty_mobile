@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<data>
+    <variable
+        name="item"
+        type="com.phuong.myspa.data.api.model.comment.Comment" />
+</data>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:background="@color/white"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_avatar"
+                android:loadImageFromUrl="@{item.user.avatar}"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearanceOverlay="@style/circle"
+                android:layout_width="56dp"
+                android:layout_height="56dp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/iv_avatar"
+                app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+                android:layout_marginStart="12dp"
+
+                app:cardBackgroundColor="#E6E4E4"
+                app:cardElevation="@dimen/dp_12"
+                app:cardCornerRadius="@dimen/dp_8"
+                >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    >
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_name"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="@{item.user.first_name}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textColor="@color/text_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:textSize="18sp"
+                        android:maxEms="13"
+                        android:singleLine="false"
+                        android:textAlignment="center"
+                        android:text="@{item.content.text}"
+                        android:textColor="@color/text_back"
+                        app:layout_constraintTop_toBottomOf="@id/tv_name"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_time"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/color_description"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toBottomOf="@id/cl"
+                app:layout_constraintStart_toStartOf="@id/cl"
+                setTimeComment="@{item.created_at}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_1"
+    app:layout_constraintTop_toBottomOf="@id/tv_time"
+    android:layout_marginBottom="@dimen/dp_4"
+    android:background="@color/background_guideline"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

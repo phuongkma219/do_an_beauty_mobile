@@ -31,16 +31,7 @@
                 android:textColor="@color/accent_primary"
                 android:layout_centerInParent="true" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_4"
-                android:background="?selectableItemBackground"
-                android:src="@drawable/baseline_map_24"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/dp_16" />
+
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivSearch"
@@ -50,8 +41,18 @@
                 android:padding="@dimen/dp_4"
                 android:src="@drawable/ic_baseline_search_24"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/ivMap"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="@dimen/dp_16" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_4"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_baseline_access_alarms_24"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_16" />
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView

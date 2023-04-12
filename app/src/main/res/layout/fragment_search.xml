@@ -5,14 +5,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.phuong.myspa.ui.detail_category.DetailCategoryViewModel" />
+            type="com.phuong.myspa.ui.search.SearchViewModel" />
         <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@drawable/splash"
         >
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,6 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:title=""
+            android:background="@color/white"
             style="@style/SemiBoldBody1"
             app:titleTextColor="@color/text_back"
             app:navigationIcon="@drawable/ic_arrow_left"
@@ -42,7 +43,7 @@
             android:id="@+id/rvShop"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/splash"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <androidx.appcompat.widget.AppCompatTextView
@@ -51,9 +52,19 @@
             android:text="@string/there_s_nothing_here"
             style="@style/SemiBoldH5"
             android:gravity="center"
+            android:visibility="@{viewModel.isEmpty()? View.VISIBLE:View.GONE}"
             android:textColor="@color/text_back"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintBottom_toBottomOf="parent"/>
+        <ProgressBar
+            android:id="@+id/pbLoadMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/rvShop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{viewModel.isLoadMore()? View.VISIBLE:View.GONE}"
+
+            />
         <include
             android:id="@+id/layoutLoading"
             android:layout_width="match_parent"

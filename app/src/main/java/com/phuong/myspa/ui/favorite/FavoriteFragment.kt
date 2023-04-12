@@ -61,10 +61,10 @@ class FavoriteFragment : AbsBaseFragment<FragmentFavouriteBinding>(){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 if (body){
-                    ToastUtils.getInstance(requireContext()).showToast("Delete success!")
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.delete_success))
                 }
                 else{
-                    ToastUtils.getInstance(requireContext()).showToast("Error.Please try again later")
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
                 }
             }
         }

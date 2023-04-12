@@ -1,4 +1,4 @@
-package com.phuong.testalarmclock.domain.usecase
+package com.phuong.myspa.domain.repository.usecase
 
 import com.phuong.myspa.data.api.model.reminder.Reminder
 import com.phuong.myspa.domain.repository.ReminderRepository

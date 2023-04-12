@@ -65,7 +65,6 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_marginStart="@dimen/dp_12"
                         app:layout_constraintTop_toTopOf="@id/ivAvatar"
                         app:layout_constraintStart_toEndOf="@id/ivAvatar"
@@ -80,11 +79,14 @@
                             android:textColor="@color/text_back"
                             style="@style/RegularBody1"
                             android:textSize="@dimen/sp_18"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/update_information"
-                            android:textColor="@color/gray_light"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnEditProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_36"
+                            android:text="@string/edit_profile"
+                            android:backgroundTint="#4CAF50"
+                            android:padding="0dp"
+                            android:textColor="@color/white"
                             style="@style/RegularBody1"/>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,7 +107,7 @@
                     app:layout_constraintTop_toBottomOf="@id/layoutUser" />
 
                 <TextView
-                    android:id="@+id/tvCheckUpdate"
+                    android:id="@+id/tvLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/dp_16"
@@ -116,7 +118,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/dp_16"
                     android:paddingEnd="@dimen/dp_12"
-                    android:text="@string/check_update"
+                    android:text="@string/change_language"
                     android:textAppearance="?textAppearanceBody2"
                     android:textColor="@color/black"
                     app:drawableRightCompat="@drawable/ic_chevron_right"
@@ -127,13 +129,13 @@
                 <View
                     android:id="@+id/view_divider_1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.8dp"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginEnd="@dimen/dp_12"
                     android:background="@color/background_guideline"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCheckUpdate" />
+                    app:layout_constraintTop_toBottomOf="@id/tvLanguage" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -185,7 +187,7 @@
                 <View
                     android:id="@+id/view_divider_2"
                     android:layout_width="0dp"
-                    android:layout_height="0.5dp"
+                    android:layout_height="0.8dp"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginEnd="@dimen/dp_12"
                     android:background="@color/background_guideline"
@@ -215,7 +217,7 @@
                 <View
                     android:id="@+id/view_divider_3"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.8dp"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginEnd="@dimen/dp_12"
                     android:background="@color/background_guideline"
@@ -245,7 +247,7 @@
                 <View
                     android:id="@+id/view_divider_4"
                     android:layout_width="0dp"
-                    android:layout_height="0.5dp"
+                    android:layout_height="0.8dp"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginEnd="@dimen/dp_12"
                     android:background="@color/background_guideline"
@@ -255,35 +257,6 @@
 
 
 
-                <TextView
-                    android:id="@+id/tvRateUs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp_16"
-                    android:paddingBottom="@dimen/dp_16"
-                    android:background="?attr/selectableItemBackground"
-                    android:fontFamily="@font/sf_pro_regular"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/dp_16"
-                    android:paddingEnd="@dimen/dp_12"
-                    android:text="@string/rate_us"
-                    android:textAppearance="?textAppearanceBody2"
-                    android:textColor="@color/black"
-                    app:drawableRightCompat="@drawable/ic_chevron_right"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view_divider_4" />
-
-                <View
-                    android:id="@+id/view_divider_6"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:layout_marginEnd="@dimen/dp_12"
-                    android:background="@color/background_guideline"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvRateUs" />
 
                 <TextView
                     android:id="@+id/tvContactUs"
@@ -302,12 +275,12 @@
                     app:drawableRightCompat="@drawable/ic_chevron_right"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view_divider_6" />
+                    app:layout_constraintTop_toBottomOf="@id/view_divider_4" />
 
                 <View
                     android:id="@+id/view_divider_7"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.8dp"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginEnd="@dimen/dp_12"
                     android:background="@color/background_guideline"

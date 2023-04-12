@@ -28,7 +28,7 @@ class AlarmReceiver : BroadcastReceiver() {
             if (action.equals(alarmAction)) {
                     val alarmJson = intent.extras?.getString("IDS")
                     if (alarmJson?.isNotEmpty() == true) {
-                        BeautyNotificationManager(context!!).notifyDailyBox(alarmJson)
+//                        BeautyNotificationManager(context!!).notifyDailyBox(alarmJson)
                     }
             }
             else if (listOf(*TIME_SYSTEM_CHANGE_LIST).contains(action)) {

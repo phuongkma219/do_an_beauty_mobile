@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher
+class DetailCategoryViewModel @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher
 ,private val detailCategoryRepository: DetailCategoryRepository) :BaseLoadingDataViewModel<MutableList<ShopInfor>>() {
     var dataVM : DataShop? = null
     fun fetchData(params:QueryCategory,isLoadMore:Boolean){
@@ -41,7 +41,7 @@ class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispa
                         if (dataMutableLiveData.value!!.loadingStatus == LoadingStatus.Refresh) {
                             0
                         } else {
-                            if (dataVM!!.list_shop != null) {
+                            if (dataVM!!.shops != null) {
                                getPage()
                             } else {
                                 0
@@ -52,13 +52,13 @@ class DetailCategoryViewModel@Inject constructor(@IoDispatcher private val dispa
                     }
                 val responseData = detailCategoryRepository.getShopsByCategory(params,requestPage.toString())
                 if (responseData?.success == true){
-                    val shops = responseData.data?.list_shop
+                    val shops = responseData.data?.shops
                     if (shops?.size != 0 ){
                         dataVM = responseData.data
                         shops?.forEach{ sh ->
                         sh.avatar = Constants.BASE_URL +  sh.avatar.replace("\\", "/")
                     }
-                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop!!))
+                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.shops!!))
                     }
                     else{
                         dataMutableLiveData.postValue(DataResponse.DataIdle())

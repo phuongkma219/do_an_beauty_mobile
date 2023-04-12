@@ -7,9 +7,7 @@ import com.phuong.myspa.data.repository.ReminderRepositoryImpl
 import com.phuong.myspa.data.local.dao.ReminderDao
 import com.phuong.myspa.data.local.database.ReminderDatabase
 import com.phuong.myspa.domain.repository.ReminderRepository
-import com.phuong.myspa.domain.repository.usecase.DeleteReminderUseCase
-import com.phuong.myspa.domain.repository.usecase.GetReminderByIdUseCase
-import com.phuong.testalarmclock.domain.usecase.*
+import com.phuong.myspa.domain.repository.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

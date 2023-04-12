@@ -63,6 +63,9 @@ class ReminderWorker @AssistedInject constructor(
                 reminder = ReminderEntity(
                     newReminder.id,
                     newReminder.title,
+                    newReminder.shopId,
+                    newReminder.serviceId,
+                    newReminder.serviceName,
                     newReminder.description,
                     newReminder.reminderStart,
                     newReminder.reminderEnd,

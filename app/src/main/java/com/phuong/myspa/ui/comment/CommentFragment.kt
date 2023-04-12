@@ -1,60 +1,130 @@
 package com.phuong.myspa.ui.comment
 
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.phuong.myspa.R
+import com.phuong.myspa.base.AbsBaseFragment
+import com.phuong.myspa.data.api.model.comment.Content
+import com.phuong.myspa.data.api.model.comment.UploadComment
+import com.phuong.myspa.data.api.model.shop.ShopInfor
+import com.phuong.myspa.data.api.response.DataResponse
+import com.phuong.myspa.data.api.response.LoadingStatus
+import com.phuong.myspa.databinding.FragmentCommentBinding
+import com.phuong.myspa.utils.SharedPreferenceUtils
+import com.phuong.myspa.utils.ToastUtils
+import com.phuong.myspa.utils.hideKeyBoard
+import com.phuong.myspa.utils.loadImageFromUrl
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
+    private val mAdapter by lazy { CommentAdapter() }
+    private val mViewModel by viewModels<CommentViewModel>()
+    private var data:ShopInfor? = null
+    private var firstVisibleItem = 0
+    private var visibleItemCount: Int = 0
+    private var totalItemCount: Int = 0
+    private var visibleThreshold = 1
+    private var mLayoutManager : LinearLayoutManager? = null
+    override fun getLayout(): Int = R.layout.fragment_comment
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CommentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CommentFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun initView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            data = arguments?.getParcelable(DATA, ShopInfor::class.java)
+        } else {
+            data = arguments?.getParcelable(DATA)
+        }
+        val user = SharedPreferenceUtils.getInstance(requireContext()).getData()
+        if (user != null){
+            binding.ivAvatar.loadImageFromUrl(user.user!!.avatar!!)
+        }
+        else{
+            binding.constEdt.visibility = View.GONE
+        }
+        binding.viewModel = mViewModel
+        mLayoutManager = LinearLayoutManager(requireContext())
+        binding.rvShop.apply {
+            layoutManager = mLayoutManager
+            adapter = mAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    visibleItemCount = recyclerView.childCount
+                    totalItemCount = mLayoutManager!!.itemCount
+                    firstVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
+                    if (dy > 0 && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
+                        if (mViewModel.dataVM != null){
+                            mViewModel.fetchData( data!!._id,true)
+                        }
+                    }
+                }
+            })
+        }
+        binding.edtContent.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    if (!binding.edtContent.text!!.isEmpty()){
+                        uploadComment()
+                    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+                    hideKeyBoard(requireContext(),binding.edtContent)
+                    return true
+                }
+                return false
+            }
+
+        })
+
+    }
+
+    private fun uploadComment() {
+        val uploadComment = UploadComment(data!!._id, Content(text = binding.edtContent.text.toString().trim()))
+        mViewModel.uploadComment(uploadComment)
+    }
+
+    override fun initViewModel() {
+        super.initViewModel()
+        mViewModel.fetchData(data!!._id, false)
+        mViewModel.dataLiveData.observe(viewLifecycleOwner) {
+            if (it.loadingStatus == LoadingStatus.Success) {
+                val body = (it as DataResponse.DataSuccess).body
+                mAdapter.submitList(mViewModel.getPage(data!!._id) > 0, body)
+            }
+        }
+        mViewModel.isComment.observe(viewLifecycleOwner){
+            if (it.loadingStatus == LoadingStatus.Success) {
+//                binding.layoutLoading.root.visibility = View.GONE
+                binding.edtContent.setText("")
+                mAdapter.clearData()
+                mViewModel.fetchData(data!!._id, false)
+            }
+            else if (it.loadingStatus == LoadingStatus.Loading){
+                binding.layoutLoading.root.visibility = View.VISIBLE
+            }
+            else if (it.loadingStatus == LoadingStatus.Error){
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comment, container, false)
-    }
-
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CommentFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        const val DATA = "KEY_DATA"
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(data: ShopInfor) =
             CommentFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelable(DATA, data)
                 }
             }
     }
+
 }

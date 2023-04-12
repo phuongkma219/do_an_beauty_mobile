@@ -136,4 +136,37 @@
         app:exitAnim="@android:anim/fade_out"
         app:popEnterAnim="@android:anim/fade_in"
         app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/contactUsFragment"
+        android:name="com.phuong.myspa.ui.setting.ContactUsFragment"
+        android:label="ContactUsFragment" />
+    <action
+        android:id="@+id/action_global_contactUsFragment"
+        app:destination="@id/contactUsFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/inforUserFragment"
+        android:name="com.phuong.myspa.ui.updateUser.InforUserFragment"
+        android:label="InforUserFragment" />
+    <action
+        android:id="@+id/action_global_inforUserFragment"
+        app:destination="@id/inforUserFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/reminderFragment"
+        android:name="com.phuong.myspa.ui.reminder.ReminderFragment"
+        android:label="ReminderFragment" />
+    <action
+        android:id="@+id/action_global_reminderFragment"
+        app:destination="@id/reminderFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
 </navigation>

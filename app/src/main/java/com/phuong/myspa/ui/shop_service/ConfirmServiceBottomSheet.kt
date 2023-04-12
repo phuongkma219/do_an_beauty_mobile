@@ -4,21 +4,24 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.phuong.myspa.R
 import com.phuong.myspa.base.BaseBottomSheetDialogFragment
+import com.phuong.myspa.data.api.model.reminder.RemindType
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.databinding.BottomsheetConfirmServiceBinding
-import com.phuong.myspa.ui.detail_category.DetailCategoryViewModel
+import com.phuong.myspa.ui.reminder.RemindersViewModel
 import com.phuong.myspa.utils.ToastUtils
 import com.phuong.myspa.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
+@AndroidEntryPoint
 class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirmServiceBinding>() {
     private var hours :Int? = null
     private var minute :Int? = null
@@ -26,6 +29,7 @@ class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirm
     private var month:Int? = null
     private var shopInfor:ShopInfor? = null
     private var shopService:ShopService? = null
+    private val mViewModel by viewModels<RemindersViewModel>()
     override fun initBinding() {
         super.initBinding()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -64,29 +68,29 @@ class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirm
             TimePickerDialog(requireContext(), timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
 
         }
-        binding.rlAddress.setOnClickListener {
-            if (Utils.locationPermissionGrant(requireContext())){
-                showDialog()
-            }else{
-                requestStoragePermission()
-            }
-        }
+//        binding.rlAddress.setOnClickListener {
+//            if (Utils.locationPermissionGrant(requireContext())){
+//                showDialog()
+//            }else{
+//                requestStoragePermission()
+//            }
+//        }
         binding.btnConfirm.setOnClickListener {
             if (hours== null|| minute == null){
-                ToastUtils.getInstance(requireContext()).showToast("Select time")
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.select_time))
             }
             if (day == null || month == null){
-                ToastUtils.getInstance(requireContext()).showToast("Select day")
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.select_day))
             }
             if (hours!= null && minute!= null &&day != null && month != null){
-                val content = shopInfor?.name +" : "+ shopService?.name
-                Utils.startAlarm(requireContext(),minute!!,hours!!,day!!,month!!,content)
-
+                val content =   binding.tvAddress.text.toString().trim() +
+                        "\n" +resources.getString(R.string.address) +" "+ shopInfor?.address
+                val localDateTime = LocalDateTime.of(2023, month!! +1, day!!, hours!!, minute!!)
+                mViewModel.createReminder(shopInfor?.name!!,shopInfor?._id!!,shopService?._id!!,shopService?.name!!,content,RemindType.NONE,localDateTime!!.atZone(
+                    ZoneId.systemDefault()).toInstant())
+                dismiss()
             }
-            else{
-                ToastUtils.getInstance(requireContext()).showToast("Error")
 
-            }
 
         }
     }
@@ -98,7 +102,7 @@ class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirm
         val dialog = GetAddressFragment()
         dialog.listener = object :GetAddressFragment.ISaveAddress{
             override fun getAddress(address: String) {
-                binding.tvAddress.text = address
+//                binding.tvAddress.text = address
             }
 
         }

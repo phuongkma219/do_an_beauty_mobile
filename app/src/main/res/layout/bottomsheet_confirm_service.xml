@@ -112,7 +112,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvSetAddress"
             android:foreground="?selectableItemBackground"
             android:background="@drawable/bg_edt">
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/tvAddress"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp_48"

@@ -8,6 +8,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.*
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -314,7 +315,6 @@ object Utils {
     fun startAlarm(context: Context,minute:Int,hour:Int,day:Int,month:Int,content:String) {
         val alarmReceiverIntent = Intent(context, AlarmReceiver::class.java)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        Log.d("kkk", "startAlarm: $content")
         val calendar: Calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, 2023)
         calendar.set(Calendar.MONTH, month)
@@ -342,6 +342,13 @@ object Utils {
         }
     }
 
+    fun getScreenWidth(): Int {
+        return Resources.getSystem().displayMetrics.widthPixels
+    }
+
+    fun getScreenHeight(): Int {
+        return Resources.getSystem().displayMetrics.heightPixels
+    }
 
 }
 

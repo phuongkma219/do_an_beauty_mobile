@@ -5,6 +5,9 @@ import java.time.Instant
 data class Reminder(
     val id: Long,
     val title: String,
+    val shopId:String,
+    val serviceId:String,
+    val serviceName:String,
     val description: String,
     val reminderStart: Instant,
     val reminderEnd: Instant,

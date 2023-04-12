@@ -1,7 +1,4 @@
-package com.phuong.testalarmclock.domain.usecase
-
-import com.phuong.myspa.domain.repository.usecase.DeleteReminderUseCase
-import com.phuong.myspa.domain.repository.usecase.GetReminderByIdUseCase
+package com.phuong.myspa.domain.repository.usecase
 
 class ReminderUseCases(
     val deleteReminderUseCase: DeleteReminderUseCase,

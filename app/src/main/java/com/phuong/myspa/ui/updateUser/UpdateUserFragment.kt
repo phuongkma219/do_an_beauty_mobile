@@ -41,13 +41,13 @@ private val mViewModel by viewModels<UpdateUserViewModel>()
         }
         binding.ivAvatar.setOnClickListener {
             val alertDialog = AlertDialog.Builder(requireContext())
-            alertDialog.setTitle("Change Avatar")
-            alertDialog.setMessage("Do you want to confirm avatar change?")
-            alertDialog.setNegativeButton("No"
+            alertDialog.setTitle(resources.getString(R.string.change_avatar))
+            alertDialog.setMessage(resources.getString(R.string.do_you_want_to_confirm_avatar_change))
+            alertDialog.setNegativeButton(resources.getString(R.string.no)
                 ) { p0, p1 ->
                     p0.dismiss()
                 }
-            alertDialog.setPositiveButton("Yes"
+            alertDialog.setPositiveButton(resources.getString(R.string.yes)
             ) { p0, p1 ->
                 checkAndOpenPickDialog()
             }
@@ -166,12 +166,12 @@ private val mViewModel by viewModels<UpdateUserViewModel>()
                     binding.rlLoading.visibility = View.GONE
                     val body = (it as DataResponse.DataSuccess).body
                     binding.ivAvatar.loadImageFromUrl(body)
-                    ToastUtils.getInstance(requireContext()).showToast("Compelete")
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.compelete))
 
                 }
                 LoadingStatus.Error ->{
                     binding.rlLoading.visibility = View.GONE
-                    ToastUtils.getInstance(requireContext()).showToast("Error")
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
 
                 }
                 LoadingStatus.Loading ->{
@@ -186,13 +186,12 @@ private val mViewModel by viewModels<UpdateUserViewModel>()
             when (it.loadingStatus){
                 LoadingStatus.Success -> {
                     binding.rlLoading.visibility = View.GONE
-                    ToastUtils.getInstance(requireContext()).showToast("Compelete")
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.compelete))
 
                 }
                 LoadingStatus.Error ->{
                     binding.rlLoading.visibility = View.GONE
-                    ToastUtils.getInstance(requireContext()).showToast("Error")
-
+                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
                 }
                 LoadingStatus.Loading ->{
                     binding.rlLoading.visibility = View.VISIBLE

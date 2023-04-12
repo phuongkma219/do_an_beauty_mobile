@@ -11,6 +11,9 @@ data class ReminderEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long? = null,
     val title: String,
+    val shopId:String,
+    val serviceId:String,
+    val serviceName:String,
     val description: String,
     val reminderStart: Instant,
     val reminderEnd: Instant,
@@ -23,6 +26,9 @@ data class ReminderEntity(
         return Reminder(
             id ?: -1L,
             title,
+             shopId,
+            serviceId,
+            serviceName,
             description,
             reminderStart,
             reminderEnd,
