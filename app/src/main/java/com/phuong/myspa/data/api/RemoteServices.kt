@@ -67,4 +67,11 @@ interface RemoteServices {
 
     @GET("/v1/shops/comments_shop/{id}")
     suspend fun getCommentsShop(@Path("id") id:String,@Query("page") page : String):ApiResponse<DataComment>
+
+    @Multipart
+    @POST("/v1/upload/image")
+    suspend fun uploadImage(
+        @Header("Authorization") token: String?,
+        @Part image: MultipartBody.Part?
+    ): ApiResponse<ImageUpload>
 }

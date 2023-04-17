@@ -105,4 +105,5 @@
     <string name="select_time">Chọn thời gian</string>
     <string name="select_day">Chọn ngày</string>
     <string name="reminder">Nhắc nhở</string>
+    <string name="error_image">Error.Upload image fail</string>
 </resources>

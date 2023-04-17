@@ -21,7 +21,3 @@ annotation class MainImmediateDispatcher
 @Qualifier
 @Target(AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FUNCTION)
 annotation class AppContext
-
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class ApplicationScope

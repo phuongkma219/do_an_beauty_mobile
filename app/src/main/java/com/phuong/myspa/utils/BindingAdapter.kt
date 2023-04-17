@@ -12,6 +12,7 @@ import com.phuong.myspa.MyApp
 import com.phuong.myspa.R
 import com.phuong.myspa.data.PhotoModel
 import com.phuong.myspa.data.api.model.shop.ShopInfor
+import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.ui.popup.ActionModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -133,4 +134,16 @@ fun TextView.setTimeReminder(reminderStart: Instant){
             ZoneId.systemDefault()
         ))
     this.text = startDateTime
+}
+@BindingAdapter("setImageCmt")
+fun ShapeableImageView.setImageCmt(images : Array<String>?){
+    if (images != null){
+        visibility = View.VISIBLE
+        Glide.with(this).load(images[0])
+            .placeholder(R.drawable.img_thumb_bg_default)
+            .error(R.drawable.img_thumb_bg_default).into(this)
+    }
+    else{
+        visibility = View.GONE
+    }
 }

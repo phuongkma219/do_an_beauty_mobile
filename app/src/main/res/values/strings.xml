@@ -125,4 +125,5 @@
     <string name="select_time">Select time</string>
     <string name="select_day">Select day</string>
     <string name="reminder">Reminder</string>
+    <string name="error_image">Error.Upload image fail</string>
 </resources>

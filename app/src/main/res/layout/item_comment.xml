@@ -55,6 +55,17 @@
                         android:textColor="@color/text_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivImage"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                       app:layout_constraintTop_toBottomOf="@id/tv_name"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:visibility="gone"
+                        setImageCmt="@{item.content.image}"
+                        />
                     <androidx.appcompat.widget.AppCompatTextView
                         android:textSize="18sp"
                         android:maxEms="13"
@@ -62,7 +73,7 @@
                         android:textAlignment="center"
                         android:text="@{item.content.text}"
                         android:textColor="@color/text_back"
-                        app:layout_constraintTop_toBottomOf="@id/tv_name"
+                        app:layout_constraintTop_toBottomOf="@id/ivImage"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>

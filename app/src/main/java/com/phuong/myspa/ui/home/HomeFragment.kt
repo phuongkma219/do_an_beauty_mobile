@@ -12,11 +12,7 @@ import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentHomeBinding
 import com.phuong.myspa.ui.detail_category.DetailCategoryFragmentDirections
-import com.phuong.myspa.ui.main.MainFragment
-import com.phuong.myspa.ui.reminder.ReminderFragmentDirections
 import com.phuong.myspa.ui.setting.SettingFragmentDirections
-import com.phuong.myspa.utils.CacheUtils
-import com.phuong.myspa.utils.DataUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,7 +49,6 @@ class HomeFragment:AbsBaseFragment<FragmentHomeBinding>() {
             findNavController().navigate(SettingFragmentDirections.actionGlobalSearchFragment())
         }
         binding.ivReminder.setOnClickListener {
-            findNavController().navigate(ReminderFragmentDirections.actionGlobalReminderFragment())
 
         }
 

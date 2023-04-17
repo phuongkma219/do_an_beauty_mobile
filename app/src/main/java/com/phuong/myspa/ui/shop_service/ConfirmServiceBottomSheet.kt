@@ -5,20 +5,16 @@ import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.viewModels
 import com.phuong.myspa.R
 import com.phuong.myspa.base.BaseBottomSheetDialogFragment
-import com.phuong.myspa.data.api.model.reminder.RemindType
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.databinding.BottomsheetConfirmServiceBinding
-import com.phuong.myspa.ui.reminder.RemindersViewModel
 import com.phuong.myspa.utils.ToastUtils
 import com.phuong.myspa.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.util.*
 
 @AndroidEntryPoint
@@ -29,7 +25,6 @@ class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirm
     private var month:Int? = null
     private var shopInfor:ShopInfor? = null
     private var shopService:ShopService? = null
-    private val mViewModel by viewModels<RemindersViewModel>()
     override fun initBinding() {
         super.initBinding()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -86,8 +81,7 @@ class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirm
                 val content =   binding.tvAddress.text.toString().trim() +
                         "\n" +resources.getString(R.string.address) +" "+ shopInfor?.address
                 val localDateTime = LocalDateTime.of(2023, month!! +1, day!!, hours!!, minute!!)
-                mViewModel.createReminder(shopInfor?.name!!,shopInfor?._id!!,shopService?._id!!,shopService?.name!!,content,RemindType.NONE,localDateTime!!.atZone(
-                    ZoneId.systemDefault()).toInstant())
+
                 dismiss()
             }
 
@@ -119,7 +113,6 @@ class ConfirmServiceBottomSheet:BaseBottomSheetDialogFragment<BottomsheetConfirm
             if (Utils.locationPermissionGrant(requireContext())) {
                 showDialog()
             } else {
-
                 Utils.showAlertPermissionNotGrant(binding.root, requireActivity())
             }
         }

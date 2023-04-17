@@ -47,33 +47,53 @@
             android:layout_marginBottom="@dimen/dp_8"
             app:layout_constraintBottom_toBottomOf="parent">
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivAvatar"
+                android:id="@+id/ivImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/splash"
+                app:layout_constraintBottom_toTopOf="@id/btnImages"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"
+                />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivClose"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                app:layout_constraintStart_toEndOf="@id/ivImage"
+                app:layout_constraintTop_toTopOf="@id/ivImage"
+                android:src="@drawable/ic_close_black"
+                android:layout_marginStart="@dimen/dp_2"
+                android:visibility="gone"
+                app:strokeWidth="@dimen/dp_1"
+                app:strokeColor="@color/gray_light"
+                app:shapeAppearanceOverlay="@style/circle"
+                />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btnImages"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/dp_4"
                 android:layout_marginBottom="@dimen/dp_4"
                 android:layout_marginStart="@dimen/dp_12"
                 android:scaleType="centerCrop"
-                app:strokeWidth="@dimen/dp_1"
-                app:strokeColor="@color/accent_primary"
-                app:shapeAppearanceOverlay="@style/circle"
+                android:src="@drawable/ic_baseline_image_24"
                 />
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginStart="@dimen/dp_12"
                 android:layout_marginEnd="@dimen/dp_12"
+                android:layout_marginBottom="@dimen/dp_4"
                 app:boxCornerRadiusTopEnd="@dimen/dp_12"
                 app:boxCornerRadiusTopStart="@dimen/dp_12"
                 app:boxCornerRadiusBottomEnd="@dimen/dp_12"
                 app:boxCornerRadiusBottomStart="@dimen/dp_12"
-                app:layout_constraintStart_toEndOf="@id/ivAvatar"
+                app:layout_constraintStart_toEndOf="@id/btnImages"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 >
                 <com.google.android.material.textfield.TextInputEditText

@@ -5,12 +5,15 @@ import com.phuong.myspa.data.api.RemoteServices
 import com.phuong.myspa.data.api.model.comment.DataComment
 import com.phuong.myspa.data.api.model.comment.UploadComment
 import com.phuong.myspa.data.api.model.remote.ApiResponse
+import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.di.AppContext
 import com.phuong.myspa.di.IoDispatcher
 import com.phuong.myspa.utils.Constants
 import com.phuong.myspa.utils.SharedPreferenceUtils
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -37,6 +40,21 @@ class CommentRepository @Inject constructor(@IoDispatcher private val dispatcher
         return try {
             withContext(dispatcher){
                 provideRemoteAPI.getCommentsShop(id, page)
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
+    }
+    suspend fun uploadImage(image: MultipartBody.Part):ApiResponse<ImageUpload>
+    ?{
+        return try {
+            withContext(Dispatchers.Default){
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+                provideRemoteAPI.uploadImage(token,image)
             }
         }
         catch (ex : UnknownHostException){

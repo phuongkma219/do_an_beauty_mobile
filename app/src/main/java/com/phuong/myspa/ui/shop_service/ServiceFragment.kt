@@ -2,8 +2,6 @@ package com.phuong.myspa.ui.shop_service
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phuong.myspa.R
@@ -13,9 +11,7 @@ import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentServiceBinding
-import com.phuong.myspa.ui.detail_shop.DetailShopFragment
 import com.phuong.myspa.ui.detail_shop.ShopViewModel
-import com.phuong.myspa.ui.reminder.RemindersViewModel
 import com.phuong.myspa.utils.VerticalSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
