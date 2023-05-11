@@ -5,7 +5,7 @@ import com.phuong.myspa.R
 import com.phuong.myspa.ui.popup.ActionModel
 
 object Constants {
-//     const val BASE_URL = "https://a59b-2402-800-61c3-9978-755f-cfaa-39ab-13c1.ngrok.io"
+     const val BASE_URL = "https://ab56-2402-800-61b3-6c2a-74ed-bb03-f94b-857f.ngrok.io"
      const val PREFIX_TOKEN = "Bearer "
      const val TITLE_NOTIFY = "My Spa"
      const val KEY_NOTIFICATION_ID = "ID_Notification"
@@ -29,6 +29,6 @@ object Constants {
 
 //     android:usesCleartextTraffic="true"
 //     android:networkSecurityConfig="@xml/network_security_config"
-const val BASE_URL = "http://10.0.2.2:3000"
+//const val BASE_URL = "http://10.0.2.2:3000"
 
 }

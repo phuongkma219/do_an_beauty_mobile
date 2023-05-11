@@ -9,6 +9,7 @@ import com.phuong.myspa.data.api.model.login.UserDTO
 import com.phuong.myspa.data.api.model.login.UserLogin
 import com.phuong.myspa.data.api.model.login.UserSignUp
 import com.phuong.myspa.data.api.model.remote.ApiResponse
+import com.phuong.myspa.data.api.model.shop.AddCart
 import com.phuong.myspa.data.api.model.shop.DataShop
 import com.phuong.myspa.data.api.model.shop.Shop
 import com.phuong.myspa.data.api.model.shop.ShopInfor
@@ -74,4 +75,6 @@ interface RemoteServices {
         @Header("Authorization") token: String?,
         @Part image: MultipartBody.Part?
     ): ApiResponse<ImageUpload>
+    @POST("/v1/shops/add_cart")
+    suspend fun addCart(@Header("Authorization") token: String?,@Body cart:AddCart):ApiResponse<Any>
 }

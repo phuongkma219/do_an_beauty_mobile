@@ -45,8 +45,8 @@ class ServiceFragment : AbsBaseFragment<FragmentServiceBinding>() {
             }
 
             override fun onSelectService(item: ShopService, position: Int) {
-                val bottomSheet = ConfirmServiceBottomSheet.create(item,shopInfor!!)
-                bottomSheet.show(childFragmentManager,ConfirmServiceBottomSheet.TAG)
+//                val bottomSheet = ConfirmServiceBottomSheet.create(item,shopInfor!!)
+//                bottomSheet.show(childFragmentManager,ConfirmServiceBottomSheet.TAG)
             }
 
         }

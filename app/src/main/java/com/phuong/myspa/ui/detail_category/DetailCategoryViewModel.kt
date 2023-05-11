@@ -41,7 +41,7 @@ class DetailCategoryViewModel @Inject constructor(@IoDispatcher private val disp
                         if (dataMutableLiveData.value!!.loadingStatus == LoadingStatus.Refresh) {
                             0
                         } else {
-                            if (dataVM!!.shops != null) {
+                            if (dataVM!!.list_shop != null) {
                                getPage()
                             } else {
                                 0
@@ -52,13 +52,13 @@ class DetailCategoryViewModel @Inject constructor(@IoDispatcher private val disp
                     }
                 val responseData = detailCategoryRepository.getShopsByCategory(params,requestPage.toString())
                 if (responseData?.success == true){
-                    val shops = responseData.data?.shops
+                    val shops = responseData.data?.list_shop
                     if (shops?.size != 0 ){
                         dataVM = responseData.data
                         shops?.forEach{ sh ->
                         sh.avatar = Constants.BASE_URL +  sh.avatar.replace("\\", "/")
                     }
-                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.shops!!))
+                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop!!))
                     }
                     else{
                         dataMutableLiveData.postValue(DataResponse.DataIdle())

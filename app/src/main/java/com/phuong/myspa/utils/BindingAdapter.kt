@@ -7,6 +7,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.google.android.material.imageview.ShapeableImageView
 import com.phuong.myspa.MyApp
 import com.phuong.myspa.R
@@ -137,13 +138,13 @@ fun TextView.setTimeReminder(reminderStart: Instant){
 }
 @BindingAdapter("setImageCmt")
 fun ShapeableImageView.setImageCmt(images : Array<String>?){
-    if (images != null){
-        visibility = View.VISIBLE
-        Glide.with(this).load(images[0])
+    if (images?.size != 0){
+        this.visibility = View.VISIBLE
+        Glide.with(this).load(images!![0])
             .placeholder(R.drawable.img_thumb_bg_default)
             .error(R.drawable.img_thumb_bg_default).into(this)
     }
     else{
-        visibility = View.GONE
+        this.visibility = View.GONE
     }
 }

@@ -62,12 +62,12 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
 
         binding.tvPrivacyPolicy.setOnClickListener {
             val action = SignUpFragmentDirections.actionConfirmFragmentToPolicyAndTermFragment().setParam(2)
-            (parentFragment?.parentFragment as MainFragment).findNavController()
+            findNavController()
                 .navigate(action)
         }
         binding.tvTermOfService.setOnClickListener {
             val action = SignUpFragmentDirections.actionConfirmFragmentToPolicyAndTermFragment().setParam(1)
-            (parentFragment?.parentFragment as MainFragment).findNavController()
+          findNavController()
                 .navigate(action)
         }
         binding.tvShareApp.setOnClickListener {

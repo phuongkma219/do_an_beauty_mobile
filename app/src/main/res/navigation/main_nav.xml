@@ -150,7 +150,9 @@
     <fragment
         android:id="@+id/inforUserFragment"
         android:name="com.phuong.myspa.ui.updateUser.InforUserFragment"
-        android:label="InforUserFragment" />
+        android:label="InforUserFragment"
+        tools:layout="@layout/fragment_infor_user"
+        />
     <action
         android:id="@+id/action_global_inforUserFragment"
         app:destination="@id/inforUserFragment"
