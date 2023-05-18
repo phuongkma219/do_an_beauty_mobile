@@ -1,6 +1,7 @@
 package com.phuong.myspa.utils
 
 import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -51,11 +52,24 @@ fun TextView.setHours(item: ShopInfor) {
 }
 @BindingAdapter("setTime")
 fun TextView.setTime(time:String){
-    text = MyApp.resource().getString(R.string.time) +" : $time"
+    val sdf =  SimpleDateFormat("hh:mm")
+ val date =    SimpleDateFormat("hh:mm:ss").parse(time)
+    val string = sdf.format(date)
+    text = MyApp.resource().getString(R.string.time) +" : $string "  +  MyApp.resource().getString(R.string.hours)
 }
 @BindingAdapter("setPrice")
 fun TextView.setPrice(time:String){
-    text =MyApp.resource().getString(R.string.price)+ ": $time $"
+    var price = ""
+    val test = time.reversed()
+   for (i in test.length-1 downTo 0) {
+        if (i%3 ==0 && i != 0){
+            price += "${test[i]}."
+        }
+        else{
+            price += test[i]
+        }
+    }
+    text =MyApp.resource().getString(R.string.price)+ ": $price VND"
 }
 @BindingAdapter("android:setRate")
 fun RatingBar.setRate(rate:Double){
@@ -147,4 +161,8 @@ fun ShapeableImageView.setImageCmt(images : Array<String>?){
     else{
         this.visibility = View.GONE
     }
+}
+@BindingAdapter("setText")
+fun TextView.setText(time:String){
+  text = time
 }

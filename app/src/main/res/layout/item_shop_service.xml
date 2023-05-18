@@ -78,7 +78,6 @@
                 style="@style/SemiBoldBody1"
                 android:textColor="#FF5E1F"
                 android:textSize="@dimen/sp_18"
-                app:layout_constraintBottom_toBottomOf="@id/btnSelect"
                 app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
                 app:layout_constraintStart_toStartOf="parent"/>
             <com.google.android.material.button.MaterialButton
@@ -88,7 +87,7 @@
                 android:text="@string/add_to_cart"
                 android:backgroundTint="@color/accent_primary"
                 android:onClick="@{() -> itemListener.onSelectService(item,itemPosition)}"
-                app:layout_constraintTop_toBottomOf="@id/tvSeeDetail"
+                app:layout_constraintTop_toBottomOf="@id/tvPrice"
                 android:layout_marginTop="@dimen/dp_16"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

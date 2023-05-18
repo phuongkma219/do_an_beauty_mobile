@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
+import com.phuong.myspa.data.api.model.shop.AddCart
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentServiceBinding
 import com.phuong.myspa.ui.detail_shop.ShopViewModel
+import com.phuong.myspa.utils.ToastUtils
 import com.phuong.myspa.utils.VerticalSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,8 +47,7 @@ class ServiceFragment : AbsBaseFragment<FragmentServiceBinding>() {
             }
 
             override fun onSelectService(item: ShopService, position: Int) {
-//                val bottomSheet = ConfirmServiceBottomSheet.create(item,shopInfor!!)
-//                bottomSheet.show(childFragmentManager,ConfirmServiceBottomSheet.TAG)
+                mViewModel.addCart(AddCart(shopInfor!!._id,item._id))
             }
 
         }
@@ -61,7 +62,14 @@ class ServiceFragment : AbsBaseFragment<FragmentServiceBinding>() {
                 mAdapter.submit(body)
                 mAdapter.notifyDataSetChanged()
             }
-
+        }
+        mViewModel.isSucess.observe(viewLifecycleOwner){
+            if (it){
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.add_to_cart))
+            }
+            else{
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
+            }
         }
     }
     override fun getLayout(): Int = R.layout.fragment_service

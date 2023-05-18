@@ -160,5 +160,15 @@
         app:exitAnim="@android:anim/fade_out"
         app:popEnterAnim="@android:anim/fade_in"
         app:popExitAnim="@anim/slide_out_right"/>
-
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.phuong.myspa.ui.cart.CartFragment"
+        android:label="CartFragment" />
+    <action
+        android:id="@+id/action_global_cartFragment"
+        app:destination="@id/cartFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
 </navigation>

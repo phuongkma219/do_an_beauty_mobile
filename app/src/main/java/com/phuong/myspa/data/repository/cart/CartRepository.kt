@@ -1,4 +1,4 @@
-package com.phuong.myspa.data.repository.home
+package com.phuong.myspa.data.repository.cart
 
 import com.phuong.myspa.MyApp
 import com.phuong.myspa.data.api.RemoteServices
@@ -14,13 +14,16 @@ import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class HomeRepository @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher,
+class CartRepository @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher,
                                          @AppContext private val app: MyApp,
-                                         private val provideRemoteAPI: RemoteServices) {
-    suspend fun getListCategory(): ApiResponse<MutableList<Category>> ?{
+                                         private val provideRemoteAPI: RemoteServices
+) {
+
+    suspend fun getListCart(): ApiResponse<MutableList<DataCart>>?{
         return try {
             withContext(dispatcher){
-                provideRemoteAPI.getListCategory()
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+                provideRemoteAPI.getListCart(token)
             }
         }
         catch (ex : UnknownHostException){
@@ -30,6 +33,5 @@ class HomeRepository @Inject constructor(@IoDispatcher private val dispatcher: C
             null
         }
     }
-
 
 }

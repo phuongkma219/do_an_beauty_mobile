@@ -9,10 +9,7 @@ import com.phuong.myspa.data.api.model.login.UserDTO
 import com.phuong.myspa.data.api.model.login.UserLogin
 import com.phuong.myspa.data.api.model.login.UserSignUp
 import com.phuong.myspa.data.api.model.remote.ApiResponse
-import com.phuong.myspa.data.api.model.shop.AddCart
-import com.phuong.myspa.data.api.model.shop.DataShop
-import com.phuong.myspa.data.api.model.shop.Shop
-import com.phuong.myspa.data.api.model.shop.ShopInfor
+import com.phuong.myspa.data.api.model.shop.*
 import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.data.api.model.user.User
 import okhttp3.MultipartBody
@@ -77,4 +74,7 @@ interface RemoteServices {
     ): ApiResponse<ImageUpload>
     @POST("/v1/shops/add_cart")
     suspend fun addCart(@Header("Authorization") token: String?,@Body cart:AddCart):ApiResponse<Any>
+
+    @GET("/v1/shops/get_list_cart")
+    suspend fun getListCart(@Header("Authorization") token: String?):ApiResponse<MutableList<DataCart>>?
 }
