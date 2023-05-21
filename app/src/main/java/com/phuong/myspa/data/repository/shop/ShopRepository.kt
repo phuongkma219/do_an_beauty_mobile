@@ -3,8 +3,9 @@ package com.phuong.myspa.data.repository.shop
 import com.phuong.myspa.MyApp
 import com.phuong.myspa.data.api.RemoteServices
 import com.phuong.myspa.data.api.model.remote.ApiResponse
-import com.phuong.myspa.data.api.model.shop.AddCart
+import com.phuong.myspa.data.api.model.cart.CartDTO
 import com.phuong.myspa.data.api.model.shop.Shop
+import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.di.AppContext
 import com.phuong.myspa.di.IoDispatcher
 import com.phuong.myspa.utils.Constants
@@ -21,7 +22,9 @@ class ShopRepository  @Inject constructor(@IoDispatcher private val dispatcher: 
     ?{
         return try {
              withContext(dispatcher){
-                provideRemoteAPI.getDetailShop(shopId)
+                 val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+
+                 provideRemoteAPI.getDetailShop(token,shopId)
             }
         }
         catch (ex : UnknownHostException){
@@ -31,12 +34,26 @@ class ShopRepository  @Inject constructor(@IoDispatcher private val dispatcher: 
             null
         }
     }
-    suspend fun addCart(addCart: AddCart): ApiResponse<Any>
+    suspend fun getDetailService(serviceId: String): ApiResponse<ShopService>
+    ?{
+        return try {
+            withContext(dispatcher){
+                provideRemoteAPI.getDetailService(serviceId)
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
+    }
+    suspend fun addCart(cartDTO: CartDTO): ApiResponse<Any>
     ?{
         return try {
             withContext(dispatcher){
                 val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
-                provideRemoteAPI.addCart(token,addCart)
+                provideRemoteAPI.addCart(token,cartDTO)
             }
         }
         catch (ex : UnknownHostException){

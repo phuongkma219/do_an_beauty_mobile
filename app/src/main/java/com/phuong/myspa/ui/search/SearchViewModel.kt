@@ -69,7 +69,7 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
                         shops?.forEach{ sh ->
                             sh.avatar = Constants.BASE_URL +  sh.avatar.replace("\\", "/")
                         }
-                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop!!))
+                        dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop))
                     }
                     else{
                         dataMutableLiveData.postValue(DataResponse.DataSuccess(null))

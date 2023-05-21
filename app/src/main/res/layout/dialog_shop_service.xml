@@ -44,11 +44,22 @@
             android:textColor="@color/text_back"
             />
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTime"
-            android:layout_width="match_parent"
+            android:id="@+id/tvTitleTime"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tvName"
             app:layout_constraintStart_toStartOf="parent"
+            style="@style/MediumBody1"
+            android:text="@string/time"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:layout_constraintStart_toEndOf="@id/tvTitleTime"
             style="@style/MediumBody1"
             setTime="@{item.time}"
             android:paddingStart="@dimen/dp_16"
@@ -78,16 +89,38 @@
             android:text="@{item.description}"
             android:textColor="@color/text_back"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPrice"
-            android:layout_width="match_parent"
+            android:id="@+id/tvTitlePrice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tvDescription"
             style="@style/MediumBody1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingStart="@dimen/dp_16"
+            android:textSize="@dimen/sp_18"
+            android:text="@string/price"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            style="@style/MediumBody1"
+            app:layout_constraintStart_toEndOf="@id/tvTitlePrice"
             android:paddingStart="@dimen/dp_16"
             android:textSize="@dimen/sp_18"
             setPrice="@{item.price}"
             />
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cornerRadius="@dimen/dp_6"
+        android:layout_marginHorizontal="@dimen/dp_12"
+        android:text="@string/add_to_cart"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/md_red_500"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

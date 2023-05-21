@@ -93,7 +93,7 @@
     <string name="add_to_favorite">Thêm vào yêu thích</string>
     <string name="compelete">Thành !!</string>
     <string name="gender">Giới tính</string>
-    <string name="add_comment">Add Comment</string>
+    <string name="add_comment">Thêm bình luận</string>
     <string name="time">Thời gian</string>
     <string name="price">Giá tiền</string>
     <string name="just_finished">vừa xong</string>
@@ -105,6 +105,12 @@
     <string name="select_time">Chọn thời gian</string>
     <string name="select_day">Chọn ngày</string>
     <string name="add_to_cart">Thêm vào giỏ hàng</string>
-    <string name="error_image">Error.Upload image fail</string>
-    <string name="cart">Cart</string>
+    <string name="error_image">Lỗi.Upload ảnh</string>
+    <string name="cart">Giỏ hàng</string>
+    <string name="delete">Xóa</string>
+    <string name="sum_pay">Sum pay</string>
+    <string name="buy">Buy</string>
+    <string name="purchase_history">Purchase History</string>
+    <string name="payment_time">Payment time:</string>
+    <string name="invoice_information">Invoice information</string>
 </resources>

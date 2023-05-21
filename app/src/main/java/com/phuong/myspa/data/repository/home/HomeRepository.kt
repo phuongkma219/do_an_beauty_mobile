@@ -4,11 +4,8 @@ import com.phuong.myspa.MyApp
 import com.phuong.myspa.data.api.RemoteServices
 import com.phuong.myspa.data.api.model.Category
 import com.phuong.myspa.data.api.model.remote.ApiResponse
-import com.phuong.myspa.data.api.model.shop.DataCart
 import com.phuong.myspa.di.AppContext
 import com.phuong.myspa.di.IoDispatcher
-import com.phuong.myspa.utils.Constants
-import com.phuong.myspa.utils.SharedPreferenceUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException

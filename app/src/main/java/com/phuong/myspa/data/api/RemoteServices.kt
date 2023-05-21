@@ -3,8 +3,12 @@ package com.phuong.myspa.data.api
 import com.phuong.myspa.data.api.model.Category
 import com.phuong.myspa.data.api.model.FavoriteDT0
 import com.phuong.myspa.data.api.model.QueryCategory
+import com.phuong.myspa.data.api.model.cart.CartDTO
+import com.phuong.myspa.data.api.model.cart.DataCart
 import com.phuong.myspa.data.api.model.comment.DataComment
 import com.phuong.myspa.data.api.model.comment.UploadComment
+import com.phuong.myspa.data.api.model.history.History
+import com.phuong.myspa.data.api.model.history.HistoryDTO
 import com.phuong.myspa.data.api.model.login.UserDTO
 import com.phuong.myspa.data.api.model.login.UserLogin
 import com.phuong.myspa.data.api.model.login.UserSignUp
@@ -32,7 +36,7 @@ interface RemoteServices {
     ): ApiResponse<DataShop>
 
     @GET("/v1/shops/get_detail")
-    suspend fun getDetailShop(@Query("shop_id") shopId: String): ApiResponse<Shop>
+    suspend fun getDetailShop(@Header("Authorization") token: String,@Query("shop_id") shopId: String): ApiResponse<Shop>
 
 
     @GET("/v1/users/me")
@@ -73,8 +77,26 @@ interface RemoteServices {
         @Part image: MultipartBody.Part?
     ): ApiResponse<ImageUpload>
     @POST("/v1/shops/add_cart")
-    suspend fun addCart(@Header("Authorization") token: String?,@Body cart:AddCart):ApiResponse<Any>
+    suspend fun addCart(@Header("Authorization") token: String?,@Body cart: CartDTO):ApiResponse<Any>
 
     @GET("/v1/shops/get_list_cart")
     suspend fun getListCart(@Header("Authorization") token: String?):ApiResponse<MutableList<DataCart>>?
+
+    @POST("/v1/shops/delete_cart")
+    suspend fun deleteCart(@Header("Authorization") token: String?,@Body cart: CartDTO):ApiResponse<Any>
+
+    @POST("/v1/shops/add_history")
+    suspend fun addHistory(@Header("Authorization") token: String?,@Body historyDTO: HistoryDTO):ApiResponse<Any>
+
+    @GET("/v1/shops/get_list_history")
+    suspend fun getListHistory(@Header("Authorization") token: String?):ApiResponse<MutableList<History>>?
+
+    @GET("/v1/shops/get_detail_service")
+    suspend fun getDetailService(@Query("_id")  id:String,):ApiResponse<ShopService>?
+
+    @GET("/v1/shops/get_detail_history")
+    suspend fun getDetailHistory(@Header("Authorization") token: String?,@Query("_id")  id:String,@Body historyDTO: HistoryDTO):ApiResponse<History?>
+
+    @POST("/v1/shops/delete_history")
+    suspend fun deleteHistory(@Header("Authorization") token: String?,@Body historyDTO: HistoryDTO):ApiResponse<Any>
 }

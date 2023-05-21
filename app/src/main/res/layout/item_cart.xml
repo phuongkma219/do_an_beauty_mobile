@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.phuong.myspa.data.api.model.shop.DataCart" />
+            type="com.phuong.myspa.data.api.model.cart.DataCart" />
 
     </data>
     <androidx.cardview.widget.CardView

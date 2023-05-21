@@ -31,7 +31,7 @@ class FavoriteFragment : AbsBaseFragment<FragmentFavouriteBinding>(){
         binding.rvShop.layoutManager = LinearLayoutManager(requireContext())
         mAdapter.listener = object : ShopAdapter.IOnItemClickShop{
             override fun onItemClick(item: ShopInfor, position: Int) {
-                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item))
+                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item._id))
             }
 
             override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {

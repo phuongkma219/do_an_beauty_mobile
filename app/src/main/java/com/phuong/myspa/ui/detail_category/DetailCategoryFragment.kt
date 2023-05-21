@@ -57,7 +57,7 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
         binding.rvShop.adapter = mAdapter
         mAdapter.listener = object :ShopAdapter.IOnItemClickShop{
             override fun onItemClick(item: ShopInfor, position: Int) {
-                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item))
+                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item._id))
             }
 
             override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {
@@ -74,7 +74,7 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
     override fun initViewModel() {
         super.initViewModel()
         mViewModel.fetchData(QueryCategory(mutableListOf(args.category._id)),false)
-        mViewModel.dataLiveData.observe(viewLifecycleOwner){
+        mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 mAdapter.submitList(mViewModel.getPage()>0,body)

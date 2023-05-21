@@ -1,4 +1,4 @@
-package com.hola.ringtonmaker.ui.base.adapter.base
+package com.phuong.myspa.base.adapter
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

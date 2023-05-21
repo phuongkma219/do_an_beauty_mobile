@@ -1,37 +1,30 @@
 package com.phuong.myspa.utils
 
 import android.os.SystemClock
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.google.android.material.imageview.ShapeableImageView
 import com.phuong.myspa.MyApp
 import com.phuong.myspa.R
 import com.phuong.myspa.data.PhotoModel
 import com.phuong.myspa.data.api.model.shop.ShopInfor
-import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.ui.popup.ActionModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
+import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 @BindingAdapter("android:loadImageFromUrl")
-fun ImageView.loadImageFromUrl(url:String) {
-   if (url.isNotEmpty()){
+fun ImageView.loadImageFromUrl(url:String?) {
        Glide.with(this).load(url)
            .placeholder(R.drawable.img_thumb_bg_default)
            .error(R.drawable.img_thumb_bg_default).into(this)
-   }
 }
 
 fun View.onClickWithDebounce(debounceTime:Long =1500L, action:() ->Unit){
@@ -47,33 +40,45 @@ fun View.onClickWithDebounce(debounceTime:Long =1500L, action:() ->Unit){
     })
 }
 @BindingAdapter("android:setHours")
-fun TextView.setHours(item: ShopInfor) {
-    text = item.start_time + " to " + item.end_time
+fun TextView.setHours(item: ShopInfor?) {
+  if (item != null){
+      val sdf =  SimpleDateFormat("hh:mm")
+      val dateS =    SimpleDateFormat("hh:mm:ss").parse(item.start_time)
+      val dateE =    SimpleDateFormat("hh:mm:ss").parse((item.end_time))
+
+      val startTime = sdf.format(dateS)
+      val endTime = sdf.format(dateE)
+      text =startTime + " -> " + endTime
+  }
 }
 @BindingAdapter("setTime")
-fun TextView.setTime(time:String){
-    val sdf =  SimpleDateFormat("hh:mm")
- val date =    SimpleDateFormat("hh:mm:ss").parse(time)
-    val string = sdf.format(date)
-    text = MyApp.resource().getString(R.string.time) +" : $string "  +  MyApp.resource().getString(R.string.hours)
+fun TextView.setTime(time:String?){
+   if (time!= null){
+       val sdf =  SimpleDateFormat("hh:mm")
+       val date =    SimpleDateFormat("hh:mm:ss").parse(time)
+       val string = sdf.format(date)
+       text = " : $string "  +  MyApp.resource().getString(R.string.hours)
+   }
 }
 @BindingAdapter("setPrice")
-fun TextView.setPrice(time:String){
-    var price = ""
-    val test = time.reversed()
-   for (i in test.length-1 downTo 0) {
-        if (i%3 ==0 && i != 0){
-            price += "${test[i]}."
+fun TextView.setPrice(time:String?){
+    if (time != null){
+        var price = ""
+        val test = time.reversed()
+        for (i in test.length-1 downTo 0) {
+            if (i%3 ==0 && i != 0){
+                price += "${test[i]}."
+            }
+            else{
+                price += test[i]
+            }
         }
-        else{
-            price += test[i]
-        }
+        text =" : $price VND"
     }
-    text =MyApp.resource().getString(R.string.price)+ ": $price VND"
 }
 @BindingAdapter("android:setRate")
-fun RatingBar.setRate(rate:Double){
-    this.rating = rate.toFloat()
+fun RatingBar.setRate(rate:Double?){
+    this.rating = rate?.toFloat() ?: 0f
 }
 @BindingAdapter("android:bindThumbnailFile")
 fun ShapeableImageView.bindThumbnailFile(photoModel: PhotoModel?) {
@@ -165,4 +170,17 @@ fun ShapeableImageView.setImageCmt(images : Array<String>?){
 @BindingAdapter("setText")
 fun TextView.setText(time:String){
   text = time
+}
+@BindingAdapter("setTimeCreate")
+fun TextView.setTimeCreate(time: String): String? {
+    try {
+        val zdt = ZonedDateTime.now(ZoneId.of("UTC"))
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+       return zdt.format(formatter)
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+        return null
+    }
+
+
 }

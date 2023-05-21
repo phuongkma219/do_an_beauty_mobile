@@ -7,7 +7,9 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,24 +19,25 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.model.shop.ShopInfor
+import com.phuong.myspa.data.api.response.DataResponse
+import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentDetailShopBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
 @AndroidEntryPoint
 class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapReadyCallback {
-    private var data: ShopInfor? = null
+    private var shopId: String? = null
     private lateinit var mMap: GoogleMap
     private  var supportMapFragment: SupportMapFragment ? = null
+    private lateinit var mViewModel:ShopViewModel
+
     override fun initView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            data = arguments?.getParcelable(DATA, ShopInfor::class.java)
-        } else {
-            data = arguments?.getParcelable(DATA)
-        }
-        binding.item = data
+
+        shopId = arguments?.getString(DATA)
+
         binding.tvContact.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${data!!.phone_number}"))
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${binding.item!!.phone_number}"))
             startActivity(intent)
         }
         supportMapFragment =childFragmentManager
@@ -42,20 +45,31 @@ class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapRead
         supportMapFragment!!.getMapAsync(this)
     }
     override fun getLayout(): Int = R.layout.fragment_detail_shop
+    override fun initViewModel() {
+        super.initViewModel()
+        mViewModel = ViewModelProvider(requireActivity())[ShopViewModel::class.java]
+
+        mViewModel.getDetailShop(shopId!!)
+        mViewModel.dataLiveData.observe(this){
+            if (it.loadingStatus == LoadingStatus.Success) {
+                val body = (it as DataResponse.DataSuccess).body.data?.infor
+                if (body != null){
+                    binding.item = body
+                    try {
+                        val shop = getLocationFromAddress(requireContext(),body!!.address)
+                        mMap.addMarker(MarkerOptions().position(shop).title(body!!.name))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
+                        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                    }
+                    catch (e:Exception){
+                        supportMapFragment!!.requireView().visibility = View.INVISIBLE
+                    }
+                }
+            }
+        }
+    }
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        try {
-            val shop = getLocationFromAddress(requireContext(),data!!.address)
-            mMap.addMarker(MarkerOptions().position(shop).title(data!!.name))
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
-            mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-        }
-        catch (e:Exception){
-            supportMapFragment!!.requireView().visibility = View.INVISIBLE
-        }
-
-
-
     }
     fun getLocationFromAddress(context: Context, strAddress: String): LatLng? {
         val coder = Geocoder(context)
@@ -88,10 +102,10 @@ class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapRead
     companion object {
          const val DATA = "DATA"
         @JvmStatic
-        fun newInstance(data:ShopInfor) =
+        fun newInstance(shopId:String) =
             DetailShopFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(DATA, data)
+                    putString(DATA, shopId)
                 }
             }
     }

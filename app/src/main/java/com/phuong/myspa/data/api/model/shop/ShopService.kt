@@ -16,4 +16,4 @@ data class ShopService(
     val shop_id: String,
     val time: String,
     val updated_at: String
-):Parcelable
+):Parcelable,DataModel()

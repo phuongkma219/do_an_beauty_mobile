@@ -63,7 +63,7 @@ binding.rlCartHome.setOnClickListener {
         binding.layoutNoInternet.btRetry.setOnClickListener {
             mViewModel.getListCategory()
         }
-        mViewModel.dataLiveData.observe(viewLifecycleOwner){
+        mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 mAdapter.submitData(body.data)

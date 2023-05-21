@@ -87,8 +87,8 @@
         android:id="@+id/shopFragment"
         android:name="com.phuong.myspa.ui.detail_shop.ShopFragment"
         android:label="DetailShopFragment" >
-        <argument android:name="shop"
-            app:argType="com.phuong.myspa.data.api.model.shop.ShopInfor"
+        <argument android:name="shopId"
+            app:argType="string"
             app:nullable="false"/>
     </fragment>
     <action
@@ -167,6 +167,17 @@
     <action
         android:id="@+id/action_global_cartFragment"
         app:destination="@id/cartFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.phuong.myspa.ui.history.HistoryFragment"
+        android:label="HistoryFragment" />
+    <action
+        android:id="@+id/action_global_historyFragment"
+        app:destination="@id/historyFragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@android:anim/fade_out"
         app:popEnterAnim="@android:anim/fade_in"

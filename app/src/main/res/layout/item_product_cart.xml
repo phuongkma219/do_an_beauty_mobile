@@ -3,23 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.phuong.myspa.data.api.model.shop.DataModel.DataItem"/>
         <variable
             name="item"
-            type="com.phuong.myspa.data.api.model.shop.Item" />
+            type="DataItem" />
+        <import type="androidx.lifecycle.MutableLiveData" />
+
+        <import type="java.util.Stack" />
         <variable
-            name="itemPosition"
-            type="Integer" />
+            name="liveSelect"
+            type="MutableLiveData&lt;Stack&lt;DataItem>>" />
 
     </data>
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="96dp"
+        android:background="@drawable/ripple_click_square"
+        >
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_un_select"
+            android:src="@{liveSelect.search(item) != -1 ? @drawable/ic_select : @drawable/ic_un_select}"
             android:layout_marginStart="@dimen/dp_8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +39,6 @@
             android:layout_width="@dimen/dp_64"
             android:layout_height="@dimen/dp_64"
             android:scaleType="centerCrop"
-            android:loadImageFromUrl="@{item.serviceDetail.avatar}"
             app:shapeAppearanceOverlay="@style/roundedImage6"
             android:layout_marginStart="@dimen/dp_8"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,27 +47,30 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvName"
             android:layout_width="0dp"
+            android:text="@{item.name}"
             android:layout_height="wrap_content"
-            setText="@{item.serviceDetail.name}"
             style="@style/RegularBody1"
-            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginStart="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_12"
+            android:maxLines="1"
+            android:singleLine="true"
             android:textColor="@color/text_back"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp_12"
            app:layout_constraintStart_toEndOf="@id/ivAvatar" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTime"
-            android:layout_width="0dp"
+            android:id="@+id/tvTitlePrice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           setTime="@{item.serviceDetail.time}"
-            style="@style/RegularBody2"
-            android:textColor="@color/color_description"
-            android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginStart="@dimen/dp_4"
-            app:layout_constraintTop_toBottomOf="@id/tvName"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp_16"
+            style="@style/SemiBoldBody1"
+            android:textColor="#FF5E1F"
+            android:text="@string/price"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_4"
+            app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
             app:layout_constraintStart_toEndOf="@id/ivAvatar" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -66,12 +78,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_16"
-            setPrice="@{item.serviceDetail.price}"
             style="@style/SemiBoldBody1"
+            setPrice="@{item.price}"
             android:textColor="#FF5E1F"
             android:layout_marginStart="@dimen/dp_4"
-            app:layout_constraintTop_toBottomOf="@id/tvTime"
-            app:layout_constraintStart_toEndOf="@id/ivAvatar" />
+            android:layout_marginBottom="@dimen/dp_4"
+            app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+            app:layout_constraintStart_toEndOf="@id/tvTitlePrice" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_2"
+            android:src="@drawable/ic_baseline_delete_outline_24"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/dp_12"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

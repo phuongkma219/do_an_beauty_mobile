@@ -127,4 +127,10 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="error_image">Error.Upload image fail</string>
     <string name="cart">Cart</string>
+    <string name="delete">Delete</string>
+    <string name="sum_pay">Sum pay</string>
+    <string name="buy">Buy</string>
+    <string name="purchase_history">Purchase History</string>
+    <string name="payment_time">Payment time:</string>
+    <string name="invoice_information">Invoice information</string>
 </resources>

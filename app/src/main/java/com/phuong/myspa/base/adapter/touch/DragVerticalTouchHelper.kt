@@ -1,7 +1,8 @@
-package com.hola.ringtonmaker.ui.base.adapter.base.touch
+package com.phuong.myspa.base.adapter.touch
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.phuong.myspa.base.adapter.touch.DragItemTouchListener
 
 class DragVerticalTouchHelper(private val listener: DragItemTouchListener) : ItemTouchHelper.Callback() {
 

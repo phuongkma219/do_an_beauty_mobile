@@ -10,22 +10,23 @@ import com.phuong.myspa.ui.shop_service.ServiceFragment
 
 class FragmentPageAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle):
     FragmentStateAdapter(fragmentManager, lifecycle){
-    private var data : ShopInfor? = null
+    private var shopId : String? = null
     override fun getItemCount(): Int {
         return 3
     }
-    fun setData(shop:ShopInfor){
-        data = shop
+
+    fun setData(shopId:String){
+        this.shopId = shopId
     }
 
     override fun createFragment(position: Int): Fragment {
         return if (position == 0){
-            DetailShopFragment.newInstance(data!!)
+            DetailShopFragment.newInstance(shopId!!)
         } else if(position ==1){
-            ServiceFragment.newInstance(data!!)
+            ServiceFragment.newInstance(shopId!!)
         }
         else{
-            CommentFragment.newInstance(data!!)
+            CommentFragment.newInstance((shopId!!))
         }
     }
     fun refreshFragment(position: Int){

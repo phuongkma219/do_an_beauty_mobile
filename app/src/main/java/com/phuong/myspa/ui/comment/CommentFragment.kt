@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
     private val mAdapter by lazy { CommentAdapter() }
     private val mViewModel by viewModels<CommentViewModel>()
-    private var data:ShopInfor? = null
+    private var shopId: String? = null
     private var firstVisibleItem = 0
     private var visibleItemCount: Int = 0
     private var totalItemCount: Int = 0
@@ -38,11 +38,8 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
     override fun getLayout(): Int = R.layout.fragment_comment
 
     override fun initView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            data = arguments?.getParcelable(DATA, ShopInfor::class.java)
-        } else {
-            data = arguments?.getParcelable(DATA)
-        }
+
+            shopId = arguments?.getString(DATA)
 
         binding.viewModel = mViewModel
         mLayoutManager = LinearLayoutManager(requireContext())
@@ -57,7 +54,7 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
                     firstVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
                     if (dy > 0 && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
                         if (mViewModel.dataVM != null){
-                            mViewModel.fetchData( data!!._id,true)
+                            mViewModel.fetchData(shopId!!,true)
                         }
                     }
                 }
@@ -90,7 +87,7 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
 
     private fun uploadComment() {
         if (imageFile == null){
-          val   uploadComment = UploadComment(data!!._id, Content( text = binding.edtContent.text.toString().trim()))
+          val   uploadComment = UploadComment(shopId!!, Content( text = binding.edtContent.text.toString().trim()))
             mViewModel.uploadComment(uploadComment)
 
         }
@@ -101,11 +98,11 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
 
     override fun initViewModel() {
         super.initViewModel()
-        mViewModel.fetchData(data!!._id, false)
+        mViewModel.fetchData(shopId!!, false)
         mViewModel.dataLiveData.observe(viewLifecycleOwner) {
             if (it.loadingStatus == LoadingStatus.Success) {
                 val body = (it as DataResponse.DataSuccess).body
-                mAdapter.submitList(mViewModel.getPage(data!!._id) > 0, body)
+                mAdapter.submitList(mViewModel.getPage(shopId!!) > 0, body)
                 if (imageFile != null){
                     binding.ivImage.visibility = View.GONE
                     binding.ivClose.visibility = View.GONE
@@ -119,7 +116,7 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
 //                binding.layoutLoading.root.visibility = View.GONE
                 binding.edtContent.setText("")
                 mAdapter.clearData()
-                mViewModel.fetchData(data!!._id, false)
+                mViewModel.fetchData(shopId!!, false)
             }
             else if (it.loadingStatus == LoadingStatus.Loading){
                 binding.layoutLoading.root.visibility = View.VISIBLE
@@ -131,7 +128,7 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
         mViewModel.isUploadImg.observe(viewLifecycleOwner){
             if (it.loadingStatus == LoadingStatus.Success) {
                 val body = (it as DataResponse.DataSuccess).body
-              val  uploadComment = UploadComment(data!!._id,
+              val  uploadComment = UploadComment(shopId!!,
                   Content( image = arrayOf(body.filename), text = binding.edtContent.text.toString().trim(), type = "IMAGE"))
                 mViewModel.uploadComment(uploadComment)
             }
@@ -189,10 +186,10 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
     companion object {
         const val DATA = "KEY_DATA"
         @JvmStatic
-        fun newInstance(data: ShopInfor) =
+        fun newInstance(shopId:String) =
             CommentFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(DATA, data)
+                    putString(DATA, shopId)
                 }
             }
     }

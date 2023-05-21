@@ -60,7 +60,7 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
         binding.rvShop.adapter = mAdapter
         mAdapter.listener = object :ShopAdapter.IOnItemClickShop{
             override fun onItemClick(item: ShopInfor, position: Int) {
-                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item))
+                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item._id))
             }
 
             override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {
@@ -73,7 +73,7 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
     override fun initViewModel() {
         super.initViewModel()
 
-        mViewModel.dataLiveData.observe(viewLifecycleOwner){
+        mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                if (body != null){

@@ -26,6 +26,7 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
     private lateinit var mAdapter: FragmentPageAdapter
     private val args : ShopFragmentArgs by navArgs()
     private lateinit var mViewModel:ShopViewModel
+    private var isFavorite  = false
     private val favoriteViewModel by viewModels<FavoriteViewModel>()
 
 
@@ -35,7 +36,8 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.infor)))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.service)))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.comment)))
-        mAdapter.setData(args.shop)
+        mAdapter.setData(args.shopId)
+
         binding.viewPager.adapter = mAdapter
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -55,14 +57,15 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
             }
         })
-        favoriteViewModel.isSuccess.observe(viewLifecycleOwner){
+        favoriteViewModel.isSuccess.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
-                if (body){
-                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.add_to_favorite))
-                }
-                else{
-                    ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
+                if (body) {
+                    isFavorite = true
+                    binding.toolbar.menu.findItem(R.id.icFavorite).setIcon(R.drawable.ic_baseline_favorite_24)
+                } else {
+                    isFavorite = false
+                    binding.toolbar.menu.findItem(R.id.icFavorite).setIcon(R.drawable.ic_baseline_favorite_border_24)
                 }
             }
 
@@ -72,24 +75,45 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
     override fun initViewModel() {
         super.initViewModel()
         mViewModel = ViewModelProvider(requireActivity())[ShopViewModel::class.java]
-        mViewModel.getDetailShop(args.shop._id)
+        mViewModel.getDetailShop(args.shopId)
         binding.viewModel = mViewModel
+        mViewModel.dataLiveData.observe(this){
+            if (it.loadingStatus == LoadingStatus.Success) {
+                val body = (it as DataResponse.DataSuccess).body.data
+                if (body != null){
+                    binding.toolbar.title = body.infor.name
+
+                    updateToolBar(body.isFavorite)
+
+                }
+            }
+        }
+
     }
 
     private fun setUpToolBar() {
-        binding.toolbar.title = args.shop.name
+
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
         binding.toolbar.setOnMenuItemClickListener(object :Toolbar.OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (item.itemId == R.id.icFavorite){
-                    favoriteViewModel.addFavorite(args.shop._id)
+                    favoriteViewModel.addFavorite(args.shopId,isFavorite)
                 }
                 return true
             }
 
         })
+    }
+    private fun updateToolBar(isFavorite:Boolean) {
+        this.isFavorite = isFavorite
+        if (isFavorite) {
+            binding.toolbar.menu.findItem(R.id.icFavorite).setIcon(R.drawable.ic_baseline_favorite_24)
+        } else {
+            binding.toolbar.menu.findItem(R.id.icFavorite).setIcon(R.drawable.ic_baseline_favorite_border_24)
+        }
+
     }
 
     override fun getLayout(): Int = R.layout.fragment_shop

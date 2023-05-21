@@ -10,12 +10,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
-import com.hola.ringtonmaker.ui.base.adapter.base.BaseViewHolder
-import com.hola.ringtonmaker.ui.base.adapter.base.touch.DragItemTouchListener
-import com.hola.ringtonmaker.ui.base.adapter.base.touch.DragVerticalTouchHelper
-import com.hola.ringtonmaker.ui.base.adapter.base.touch.ItemTouchDrag
 import java.util.*
 import com.phuong.myspa.BR
+import com.phuong.myspa.base.adapter.touch.*
+import com.phuong.myspa.base.adapter.viewholder.BaseViewHolder
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
 abstract class BaseAdapter<T : Any>(
@@ -24,6 +22,9 @@ abstract class BaseAdapter<T : Any>(
 
     private lateinit var inflater: LayoutInflater
     private var annotationDrag: ItemTouchDrag? = null
+    private var annotationSwipe: ItemTouchSwipe? = null
+    private var itemTouchHelperExtension: ItemTouchHelperExtension? = null
+
     protected var list = mutableListOf<T>()
     var listener: BaseListener? = null
     init {
@@ -32,6 +33,9 @@ abstract class BaseAdapter<T : Any>(
             when (annotation) {
                 is ItemTouchDrag -> {
                     annotationDrag = annotation
+                }
+                is ItemTouchSwipe -> {
+                    annotationSwipe = annotation
                 }
             }
         }
@@ -46,7 +50,7 @@ abstract class BaseAdapter<T : Any>(
             parent,
             false
         )
-        return BaseViewHolder(binding)
+        return BaseViewHolder(binding,annotationSwipe)
     }
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.binding.apply {
@@ -79,6 +83,12 @@ abstract class BaseAdapter<T : Any>(
         annotationDrag?.let {
             val callback = DragVerticalTouchHelper(this)
             ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
+        }
+        annotationSwipe?.let {
+            val callback = SwipeTouchHelper(it.mode, it.isSpring)
+            itemTouchHelperExtension = ItemTouchHelperExtension(callback).apply {
+                attachToRecyclerView(recyclerView)
+            }
         }
     }
     override fun onMove(from: Int, to: Int) {

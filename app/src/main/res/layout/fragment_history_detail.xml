@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.phuong.myspa.data.api.model.history.History" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="@dimen/dp_2"
+            app:title="@string/invoice_information"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_arrow_left" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constInfor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitleCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Code bill:"
+                android:textColor="@color/text_back"
+                style="@style/SemiBoldBody2"
+                android:layout_marginTop="@dimen/dp_12"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dp_12"
+                android:text="@{item._id}"
+                android:textColor="@color/text_back"
+                style="@style/SemiBoldBody2"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/payment_time"
+                android:textColor="@color/text_back"
+                style="@style/RegularBody2"
+                android:layout_marginTop="@dimen/dp_12"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleCode"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCode"
+                setTimeCreate="@{item.time}"
+                android:layout_marginTop="@dimen/dp_12"
+                android:textColor="@color/text_back"
+                style="@style/RegularBody2"/>
+              />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/itemContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constInfor"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/ripple_click_square"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvShopName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/MediumBody1"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:layout_marginEnd="@dimen/dp_4"
+                    app:layout_constraintEnd_toStartOf="@id/tvStatus"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_12"
+                    android:text="@{item.shopName}"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/compelete"
+                    android:textColor="@color/md_red_500"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dp_8"
+                    style="@style/RegularBody1"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="@dimen/dp_64"
+                    android:layout_height="@dimen/dp_64"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="@dimen/dp_18"
+                    app:shapeAppearanceOverlay="@style/roundedImage6"
+                    android:layout_marginStart="@dimen/dp_12"
+                    android:loadImageFromUrl="@{item.service.avatar}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/dp_12"
+                    app:layout_constraintTop_toBottomOf="@id/tvShopName"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:text="@{item.service.name}"
+                    android:layout_height="wrap_content"
+                    style="@style/RegularBody1"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/text_back"
+                    app:layout_constraintTop_toBottomOf="@id/tvShopName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    app:layout_constraintStart_toEndOf="@id/ivAvatar" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitlePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SemiBoldBody1"
+                    android:textColor="#FF5E1F"
+                    android:text="@string/price"
+                    android:layout_marginStart="@dimen/dp_8"
+                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+                    app:layout_constraintStart_toEndOf="@id/ivAvatar" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SemiBoldBody1"
+                    setPrice="@{item.service.price}"
+                    android:textColor="#FF5E1F"
+                    android:layout_marginStart="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+                    app:layout_constraintStart_toEndOf="@id/tvTitlePrice" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

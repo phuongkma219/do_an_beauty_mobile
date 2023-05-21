@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Shop(var infor: ShopInfor, var service : MutableList<ShopService>):Parcelable
+data class Shop(var infor: ShopInfor, var service : MutableList<ShopService>,var isFavorite:Boolean):Parcelable

@@ -22,10 +22,15 @@ class FavoriteViewModel @Inject constructor(@IoDispatcher private val dispatcher
     : BaseLoadingDataViewModel<MutableList<ShopInfor>?>()  {
 
         var isSuccess = MutableLiveData<DataResponse<Boolean>>(DataResponse.DataIdle())
-    fun addFavorite(shopId : String){
+    fun addFavorite(shopId : String,isFavorite : Boolean){
         viewModelScope.launch (dispatcher){
-           val data = favoriteRepository.addFavorite(shopId)
-            if (data?.success == true){
+           val data = if (isFavorite){
+               favoriteRepository.deleteFavorite(shopId)
+           }
+            else{
+                favoriteRepository.addFavorite(shopId)
+           }
+            if (data?.success == true && !isFavorite){
                 isSuccess.postValue(DataResponse.DataSuccess(true))
             }
             else{

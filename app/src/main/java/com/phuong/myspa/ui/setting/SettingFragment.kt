@@ -82,6 +82,10 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
             SharedPreferenceUtils.getInstance(requireContext()).clearData()
             findNavController().navigate(SettingFragmentDirections.actionGlobalLoginFragment())
         }
+        binding.tvHistory.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionGlobalHistoryFragment())
+
+        }
 
     }
 

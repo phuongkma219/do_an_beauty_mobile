@@ -1,21 +1,24 @@
 package com.phuong.myspa.ui.cart
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
+import com.phuong.myspa.data.api.model.cart.CartDTO
+import com.phuong.myspa.data.api.model.shop.*
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentCartBinding
-import com.phuong.myspa.ui.comment.CommentViewModel
+import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
+import com.phuong.myspa.ui.shop_service.DialogDetailService
+import com.phuong.myspa.utils.ToastUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
     private val mViewModel  by viewModels<CartViewModel>()
-    private val mAdapter by lazy { CartAdapter() }
+    private val mAdapter  by lazy { CartAdapter() }
     override fun getLayout(): Int {
         return  R.layout.fragment_cart
     }
@@ -25,7 +28,37 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         mViewModel.getListCart()
         binding.rvCart.adapter = mAdapter
         binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
+        mAdapter.inner = object :CartAdapter.ItemCartListener{
+            override fun onClickItemService(item: DataModel.DataItem) {
+                val dialogDetailService = DialogDetailService.create(item._id,false)
+                dialogDetailService.show(childFragmentManager, DialogDetailService.TAG)
+            }
 
+            override fun onDeleteItem(item: DataModel.DataItem) {
+                mAdapter.removeItem(item)
+                mViewModel.deleteCart(CartDTO(item.shop_id,item._id))
+            }
+
+            override fun onClickTitle(item: DataModel.DataHeader) {
+              findNavController().navigate(ShopFragmentDirections.actionGlobalShopFragment(item._id))
+            }
+
+        }
+        initViewOnClick()
+    }
+    private fun initViewOnClick(){
+        mAdapter.liveSelect.observe(this){
+            var sumPrice = 0
+            it.forEach {
+                sumPrice += it.price.toInt()
+            }
+            binding.tvSumPrice.text = getPrice(sumPrice.toString()) + " VND"
+        }
+        binding.btnBuy.setOnClickListener {
+            if (mAdapter.liveSelect.value?.isNotEmpty() == true){
+                mViewModel.addHistory(mAdapter.liveSelect.value!!)
+            }
+        }
     }
 
     override fun initViewModel() {
@@ -36,5 +69,36 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                 mAdapter.submit(body)
             }
         }
+        mViewModel.isDelete.observe(viewLifecycleOwner){
+            if (it.loadingStatus == LoadingStatus.Success){
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.delete_success))
+            }
+            else if (it.loadingStatus == LoadingStatus.Error){
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
+            }
+        }
+        mViewModel.liveDataAddHistory.observe(viewLifecycleOwner){
+            if (it.loadingStatus == LoadingStatus.Success){
+                mViewModel.deleteListCart(mAdapter.liveSelect.value!!)
+                mAdapter.clearAll()
+
+            }
+            else if (it.loadingStatus == LoadingStatus.Error){
+                ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
+            }
+        }
+    }
+    private fun getPrice(time:String) : String{
+        var price = ""
+        val test = time.reversed()
+        for (i in test.length-1 downTo 0) {
+            if (i%3 ==0 && i != 0){
+                price += "${test[i]}."
+            }
+            else{
+                price += test[i]
+            }
+        }
+        return price
     }
 }

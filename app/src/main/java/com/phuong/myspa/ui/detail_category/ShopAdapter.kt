@@ -3,7 +3,7 @@ package com.phuong.myspa.ui.detail_category
 import android.view.View
 import com.phuong.myspa.base.adapter.BaseAdapter
 import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
-import com.hola.ringtonmaker.ui.base.adapter.base.BaseViewHolder
+import com.phuong.myspa.base.adapter.viewholder.BaseViewHolder
 import com.phuong.myspa.R
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.databinding.ItemShopBinding
