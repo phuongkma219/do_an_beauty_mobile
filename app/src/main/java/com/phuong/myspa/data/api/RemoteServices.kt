@@ -95,7 +95,7 @@ interface RemoteServices {
     suspend fun getDetailService(@Query("_id")  id:String,):ApiResponse<ShopService>?
 
     @GET("/v1/shops/get_detail_history")
-    suspend fun getDetailHistory(@Header("Authorization") token: String?,@Query("_id")  id:String,@Body historyDTO: HistoryDTO):ApiResponse<History?>
+    suspend fun getDetailHistory(@Header("Authorization") token: String?,@Query("_id")  id:String,@Query("shop_id")  shopId:String,@Query("service_id")  serviceId:String):ApiResponse<History?>
 
     @POST("/v1/shops/delete_history")
     suspend fun deleteHistory(@Header("Authorization") token: String?,@Body historyDTO: HistoryDTO):ApiResponse<Any>

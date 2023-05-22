@@ -13,6 +13,7 @@ import com.phuong.myspa.databinding.FragmentCartBinding
 import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
 import com.phuong.myspa.ui.shop_service.DialogDetailService
 import com.phuong.myspa.utils.ToastUtils
+import com.phuong.myspa.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -79,9 +80,10 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         }
         mViewModel.liveDataAddHistory.observe(viewLifecycleOwner){
             if (it.loadingStatus == LoadingStatus.Success){
+//                Utils.startAlarm()
                 mViewModel.deleteListCart(mAdapter.liveSelect.value!!)
                 mAdapter.clearAll()
-
+                findNavController().navigate(CartFragmentDirections.actionGlobalHistoryFragment())
             }
             else if (it.loadingStatus == LoadingStatus.Error){
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))

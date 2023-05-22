@@ -95,18 +95,23 @@ class CartRepository @Inject constructor(@IoDispatcher private val dispatcher: C
         }
     }
     suspend fun getHistoryDetail(id:String, historyDTO: HistoryDTO): ApiResponse<History?>
-    ?{
-        return try {
-            withContext(dispatcher){
-                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+    ? {
+        return   try {
 
-                provideRemoteAPI.getDetailHistory(token,id,historyDTO)
+             withContext(dispatcher) {
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app)
+                    .getData()!!.access_token
+                provideRemoteAPI.getDetailHistory(
+                    token,
+                    id,
+                    historyDTO.shop_id,
+                    historyDTO.service_id
+                )
             }
-        }
-        catch (ex : UnknownHostException){
+
+        } catch (ex: UnknownHostException) {
             null
-        }
-        catch (ex : Exception){
+        } catch (ex: Exception) {
             null
         }
     }

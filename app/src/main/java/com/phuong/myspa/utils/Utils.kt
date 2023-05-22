@@ -312,28 +312,23 @@ object Utils {
             PendingIntent.FLAG_UPDATE_CURRENT
         }
     }
-    fun startAlarm(context: Context,minute:Int,hour:Int,day:Int,month:Int,content:String) {
+    fun startAlarm(context: Context,) {
         val alarmReceiverIntent = Intent(context, AlarmReceiver::class.java)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val calendar: Calendar = Calendar.getInstance()
-        calendar.set(Calendar.YEAR, 2023)
-        calendar.set(Calendar.MONTH, month)
-        calendar.set(Calendar.DAY_OF_MONTH, day)
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        calendar.set(Calendar.SECOND, 0)
+        calendar.timeInMillis = System.currentTimeMillis()
         val bundle = Bundle()
         alarmReceiverIntent.action =
             String.format(Locale.US, "%s.%s", context.packageName, Constants.ACTION_ALARM)
 
 
-        bundle.putString("IDS", content)
+//        bundle.putString("IDS", content)
         alarmReceiverIntent.putExtras(bundle)
         val id = SystemClock.elapsedRealtime().toInt()
         val pendingIntent = PendingIntent.getBroadcast(
             context, id, alarmReceiverIntent, getPendingIntentFlag()
         )
-//        alarmManager.cancel(pendingIntent)
+        alarmManager.cancel(pendingIntent)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP, calendar.timeInMillis,AlarmManager.INTERVAL_DAY,

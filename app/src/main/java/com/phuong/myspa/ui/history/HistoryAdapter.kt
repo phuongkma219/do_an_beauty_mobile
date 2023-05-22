@@ -11,9 +11,9 @@ import com.phuong.myspa.data.api.model.shop.DataModel
 @ItemTouchSwipe(mode = SwipeMode.RIGHT_TO_LEFT,isSpring = true)
 class HistoryAdapter :BaseAdapter<History>(R.layout.item_history){
     interface ItemHistoryListener : BaseListener {
-        fun onClickItem(item: History)
-        fun onDeleteItem(item: History)
-        fun onBuyItem(item: History)
+        fun onClickItem(position:Int,item: History)
+        fun onDeleteItem(position:Int,item: History)
+        fun onBuyItem(position:Int,item: History)
     }
 }
 

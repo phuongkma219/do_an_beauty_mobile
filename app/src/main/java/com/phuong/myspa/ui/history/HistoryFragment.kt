@@ -1,5 +1,6 @@
 package com.phuong.myspa.ui.history
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,18 +38,21 @@ class HistoryFragment: AbsBaseFragment<FragmentHistoryBinding>() {
         binding.rvCart.adapter = mAdapter
         binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
         mAdapter.listener = object : HistoryAdapter.ItemHistoryListener{
-            override fun onClickItem(item: History) {
-
+            override fun onClickItem(position: Int,item: History) {
+                Log.d("kkk", "onClickItem: $item")
+                findNavController().navigate(HistoryFragmentDirections.actionGlobalDetailHistoryFragment(item))
             }
 
-            override fun onDeleteItem(item: History) {
+            override fun onDeleteItem(position: Int,item: History) {
+                Log.d("kkk", "onDeleteItem: vào day")
                 mViewModel.deleteHistory(HistoryDTO(item.service.shop_id,item.service._id))
             }
 
-            override fun onBuyItem(item: History) {
+            override fun onBuyItem(position: Int,item: History) {
                 shopViewModel.addCart(CartDTO(item.service.shop_id,item.service._id))
 
             }
+
 
         }
     }

@@ -182,4 +182,19 @@
         app:exitAnim="@android:anim/fade_out"
         app:popEnterAnim="@android:anim/fade_in"
         app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/detailHistoryFragment"
+        android:name="com.phuong.myspa.ui.history.DetailHistoryFragment"
+        android:label="DetailHistoryFragment" >
+        <argument android:name="history"
+            app:argType="com.phuong.myspa.data.api.model.history.History"
+            app:nullable="false"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_detailHistoryFragment"
+        app:destination="@id/detailHistoryFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
 </navigation>
