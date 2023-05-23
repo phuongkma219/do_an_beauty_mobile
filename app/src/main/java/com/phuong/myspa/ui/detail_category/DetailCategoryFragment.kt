@@ -57,7 +57,7 @@ class DetailCategoryFragment:AbsBaseFragment<FragmentDetailCategoryBinding>() {
         binding.rvShop.adapter = mAdapter
         mAdapter.listener = object :ShopAdapter.IOnItemClickShop{
             override fun onItemClick(item: ShopInfor, position: Int) {
-                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item._id))
+                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item))
             }
 
             override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {

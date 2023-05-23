@@ -41,7 +41,10 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
             }
 
             override fun onClickTitle(item: DataModel.DataHeader) {
-              findNavController().navigate(ShopFragmentDirections.actionGlobalShopFragment(item._id))
+                val shop = ShopInfor(0,item._id,item.address,item.avatar,
+                    item.category,item.created_at,item.description,item.email,item.end_time
+                    ,item.name,item.phone_number,item.rate,item.start_time,item.updated_at)
+              findNavController().navigate(ShopFragmentDirections.actionGlobalShopFragment(shop))
             }
 
         }
@@ -80,7 +83,6 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         }
         mViewModel.liveDataAddHistory.observe(viewLifecycleOwner){
             if (it.loadingStatus == LoadingStatus.Success){
-//                Utils.startAlarm()
                 mViewModel.deleteListCart(mAdapter.liveSelect.value!!)
                 mAdapter.clearAll()
                 findNavController().navigate(CartFragmentDirections.actionGlobalHistoryFragment())

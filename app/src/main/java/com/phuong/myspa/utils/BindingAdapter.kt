@@ -172,14 +172,16 @@ fun TextView.setText(time:String){
   text = time
 }
 @BindingAdapter("setTimeCreate")
-fun TextView.setTimeCreate(time: String): String? {
+fun TextView.setTimeCreate(time: String?){
     try {
-        val zdt = ZonedDateTime.now(ZoneId.of("UTC"))
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-       return zdt.format(formatter)
+        val simpleDateFormat = SimpleDateFormat("y-M-d'T'H:m:s", Locale.ENGLISH)
+        simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT")
+            val dateS: Date = simpleDateFormat.parse(time)
+        val formatT = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        text = formatT.format(dateS)
     } catch (e: java.lang.Exception) {
         e.printStackTrace()
-        return null
+       text =""
     }
 
 

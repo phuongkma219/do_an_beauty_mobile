@@ -27,15 +27,18 @@ import java.io.IOException
 
 @AndroidEntryPoint
 class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapReadyCallback {
-    private var shopId: String? = null
+    private var data: ShopInfor? = null
     private lateinit var mMap: GoogleMap
     private  var supportMapFragment: SupportMapFragment ? = null
     private lateinit var mViewModel:ShopViewModel
 
     override fun initView() {
-
-        shopId = arguments?.getString(DATA)
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            data = arguments?.getParcelable(DATA, ShopInfor::class.java)
+        } else {
+            data = arguments?.getParcelable(DATA)
+        }
+        binding.item = data
         binding.tvContact.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${binding.item!!.phone_number}"))
             startActivity(intent)
@@ -49,27 +52,25 @@ class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapRead
         super.initViewModel()
         mViewModel = ViewModelProvider(requireActivity())[ShopViewModel::class.java]
 
-        mViewModel.getDetailShop(shopId!!)
+        mViewModel.getDetailShop(data!!._id)
         mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success) {
                 val body = (it as DataResponse.DataSuccess).body.data?.infor
                 if (body != null){
                     binding.item = body
-                    try {
-                        val shop = getLocationFromAddress(requireContext(),body!!.address)
-                        mMap.addMarker(MarkerOptions().position(shop).title(body!!.name))
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
-                        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-                    }
-                    catch (e:Exception){
-                        supportMapFragment!!.requireView().visibility = View.INVISIBLE
-                    }
+                }
+                else{
+                    binding.item = data
                 }
             }
         }
     }
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        val shop = getLocationFromAddress(requireContext(),data!!.address)
+        mMap.addMarker(MarkerOptions().position(shop).title(data!!.name))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
+        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
     }
     fun getLocationFromAddress(context: Context, strAddress: String): LatLng? {
         val coder = Geocoder(context)
@@ -102,10 +103,10 @@ class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapRead
     companion object {
          const val DATA = "DATA"
         @JvmStatic
-        fun newInstance(shopId:String) =
+        fun newInstance(shopInfor: ShopInfor) =
             DetailShopFragment().apply {
                 arguments = Bundle().apply {
-                    putString(DATA, shopId)
+                    putParcelable(DATA, shopInfor)
                 }
             }
     }

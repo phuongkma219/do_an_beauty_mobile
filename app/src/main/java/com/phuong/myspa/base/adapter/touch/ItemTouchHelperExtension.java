@@ -107,7 +107,7 @@ public class ItemTouchHelperExtension extends RecyclerView.ItemDecoration
 
     private static final String TAG = "ItemTouchHelper";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final int ACTIVE_POINTER_ID_NONE = -1;
 
@@ -280,8 +280,6 @@ public class ItemTouchHelperExtension extends RecyclerView.ItemDecoration
                 mActivePointerId = MotionEventCompat.getPointerId(event, 0);
                 mInitialTouchX = event.getX();
                 mInitialTouchY = event.getY();
-
-
                 mClick = true;
                 mLastX = event.getX();
                 obtainVelocityTracker();

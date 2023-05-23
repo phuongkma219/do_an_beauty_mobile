@@ -89,6 +89,7 @@ abstract class BaseAdapter<T : Any>(
             itemTouchHelperExtension = ItemTouchHelperExtension(callback).apply {
                 attachToRecyclerView(recyclerView)
             }
+
         }
     }
     override fun onMove(from: Int, to: Int) {

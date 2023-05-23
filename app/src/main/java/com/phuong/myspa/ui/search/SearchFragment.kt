@@ -60,7 +60,7 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
         binding.rvShop.adapter = mAdapter
         mAdapter.listener = object :ShopAdapter.IOnItemClickShop{
             override fun onItemClick(item: ShopInfor, position: Int) {
-                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item._id))
+                findNavController().navigate(DetailCategoryFragmentDirections.actionGlobalShopFragment(item))
             }
 
             override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {
@@ -95,6 +95,7 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+                mAdapter.clearData()
                 binding.rvShop.visibility = View.VISIBLE
                 mViewModel.dataVM = null
                 mViewModel.fetchData(false)

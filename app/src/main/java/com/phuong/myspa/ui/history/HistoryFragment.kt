@@ -27,25 +27,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class HistoryFragment: AbsBaseFragment<FragmentHistoryBinding>() {
     private val mViewModel  by viewModels<HistoryViewModel>()
     private val shopViewModel  by viewModels<ShopViewModel>()
-    private val mAdapter  by lazy { HistoryAdapter() }
-    override fun getLayout(): Int {
-        return  R.layout.fragment_history
-    }
-
-    override fun initView() {
-        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-        mViewModel.getListHistory()
-        binding.rvCart.adapter = mAdapter
-        binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
-        mAdapter.listener = object : HistoryAdapter.ItemHistoryListener{
+    private val mAdapter  by lazy { HistoryAdapter().apply {
+        listener = object : HistoryAdapter.ItemHistoryListener{
             override fun onClickItem(position: Int,item: History) {
-                Log.d("kkk", "onClickItem: $item")
                 findNavController().navigate(HistoryFragmentDirections.actionGlobalDetailHistoryFragment(item))
             }
 
             override fun onDeleteItem(position: Int,item: History) {
-                Log.d("kkk", "onDeleteItem: vào day")
-                mViewModel.deleteHistory(HistoryDTO(item.service.shop_id,item.service._id))
+                Log.d("kkk", "onDeleteItem: ")
+//                mViewModel.deleteHistory(HistoryDTO(item.service.shop_id,item.service._id))
             }
 
             override fun onBuyItem(position: Int,item: History) {
@@ -55,6 +45,16 @@ class HistoryFragment: AbsBaseFragment<FragmentHistoryBinding>() {
 
 
         }
+    } }
+    override fun getLayout(): Int {
+        return  R.layout.fragment_history
+    }
+
+    override fun initView() {
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        mViewModel.getListHistory()
+        binding.rvCart.adapter = mAdapter
+        binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
     }
 
 

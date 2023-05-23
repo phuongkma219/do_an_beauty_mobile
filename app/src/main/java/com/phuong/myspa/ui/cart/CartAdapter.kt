@@ -95,11 +95,26 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
          }
 
     }
-
+//    var __v: Int,
+//    var _id: String,
+//    var address: String,
+//    var avatar: String,
+//    var category: List<String>,
+//    var created_at: String,
+//    var description: String,
+//    var email: String,
+//    var end_time: String,
+//    var name: String,
+//    var phone_number: String,
+//    var rate: Double,
+//    var start_time: String,
+//    var updated_at: String
     fun submit(newData : MutableList<DataCart>?){
         val newList = mutableListOf<DataModel>()
         newData?.forEach {
-            newList.add(DataModel.DataHeader(it.shop._id,it.shop.name))
+            newList.add(DataModel.DataHeader(0,it.shop._id,it.shop.address,it.shop.avatar,
+                it.shop.category,it.shop.created_at,it.shop.description,it.shop.email,it.shop.end_time
+                ,it.shop.name,it.shop.phone_number,it.shop.rate,it.shop.start_time,it.shop.updated_at))
             it.items.forEach {
                 newList.add(DataModel.DataItem(it.serviceDetail._id,it.serviceDetail.avatar,
                     it.serviceDetail.name,it.serviceDetail.price,

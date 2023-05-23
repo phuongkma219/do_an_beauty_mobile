@@ -1,6 +1,7 @@
 package com.phuong.myspa.base.adapter.touch
 
 import android.graphics.Canvas
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.phuong.myspa.base.adapter.viewholder.BaseViewHolder
@@ -9,7 +10,7 @@ class SwipeTouchHelper(private val mode: SwipeMode,
                        private val isSpring: Boolean
 ) : ItemTouchHelperExtension.Callback() {
 
-    override fun isLongPressDragEnabled() = false
+        override fun isLongPressDragEnabled() = false
     override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
         val dragFlag = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         val swipeFlag = when (mode) {
@@ -49,4 +50,5 @@ class SwipeTouchHelper(private val mode: SwipeMode,
             holder.getLayoutContent().translationX = dX
         }
     }
+
 }

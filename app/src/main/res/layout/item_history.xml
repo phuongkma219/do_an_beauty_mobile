@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_click_square"
+            android:layout_marginTop="@dimen/dp_6"
 
             >
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +36,8 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_btn_delete"
                     android:gravity="center"
-                    android:onClick="@{ () -> itemListener.onDeleteItem(itemPosition,item)}"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:text="@string/delete"
                     android:textColor="#FFFFFF"
                     app:layout_constraintDimensionRatio="1:1.5"
@@ -69,7 +71,7 @@
                     app:layout_constraintEnd_toStartOf="@id/tvStatus"
                     android:layout_marginTop="@dimen/dp_8"
                     android:layout_marginStart="@dimen/dp_12"
-                    android:text="@{item.shopName}"/>
+                    android:text="@{item.shop.name}"/>
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"

@@ -36,7 +36,9 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.infor)))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.service)))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.comment)))
-        mAdapter.setData(args.shopId)
+        binding.toolbar.title = args.shop.name
+
+        mAdapter.setData(args.shop)
 
         binding.viewPager.adapter = mAdapter
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
@@ -75,16 +77,13 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
     override fun initViewModel() {
         super.initViewModel()
         mViewModel = ViewModelProvider(requireActivity())[ShopViewModel::class.java]
-        mViewModel.getDetailShop(args.shopId)
+        mViewModel.getDetailShop(args.shop._id)
         binding.viewModel = mViewModel
         mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success) {
                 val body = (it as DataResponse.DataSuccess).body.data
                 if (body != null){
-                    binding.toolbar.title = body.infor.name
-
                     updateToolBar(body.isFavorite)
-
                 }
             }
         }
@@ -99,7 +98,7 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
         binding.toolbar.setOnMenuItemClickListener(object :Toolbar.OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (item.itemId == R.id.icFavorite){
-                    favoriteViewModel.addFavorite(args.shopId,isFavorite)
+                    favoriteViewModel.addFavorite(args.shop._id,isFavorite)
                 }
                 return true
             }

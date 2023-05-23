@@ -51,6 +51,7 @@
                 android:textColor="@color/text_back"
                 style="@style/SemiBoldBody2"/>
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitleTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/payment_time"
@@ -60,6 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvTitleCode"
                 app:layout_constraintStart_toStartOf="parent"/>
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +71,25 @@
                 android:textColor="@color/text_back"
                 style="@style/RegularBody2"/>
               />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textColor="@color/text_back"
+                style="@style/RegularBody2"
+                android:layout_marginTop="@dimen/dp_12"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleTime"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTime"
+                android:text="@{item.shop.address}"
+                android:layout_marginTop="@dimen/dp_12"
+                android:textColor="@color/text_back"
+                style="@style/RegularBody2"/>
+            />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,18 +112,20 @@
                     android:singleLine="true"
                     android:maxLines="1"
                     android:layout_marginEnd="@dimen/dp_4"
+                    android:padding="@dimen/dp_4"
                     app:layout_constraintEnd_toStartOf="@id/tvStatus"
                     android:layout_marginTop="@dimen/dp_8"
                     android:layout_marginStart="@dimen/dp_12"
-                    android:text="@{item.shopName}"/>
+                    android:text="@{item.shop.name}"/>
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/compelete"
-                    android:textColor="@color/md_red_500"
+                    android:text="@string/view_shop"
+                    android:padding="@dimen/dp_4"
+                    android:textColor="@color/black"
                     android:layout_marginEnd="@dimen/dp_12"
                     android:layout_marginTop="@dimen/dp_8"
                     style="@style/RegularBody1"/>

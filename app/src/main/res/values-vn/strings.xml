@@ -113,4 +113,5 @@
     <string name="purchase_history">Purchase History</string>
     <string name="payment_time">Payment time:</string>
     <string name="invoice_information">Invoice information</string>
+    <string name="view_shop">View shop</string>
 </resources>

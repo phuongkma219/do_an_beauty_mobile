@@ -1,6 +1,7 @@
 package com.phuong.myspa.ui.history
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
@@ -21,12 +22,19 @@ class DetailHistoryFragment : AbsBaseFragment<FragmentHistoryDetailBinding>() {
     }
 
     override fun initView() {
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         mViewModel.getHistoryDetail(args.history._id, HistoryDTO(args.history.service.shop_id,args.history.service._id))
         mViewModel.historyLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 binding.item = body
             }
+        }
+        binding.tvShopName.setOnClickListener {
+            findNavController().navigate(DetailHistoryFragmentDirections.actionGlobalShopFragment(args.history.shop))
+        }
+        binding.tvStatus.setOnClickListener {
+            findNavController().navigate(DetailHistoryFragmentDirections.actionGlobalShopFragment(args.history.shop))
         }
     }
 }
