@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -30,24 +31,43 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/dp_16"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:text="@string/confirm"
+                    android:text="@string/payment_confirmation"
                     android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:fontFamily="@font/sf_pro_semibold"  />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_18"
-                android:layout_marginEnd="@dimen/dp_12"
-                android:layout_marginStart="@dimen/dp_16"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:fontFamily="@font/sf_pro_regular"
-                android:textColor="@color/text_back"
-                android:textSize="@dimen/sp_18"
-                android:text="Infor user not saved, are you sure to exit?"
-                />
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitlePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:fontFamily="@font/sf_pro_regular"
+                    android:textColor="@color/text_back"
+                    android:textSize="@dimen/sp_18"
+                    android:text="@string/total_amount"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SemiBoldBody1"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="#FF5E1F"
+                    android:layout_marginStart="@dimen/dp_4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvTitlePrice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentCartBinding
 import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
+import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.ui.shop_service.DialogDetailService
 import com.phuong.myspa.utils.ToastUtils
 import com.phuong.myspa.utils.Utils
@@ -20,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
     private val mViewModel  by viewModels<CartViewModel>()
     private val mAdapter  by lazy { CartAdapter() }
+    private var totalPrice : String ="0"
     override fun getLayout(): Int {
         return  R.layout.fragment_cart
     }
@@ -56,11 +58,25 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
             it.forEach {
                 sumPrice += it.price.toInt()
             }
-            binding.tvSumPrice.text = getPrice(sumPrice.toString()) + " VND"
+            totalPrice = getPrice(sumPrice.toString()) + " VND"
+            binding.tvSumPrice.text = totalPrice
         }
         binding.btnBuy.setOnClickListener {
             if (mAdapter.liveSelect.value?.isNotEmpty() == true){
-                mViewModel.addHistory(mAdapter.liveSelect.value!!)
+                val dialogConfirmSave = DialogConfirmPayment
+                    .setContent(totalPrice).show()
+                   dialogConfirmSave.listener = object : DialogConfirmPayment.IConfirmSave{
+                       override fun onExit() {
+                           totalPrice = "0"
+                       }
+
+                       override fun onPositive() {
+                           mViewModel.addHistory(mAdapter.liveSelect.value!!)
+                       }
+
+                   }
+                dialogConfirmSave.show(childFragmentManager, DialogConfirmPayment.TAG)
+
             }
         }
     }
