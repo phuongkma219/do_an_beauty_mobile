@@ -75,7 +75,7 @@ class LoginFragment:AbsBaseFragment<FragmentLoginBinding>() {
 
             findNavController().navigate(LoginFragmentDirections.actionGlobalSignUpFragment())
         }
-        binding.tvVisitor.setOnClickListener { findNavController().navigate(LoginFragmentDirections.actionGlobalMainFragment()) }
+
         binding.edtPassword.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {

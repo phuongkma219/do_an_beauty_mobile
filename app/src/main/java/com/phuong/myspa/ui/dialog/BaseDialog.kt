@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
-import com.phuong.myspa.MainActivity
+import com.phuong.myspa.ui.activity.MainActivity
 import com.phuong.myspa.utils.Utils
 
 abstract class BaseDialog<V: ViewDataBinding> : DialogFragment() {

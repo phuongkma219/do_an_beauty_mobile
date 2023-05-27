@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
 import androidx.core.app.NotificationCompat
-import com.phuong.myspa.MainActivity
+import com.phuong.myspa.ui.activity.MainActivity
 import com.phuong.myspa.R
 import com.phuong.myspa.utils.Constants
 import com.phuong.myspa.utils.Utils

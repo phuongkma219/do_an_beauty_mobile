@@ -6,6 +6,7 @@ import android.content.Context
 import com.phuong.myspa.base.BaseResource
 import com.phuong.myspa.utils.RuntimeLocaleChanger
 import dagger.hilt.android.HiltAndroidApp
+import vn.zalopay.sdk.ZaloPaySDK
 import javax.inject.Inject
 
 
@@ -21,6 +22,7 @@ class MyApp : Application()  {
 
     override fun onCreate() {
         super.onCreate()
+//        ZaloPaySDK.init(<appID>, Environment)
         resource = BaseResource(applicationContext)
     }
 

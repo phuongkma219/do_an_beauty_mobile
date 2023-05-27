@@ -32,6 +32,6 @@ class ToastUtils(context: Context) {
 
     init {
         toast = Toast.makeText(context, "", Toast.LENGTH_SHORT)
-        toast!!.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 70)
+        toast!!.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
     }
 }

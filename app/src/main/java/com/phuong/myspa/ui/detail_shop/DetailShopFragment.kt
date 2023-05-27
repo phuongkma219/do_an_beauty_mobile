@@ -67,10 +67,18 @@ class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapRead
     }
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val shop = getLocationFromAddress(requireContext(),data!!.address)
-        mMap.addMarker(MarkerOptions().position(shop).title(data!!.name))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
-        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        try {
+            val shop = getLocationFromAddress(requireContext(),data!!.address)
+            mMap.addMarker(MarkerOptions().position(shop).title(data!!.name))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(shop,16f))
+            mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        }
+        catch (e:Exception){
+            supportMapFragment!!.requireView().visibility = View.INVISIBLE
+        }
+
+
+
     }
     fun getLocationFromAddress(context: Context, strAddress: String): LatLng? {
         val coder = Geocoder(context)

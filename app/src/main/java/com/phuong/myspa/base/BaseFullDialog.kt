@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.GridLayoutManager
-import com.phuong.myspa.MainActivity
+import com.phuong.myspa.ui.activity.MainActivity
 import com.phuong.myspa.R
 
 abstract class BaseFullDialog <V : ViewDataBinding> : DialogFragment() {
