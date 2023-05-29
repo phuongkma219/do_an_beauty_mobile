@@ -32,8 +32,10 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
             mViewModel.dataLiveData.observe(this) {
                 if (it.loadingStatus == LoadingStatus.Success) {
                     val body = (it as DataResponse.DataSuccess).body
-                    binding.tvName.text = body!!.data!!.full_name
-                    binding.ivAvatar.loadImageFromUrl(body.data!!.avatar!!)
+                   if(body != null){
+                       binding.tvName.text = body.data?.full_name ?: "Loading"
+                       binding.ivAvatar.loadImageFromUrl(body.data?.avatar)
+                   }
 
                 }
                 else if (it.loadingStatus == LoadingStatus.Error){

@@ -17,13 +17,16 @@ class MyApp : Application()  {
     companion object {
         @SuppressLint("StaticFieldLeak")
         private lateinit var resource: BaseResource
+        private lateinit var app: Context
         fun resource() = resource
+        fun getApplication() =  app
     }
 
     override fun onCreate() {
         super.onCreate()
 //        ZaloPaySDK.init(<appID>, Environment)
         resource = BaseResource(applicationContext)
+        app = applicationContext
     }
 
 

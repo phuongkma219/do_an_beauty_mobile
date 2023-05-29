@@ -72,11 +72,12 @@ class HomeAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     currentItem = holder.getCurrentItem()
                     currentItem++
                     if (currentItem>=  holder.getCount()){
-                          currentItem  =0 }
+                          currentItem  =0
+                    }
                     holder.bind(currentItem)
-                handler.postDelayed(this.runnable,4500)
+                handler.postDelayed(this.runnable,8000)
                 }
-                handler.postDelayed(runnable,4500)
+                handler.postDelayed(runnable,8000)
             }
         }
         if (TYPE_CATEGORY == holder.itemViewType){

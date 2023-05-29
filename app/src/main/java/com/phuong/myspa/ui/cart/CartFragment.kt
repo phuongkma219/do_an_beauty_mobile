@@ -1,5 +1,7 @@
 package com.phuong.myspa.ui.cart
 
+import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.os.StrictMode
 import android.view.LayoutInflater
@@ -7,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.phuong.myspa.MyApp
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.model.cart.CartDTO
@@ -19,6 +23,7 @@ import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentCartBinding
 import com.phuong.myspa.ui.activity.MainActivity
 import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
+import com.phuong.myspa.ui.detail_shop.ShopViewModel
 import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.ui.shop_service.DialogDetailService
 import com.phuong.myspa.utils.ShareViewModel
@@ -26,6 +31,7 @@ import com.phuong.myspa.utils.ToastUtils
 import com.phuong.myspa.utils.zalo.AppInfo
 import com.phuong.myspa.utils.zalo.CreateOrder
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.internal.managers.ViewComponentManager
 import org.json.JSONObject
 import vn.zalopay.sdk.Environment
 import vn.zalopay.sdk.ZaloPayError
@@ -35,18 +41,11 @@ import vn.zalopay.sdk.listeners.PayOrderListener
 
 @AndroidEntryPoint
 class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
-    private val mViewModel  by viewModels<CartViewModel>()
+//    private val mViewModel  by viewModels<CartViewModel>()
+    private lateinit var mViewModel : CartViewModel
     private val mAdapter  by lazy { CartAdapter() }
     private var totalPrice =0
-    ///
-    private var amount: String? = "10000"
-    private val fee = "0"
-    var environment = 0 //developer default
 
-    private val merchantName = "Demo SDK"
-    private val merchantCode = "SCB01"
-    private val merchantNameLabel = "Nhà cung cấp"
-    private val description = "Thanh toán dịch vụ ABC"
     override fun getLayout(): Int {
         return  R.layout.fragment_cart
     }
@@ -65,6 +64,7 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
     }
 
     override fun initView() {
+        mViewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         mViewModel.getListCart()
         binding.rvCart.adapter = mAdapter
@@ -194,7 +194,7 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
             }
         }
-        ShareViewModel.getInstance((requireContext() as MainActivity).application).get.observe(this){
+        ShareViewModel.getInstance((requireActivity() as MainActivity).application).get.observe(this){
             ZaloPaySDK.getInstance().onResult(it)
 
         }
@@ -211,6 +211,12 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
             }
         }
         return price + " VND"
+    }
+    private fun activityContext(context: Context): Context {
+        return if (context is ViewComponentManager.FragmentContextWrapper) {
+            context.baseContext
+        }
+        else context
     }
 
 
