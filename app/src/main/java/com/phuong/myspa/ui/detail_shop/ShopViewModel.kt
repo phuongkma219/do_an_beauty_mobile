@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.phuong.myspa.base.BaseLoadingDataViewModel
 import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.api.model.cart.CartDTO
+import com.phuong.myspa.data.api.model.comment.UploadComment
 import com.phuong.myspa.data.api.model.shop.Shop
 import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.data.api.response.DataResponse
@@ -22,6 +23,7 @@ class ShopViewModel  @Inject constructor(@IoDispatcher private val dispatcher: C
                                          private val shopUseCase: ShopUseCase,private val shopRepository: ShopRepository)
     : BaseLoadingDataViewModel<ApiResponse<Shop>>() {
     var isSucess = MutableLiveData<Boolean>()
+    var isReport = MutableLiveData<Boolean>()
     var serviceLiveData = MutableLiveData<DataResponse<ShopService>>(DataResponse.DataIdle())
     fun getDetailShop(shopId: String) {
         viewModelScope.launch(dispatcher) {
@@ -49,6 +51,17 @@ class ShopViewModel  @Inject constructor(@IoDispatcher private val dispatcher: C
             isSucess.postValue(true)
             }
             else{ isSucess.postValue(false)
+            }
+        }
+    }
+    fun postReport(report:UploadComment){
+        viewModelScope.launch (dispatcher){
+            val response = shopRepository.postReport(report)
+            if (response?.success == true){
+                isReport.postValue(true)
+            }
+            else{
+                isReport.postValue(false)
             }
         }
     }

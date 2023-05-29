@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="@dimen/dp_2"
+            app:title="@string/report"
+            style="@style/RegularBody1"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_arrow_left" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_12"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp_48"
+            app:layout_constraintBottom_toTopOf="@id/btnSend"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            android:background="@drawable/bg_edt"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            android:backgroundTint="@color/accent_primary"
+            app:cornerRadius="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:text="@string/send"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

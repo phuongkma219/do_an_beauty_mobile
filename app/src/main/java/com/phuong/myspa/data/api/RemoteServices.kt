@@ -99,4 +99,7 @@ interface RemoteServices {
 
     @POST("/v1/shops/delete_history")
     suspend fun deleteHistory(@Header("Authorization") token: String?,@Body historyDTO: HistoryDTO):ApiResponse<Any>
+
+    @POST("/v1/shops/post/report")
+    suspend fun uploadReport(@Header("Authorization") token: String,@Body uploadComment: UploadComment):ApiResponse<Any>
 }

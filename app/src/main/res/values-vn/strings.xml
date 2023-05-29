@@ -114,4 +114,6 @@
     <string name="payment_time">Payment time:</string>
     <string name="invoice_information">Invoice information</string>
     <string name="view_shop">View shop</string>
+    <string name="report">Report</string>
+    <string name="send">Send</string>
 </resources>

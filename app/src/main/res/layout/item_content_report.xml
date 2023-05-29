@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <data>
+            <import type="androidx.lifecycle.MutableLiveData"/>
+            <import type="java.util.Stack"/>
+            <import type="com.phuong.myspa.data.api.model.comment.Content"/>
+            <import type="android.view.View"/>
+            <variable
+                name="item"
+                type="Content" />
+            <variable
+                name="liveSelect"
+                type="MutableLiveData&lt;Stack&lt;Content>>" />
+            <variable
+                name="itemPosition"
+                type="Integer" />
+            <variable
+                name="itemListener"
+                type="com.phuong.myspa.ui.report.ReportAdapter.ISelect" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/dp_12"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingBottom="@dimen/dp_6"
+        android:onClick="@{() -> itemListener.onSelectItem(itemPosition,item)}"
+        >
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/tvSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@{liveSelect.search(item) != -1 ? @drawable/ic_select  : @drawable/ic_un_select }"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvSelect"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dp_12"
+            android:textColor="@color/text_back"
+            android:layout_marginEnd="@dimen/dp_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/MediumBody1"
+            android:text="@{item.text}"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_6"
+            app:layout_constraintTop_toBottomOf="@id/tvContent"
+            android:background="@color/background_guideline"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

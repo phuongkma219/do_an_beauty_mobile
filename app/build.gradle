@@ -65,6 +65,5 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:4.3")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
-//    implementation  'com.github.momo-wallet:mobile-sdk:1.0.7'
 
 }
