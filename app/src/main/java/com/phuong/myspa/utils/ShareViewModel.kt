@@ -14,6 +14,13 @@ class ShareViewModel( app: Application): ViewModel() {
     val get: LiveData<Intent> = Transformations.map(_intent) { it!! }
 
     fun set(intent: Intent) { _intent.value = intent }
+    private val _message = MutableLiveData<DataResponse<String>>(DataResponse.DataIdle())
+
+    val getM: LiveData<DataResponse<String>> = Transformations.map(_message) { it!! }
+
+    fun setSucces(mess: String) { _message.postValue(DataResponse.DataSuccess(mess)) }
+    fun setErr(mess: String) { _message.postValue(DataResponse.DataError(mess)) }
+
 
     companion object: SingletonHolder<ShareViewModel, Application>(::ShareViewModel)
 

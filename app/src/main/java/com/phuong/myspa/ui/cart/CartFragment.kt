@@ -26,7 +26,9 @@ import com.phuong.myspa.utils.ToastUtils
 import com.phuong.myspa.utils.zalo.AppInfo
 import com.phuong.myspa.utils.zalo.CreateOrder
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
 import org.json.JSONObject
+import vn.momo.momo_partner.AppMoMoLib
 import vn.zalopay.sdk.Environment
 import vn.zalopay.sdk.ZaloPayError
 import vn.zalopay.sdk.ZaloPaySDK
@@ -109,7 +111,9 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                        }
 
                        override fun onPositive() {
-                            val amount = 10000.toString()
+                           requestPayment(mAdapter.liveSelect.value!![0]._id)
+
+                           val amount = 10000.toString()
                            val orderApi = CreateOrder()
                            try {
                                val data: JSONObject = orderApi.createOrder(amount)
@@ -196,7 +200,6 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         }
         ShareViewModel.getInstance((requireContext() as MainActivity).application).get.observe(this){
             ZaloPaySDK.getInstance().onResult(it)
-
         }
     }
     private fun getPrice(time:String) : String{
@@ -212,6 +215,45 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         }
         return price + " VND"
     }
+    private fun requestPayment(id : String) {
+        AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT)
+        AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN)
+
+        val eventValue: MutableMap<String, Any> = HashMap()
+        //client Required
+        eventValue["merchantname"] =
+            merchantName //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
+        eventValue["merchantcode"] =
+            merchantCode //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
+        eventValue["amount"] = totalPrice //Kiểu integer
+        eventValue["orderId"] = id //uniqueue id cho Bill order, giá trị duy nhất cho mỗi đơn hàng
+        eventValue["orderLabel"] = "Mã đơn hàng" //gán nhãn
+
+        //client Optional - bill info
+        eventValue["merchantnamelabel"] = "Dịch vụ" //gán nhãn
+        eventValue["fee"] = 0 //Kiểu integer
+        eventValue["description"] = description //mô tả đơn hàng - short description
+
+        //client extra data
+        eventValue["requestId"] = merchantCode + "merchant_billId_" + System.currentTimeMillis()
+        eventValue["partnerCode"] = merchantCode
+        //Example extra data
+        val objExtraData = JSONObject()
+        try {
+            objExtraData.put("site_code", "008")
+            objExtraData.put("site_name", "CGV Cresent Mall")
+            objExtraData.put("screen_code", 0)
+            objExtraData.put("screen_name", "Special")
+            objExtraData.put("movie_name", "Kẻ Trộm Mặt Trăng 3")
+            objExtraData.put("movie_format", "2D")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        eventValue["extraData"] = objExtraData.toString()
+        eventValue["extra"] = ""
+        AppMoMoLib.getInstance().requestMoMoCallBack(requireActivity(), eventValue)
+    }
+
 
 
 }

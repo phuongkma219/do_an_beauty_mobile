@@ -23,7 +23,6 @@ class ShopRepository  @Inject constructor(@IoDispatcher private val dispatcher: 
         return try {
              withContext(dispatcher){
                  val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
-
                  provideRemoteAPI.getDetailShop(token,shopId)
             }
         }
