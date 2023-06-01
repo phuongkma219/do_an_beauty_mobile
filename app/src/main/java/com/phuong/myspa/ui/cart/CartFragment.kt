@@ -20,7 +20,9 @@ import com.phuong.myspa.databinding.FragmentCartBinding
 import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
 import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.ui.shop_service.DialogDetailService
+import com.phuong.myspa.utils.BottomToastUtils
 import com.phuong.myspa.utils.Constants
+import com.phuong.myspa.utils.SnapbarBottom
 import com.phuong.myspa.utils.ToastUtils
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.internal.managers.ViewComponentManager
@@ -104,18 +106,34 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         }
     }
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val snapbarBottom = SnapbarBottom(requireContext())
+
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val pay : PaymentConfirmation? = data?.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION)
             if (pay != null){
                 try {
                     val json = pay!!.toJSONObject().toString()
+                    snapbarBottom.showToast(SnapbarBottom.MessageType.Success
+                        ,resources.getString(R.string.success),resources.getString(R.string.payment_successfull))
+
                     mViewModel.addHistory(mAdapter.liveSelect.value!!)
 
                 }catch (e:Exception){
-                    Log.d("kkk", "initView: $e")
+                  e.printStackTrace()
+                    snapbarBottom.showToast(SnapbarBottom.MessageType.Error
+                        ,resources.getString(R.string.payment_failed),resources.getString(R.string.payment_successfull))
                 }
             }
+
+        }
+        else if(result.resultCode == Activity.RESULT_CANCELED){
+            snapbarBottom.showToast(SnapbarBottom.MessageType.Error
+                ,resources.getString(R.string.payment_failed),resources.getString(R.string.error_pro_payment))
+        }
+        else if(result.resultCode == PaymentActivity.RESULT_EXTRAS_INVALID){
+            snapbarBottom.showToast(SnapbarBottom.MessageType.Error
+                ,resources.getString(R.string.payment_failed),resources.getString(R.string.error_pro_payment))
         }
     }
     override fun onDestroy() {

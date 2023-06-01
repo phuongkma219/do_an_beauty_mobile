@@ -11,17 +11,12 @@ import com.phuong.myspa.databinding.ActivityMainBinding
 import com.phuong.myspa.utils.RuntimeLocaleChanger
 import com.phuong.myspa.utils.ShareViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import vn.momo.momo_partner.AppMoMoLib
 import java.util.*
 
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT)
 
-    }
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         // Will give the direction of the layout depending of the Locale you've just set
@@ -43,44 +38,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         ShareViewModel.getInstance(this.application).set(intent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppMoMoLib.getInstance().REQUEST_CODE_MOMO && resultCode == -1) {
-            if (data != null) {
-                if (data.getIntExtra("status", -1) == 0) {
-                    //TOKEN IS AVAILABLE
-                    val token = data.getStringExtra("data") //Token response
-                    val phoneNumber = data.getStringExtra("phonenumber")
-                    var env = data.getStringExtra("env")
-                    if (env == null) {
-                        env = "app"
-                    }
-                    if (token != null && token != "") {
-                        // TODO: send phoneNumber & token to your server side to process payment with MoMo server
-                        // IF Momo topup success, continue to process your order
-                    } else {
-                      ShareViewModel.getInstance(this.application).setSucces(resources.getString(R.string.not_receive_info))
-                    }
-                } else if (data.getIntExtra("status", -1) == 1) {
-                    //TOKEN FAIL
-                    val message =
-                        if (data.getStringExtra("message") != null) {
-                            data.getStringExtra("message")
-                        } else "Thất bại"
-                    ShareViewModel.getInstance(this.application).setErr(message!!)
-
-                } else if (data.getIntExtra("status", -1) == 2) {
-                    //TOKEN FAIL
-                    ShareViewModel.getInstance(this.application).setErr(resources.getString(R.string.not_receive_info))
-                } else {
-                    //TOKEN FAIL
-                    ShareViewModel.getInstance(this.application).setErr(resources.getString(R.string.not_receive_info))
-                }
-            } else {
-                ShareViewModel.getInstance(this.application).setErr(resources.getString(R.string.not_receive_info))
-            }
-        } else {
-            ShareViewModel.getInstance(this.application).setErr(resources.getString(R.string.not_receive_info))
-        }
-    }
 }

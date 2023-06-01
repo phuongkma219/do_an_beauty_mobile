@@ -34,8 +34,6 @@ class HistoryFragment: AbsBaseFragment<FragmentHistoryBinding>() {
             }
 
             override fun onDeleteItem(position: Int,item: History) {
-                Log.d("kkk", "onDeleteItem: ")
-//                mViewModel.deleteHistory(HistoryDTO(item.service.shop_id,item.service._id))
             }
 
             override fun onBuyItem(position: Int,item: History) {

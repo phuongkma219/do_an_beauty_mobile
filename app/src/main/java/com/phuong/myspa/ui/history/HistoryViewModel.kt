@@ -36,7 +36,7 @@ class HistoryViewModel @Inject constructor(@IoDispatcher private val dispatcher:
                 if (response?.success == true){
                     var list = response.data
                     list?.forEach{ sh ->
-                            sh.service.avatar = Constants.BASE_URL +   sh.service.avatar?.replace("\\", "/")
+                            sh.service?.avatar = Constants.BASE_URL +   sh.service.avatar?.replace("\\", "/")
                         }
                     dataMutableLiveData.postValue(DataResponse.DataSuccess(list))
 

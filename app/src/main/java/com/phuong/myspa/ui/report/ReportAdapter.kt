@@ -4,8 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
 import com.phuong.myspa.R
 import com.phuong.myspa.base.adapter.BaseAdapter
-import com.phuong.myspa.base.adapter.viewholder.BaseViewHolder
-import com.phuong.myspa.data.PhotoModel
+import com.phuong.myspa.base.adapter.BaseViewHolder
 import com.phuong.myspa.data.api.model.comment.Content
 import com.phuong.myspa.databinding.ItemContentReportBinding
 import java.util.*

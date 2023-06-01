@@ -140,4 +140,9 @@
     <string name="report">Report</string>
     <string name="report_success">Report success!</string>
     <string name="send">Send</string>
+    <string name="success">Success</string>
+    <string name="payment_successfull">Payment successfull</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="error_pro_payment">Error processing payment</string>
+
 </resources>

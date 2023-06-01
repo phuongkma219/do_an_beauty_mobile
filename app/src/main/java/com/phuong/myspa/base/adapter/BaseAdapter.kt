@@ -13,7 +13,6 @@ import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
 import java.util.*
 import com.phuong.myspa.BR
 import com.phuong.myspa.base.adapter.touch.*
-import com.phuong.myspa.base.adapter.viewholder.BaseViewHolder
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
 abstract class BaseAdapter<T : Any>(
@@ -22,8 +21,6 @@ abstract class BaseAdapter<T : Any>(
 
     private lateinit var inflater: LayoutInflater
     private var annotationDrag: ItemTouchDrag? = null
-    private var annotationSwipe: ItemTouchSwipe? = null
-    private var itemTouchHelperExtension: ItemTouchHelperExtension? = null
 
     protected var list = mutableListOf<T>()
     var listener: BaseListener? = null
@@ -34,9 +31,7 @@ abstract class BaseAdapter<T : Any>(
                 is ItemTouchDrag -> {
                     annotationDrag = annotation
                 }
-                is ItemTouchSwipe -> {
-                    annotationSwipe = annotation
-                }
+
             }
         }
     }
@@ -50,7 +45,7 @@ abstract class BaseAdapter<T : Any>(
             parent,
             false
         )
-        return BaseViewHolder(binding,annotationSwipe)
+        return BaseViewHolder(binding)
     }
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.binding.apply {
@@ -84,13 +79,7 @@ abstract class BaseAdapter<T : Any>(
             val callback = DragVerticalTouchHelper(this)
             ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
         }
-        annotationSwipe?.let {
-            val callback = SwipeTouchHelper(it.mode, it.isSpring)
-            itemTouchHelperExtension = ItemTouchHelperExtension(callback).apply {
-                attachToRecyclerView(recyclerView)
-            }
 
-        }
     }
     override fun onMove(from: Int, to: Int) {
         list.let { list ->

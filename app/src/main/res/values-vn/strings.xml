@@ -116,4 +116,5 @@
     <string name="view_shop">View shop</string>
     <string name="report">Report</string>
     <string name="send">Send</string>
+    <string name="payment_successfull">Payment successfull</string>
 </resources>
