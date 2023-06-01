@@ -65,5 +65,6 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:4.3")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
 
 }

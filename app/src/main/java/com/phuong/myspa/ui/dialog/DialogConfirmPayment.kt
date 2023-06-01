@@ -1,32 +1,39 @@
 package com.phuong.myspa.ui.dialog
 
+import android.os.Build
 import android.os.Bundle
 import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
 import com.phuong.myspa.R
+import com.phuong.myspa.base.BaseBottomSheetDialogFragment
+import com.phuong.myspa.data.api.model.shop.ShopInfor
+import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.databinding.DialogConfirmPaymentBinding
+import com.phuong.myspa.ui.detail_shop.DetailShopFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DialogConfirmPayment :   BaseDialog<DialogConfirmPaymentBinding>()  {
-    override fun initViewModel() {
+class DialogConfirmPayment :   BaseBottomSheetDialogFragment<DialogConfirmPaymentBinding>()  {
 
-    }
-
-    override fun initView() {
-        arguments?.apply {
-            getString(Key_Content) ?.let { binding.tvPrice.text= it }}
-        binding.btnCancel.setOnClickListener {
+    lateinit var listener : IConfirmSave
+    override fun initBinding() {
+        super.initBinding()
+        var data:ShopService? = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            data = arguments?.getParcelable(Key_Content, ShopService::class.java)
+        } else {
+            data = arguments?.getParcelable(Key_Content)
+        }
+        data?.let { binding.item = it }
+        binding.btnPay.setOnClickListener {
             dismiss()
         }
-        binding.btnOk.setOnClickListener {
-            (listener as IConfirmSave).onPositive()
+        binding.btnPay.setOnClickListener {
+            listener.onPositive()
             dismiss()
         }
     }
 
-    override fun getLayout(): Int {
-    return  R.layout.dialog_confirm_payment
-    }
+
     interface IConfirmSave : BaseListener {
         fun onExit()
         fun onPositive()
@@ -42,10 +49,19 @@ class DialogConfirmPayment :   BaseDialog<DialogConfirmPaymentBinding>()  {
             return dialog
         }
 
-        fun setContent(content:String):Companion{
-            bundle.putString(Key_Content,content)
+        fun setContent(shopService: ShopService):Companion{
+            bundle.putParcelable(Key_Content,shopService)
             return this
         }
+
+    }
+
+    override fun onDismiss() {
+
+    }
+
+    override fun getLayoutId(): Int {
+        return  R.layout.dialog_confirm_payment
 
     }
 

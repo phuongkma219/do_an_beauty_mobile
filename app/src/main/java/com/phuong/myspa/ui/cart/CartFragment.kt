@@ -1,17 +1,22 @@
 package com.phuong.myspa.ui.cart
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.paypal.android.sdk.payments.*
 import com.phuong.myspa.MyApp
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
@@ -26,6 +31,7 @@ import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
 import com.phuong.myspa.ui.detail_shop.ShopViewModel
 import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.ui.shop_service.DialogDetailService
+import com.phuong.myspa.utils.Constants
 import com.phuong.myspa.utils.ShareViewModel
 import com.phuong.myspa.utils.ToastUtils
 import com.phuong.myspa.utils.zalo.AppInfo
@@ -37,6 +43,7 @@ import vn.zalopay.sdk.Environment
 import vn.zalopay.sdk.ZaloPayError
 import vn.zalopay.sdk.ZaloPaySDK
 import vn.zalopay.sdk.listeners.PayOrderListener
+import java.math.BigDecimal
 
 
 @AndroidEntryPoint
@@ -45,25 +52,16 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
     private lateinit var mViewModel : CartViewModel
     private val mAdapter  by lazy { CartAdapter() }
     private var totalPrice =0
-
+    private lateinit var configuration: PayPalConfiguration
     override fun getLayout(): Int {
         return  R.layout.fragment_cart
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
 
-        ZaloPaySDK.init(AppInfo.APP_ID, Environment.SANDBOX)
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     override fun initView() {
+        configuration = PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
+            .clientId(Constants.CLIENT_ID)
         mViewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         mViewModel.getListCart()
@@ -102,63 +100,20 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         binding.btnBuy.setOnClickListener {
             if (mAdapter.liveSelect.value?.isNotEmpty() == true){
                 val dialogConfirmSave = DialogConfirmPayment
-                    .setContent(getPrice(totalPrice.toString())).show()
+                    .setContent(mAdapter.mapToService(mAdapter.liveSelect.value!![0])).show()
                    dialogConfirmSave.listener = object : DialogConfirmPayment.IConfirmSave{
                        override fun onExit() {
                            totalPrice = 0
                        }
 
                        override fun onPositive() {
-                            val amount = 10000.toString()
-                           val orderApi = CreateOrder()
-                           try {
-                               val data: JSONObject = orderApi.createOrder(amount)
-                               val code = data.getString("returncode")
-                               if (code == "1") {
-                                   val token = data.getString("zptranstoken")
-                                   ZaloPaySDK.getInstance().payOrder(
-                                       requireActivity(),
-                                       token,
-                                       "demozpdk://app",
-                                       object : PayOrderListener {
-                                           override fun onPaymentSucceeded(
-                                               transactionId: String,
-                                               transToken: String,
-                                               appTransID: String
-                                           ) {
-                                               mViewModel.addHistory(mAdapter.liveSelect.value!!)
-
-                                               Toast.makeText(
-                                                   requireContext(),
-                                                   "Thanh toán thành công",
-                                                   Toast.LENGTH_SHORT
-                                               ).show()
-                                           }
-
-                                           override fun onPaymentCanceled(zpTransToken: String, appTransID: String) {
-                                               Toast.makeText(
-                                                   requireContext(),
-                                                   "Thanh toán bị hủy",
-                                                   Toast.LENGTH_SHORT
-                                               ).show()
-                                           }
-
-                                           override fun onPaymentError(
-                                               zaloPayError: ZaloPayError,
-                                               zpTransToken: String,
-                                               appTransID: String
-                                           ) {
-                                               Toast.makeText(
-                                                   requireContext(),
-                                                   "Thanh toán thất bại",
-                                                   Toast.LENGTH_SHORT
-                                               ).show()
-                                           }
-                                       })
-                               }
-                           } catch (e: Exception) {
-                               e.printStackTrace()
-                           }
+                           val payment = PayPalPayment(
+                               BigDecimal(java.lang.String.valueOf(1)),"USD","Thanh toan",
+                               PayPalPayment.PAYMENT_INTENT_SALE)
+                           val intent = Intent(requireContext(), PaymentActivity::class.java)
+                           intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration)
+                           intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payment)
+                           resultLauncher.launch(intent)
                        }
 
                    }
@@ -167,6 +122,26 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
             }
         }
     }
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val pay : PaymentConfirmation? = data?.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION)
+            if (pay != null){
+                try {
+                    val json = pay!!.toJSONObject().toString()
+                    mViewModel.addHistory(mAdapter.liveSelect.value!!)
+
+                }catch (e:Exception){
+                    Log.d("kkk", "initView: $e")
+                }
+            }
+        }
+    }
+    override fun onDestroy() {
+        requireActivity().stopService(Intent(requireContext(), PayPalService::class.java))
+        super.onDestroy()
+    }
+
 
     override fun initViewModel() {
         super.initViewModel()
@@ -193,10 +168,6 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
             else if (it.loadingStatus == LoadingStatus.Error){
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
             }
-        }
-        ShareViewModel.getInstance((requireActivity() as MainActivity).application).get.observe(this){
-            ZaloPaySDK.getInstance().onResult(it)
-
         }
     }
     private fun getPrice(time:String) : String{

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
 import com.phuong.myspa.data.api.model.cart.DataCart
 import com.phuong.myspa.data.api.model.shop.DataModel
+import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.databinding.ItemHeaderBinding
 import com.phuong.myspa.databinding.ItemProductCartBinding
 import com.phuong.myspa.utils.loadImageFromUrl
@@ -75,6 +76,7 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                 holder.bind(listData[position] as DataModel.DataItem)
                 holder.binding.liveSelect = liveSelect
                 holder.binding.ivSelect.setOnClickListener {
+                    clearAll()
                     select(listData[position] as DataModel.DataItem)
                 }
             }
@@ -95,20 +97,7 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
          }
 
     }
-//    var __v: Int,
-//    var _id: String,
-//    var address: String,
-//    var avatar: String,
-//    var category: List<String>,
-//    var created_at: String,
-//    var description: String,
-//    var email: String,
-//    var end_time: String,
-//    var name: String,
-//    var phone_number: String,
-//    var rate: Double,
-//    var start_time: String,
-//    var updated_at: String
+
     fun submit(newData : MutableList<DataCart>?){
         val newList = mutableListOf<DataModel>()
         newData?.forEach {
@@ -124,6 +113,12 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         listData = newList
         notifyDataSetChanged()
 
+    }
+    fun mapToService(dataModel: DataModel.DataItem):ShopService{
+        return ShopService(0,dataModel._id,dataModel.avatar,
+            dataModel.created_at,dataModel.description,
+            dataModel.name,dataModel.price,0,
+            dataModel.shop_id,dataModel.time,"")
     }
     fun select(item: DataModel.DataItem) {
         val select = liveSelect.value ?: Stack()

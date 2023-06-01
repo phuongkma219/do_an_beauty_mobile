@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="item"
+            type="com.phuong.myspa.data.api.model.shop.ShopService" />
 
     </data>
 
@@ -31,72 +34,96 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/dp_16"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:text="@string/payment_confirmation"
+                    android:text="@string/payment"
                     android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:fontFamily="@font/sf_pro_semibold"  />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/itemContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="96dp"
+                android:background="@drawable/ripple_click_square"
+                >
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="@dimen/dp_64"
+                    android:layout_height="@dimen/dp_64"
+                    android:scaleType="centerCrop"
+                    android:loadImageFromUrl="@{item.avatar}"
+                    app:shapeAppearanceOverlay="@style/roundedImage6"
+                    android:layout_marginStart="@dimen/dp_12"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:text="@{item.name}"
+                    android:layout_height="wrap_content"
+                    style="@style/RegularBody1"
+                    android:layout_marginStart="@dimen/dp_12"
+                    android:singleLine="true"
+                    android:textColor="@color/text_back"
+                    app:layout_constraintTop_toTopOf="@id/ivAvatar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    app:layout_constraintStart_toEndOf="@id/ivAvatar" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTitlePrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_18"
-                    android:layout_marginEnd="@dimen/dp_12"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:fontFamily="@font/sf_pro_regular"
-                    android:textColor="@color/text_back"
-                    android:textSize="@dimen/sp_18"
-                    android:text="@string/total_amount"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
+                    android:layout_marginTop="@dimen/dp_16"
+                    style="@style/SemiBoldBody1"
+                    android:textColor="#FF5E1F"
+                    android:text="@string/price"
+                    android:layout_marginStart="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+                    app:layout_constraintStart_toEndOf="@id/ivAvatar" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
                     style="@style/SemiBoldBody1"
-                    android:layout_marginTop="@dimen/dp_18"
-                    android:textSize="@dimen/sp_18"
+                    setPrice="@{item.price}"
                     android:textColor="#FF5E1F"
                     android:layout_marginStart="@dimen/dp_4"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
                     app:layout_constraintStart_toEndOf="@id/tvTitlePrice" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <LinearLayout
+                android:id="@+id/btnPay"
+                android:background="@drawable/bg_button_paypal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_30"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:layout_marginEnd="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginHorizontal="@dimen/dp_12"
                 android:orientation="horizontal"
-                android:gravity="end">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnCancel"
+                android:padding="@dimen/dp_4"
+               android:gravity="center"
+                android:layout_marginBottom="@dimen/dp_24"
+                >
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_8"
-                    android:text="@string/cancel"
-                    android:backgroundTint="@color/gray_light"
-                    android:textAllCaps="true"
-                  />
+                    android:src="@drawable/logo_paypal"
+                   android:layout_marginEnd="@dimen/dp_4"
+                    />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/paypal_title"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnOk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ok"
-                    android:textAllCaps="true"
-                    android:backgroundTint="@color/md_red_200"
-                    android:textColor="@color/white" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </LinearLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -26,8 +26,10 @@ object Constants {
 
           actions
      }
+    const val CLIENT_ID = "AVymvDCUSLQuksCEDwJJkSUD9lLYF1rx2jVg5Jpaf9BtIVWGVCs8031PlqWne0_Is9My80dVM6SriVM_"
 
-//     android:usesCleartextTraffic="true"
+
+     //     android:usesCleartextTraffic="true"
 //     android:networkSecurityConfig="@xml/network_security_config"
 const val BASE_URL = "http://10.0.2.2:3000"
 

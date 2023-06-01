@@ -658,4 +658,5 @@
     <color name="color_description">#636363</color>
     <color name="stroke_image">#409e9e9e</color>
     <color name="color_line_album">#DCDCDC</color>
+    <color name="bg_btn_paypal">#ffc439</color>
 </resources>
