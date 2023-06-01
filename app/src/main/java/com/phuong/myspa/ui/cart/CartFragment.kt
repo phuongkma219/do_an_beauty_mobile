@@ -1,14 +1,14 @@
 package com.phuong.myspa.ui.cart
 
-import android.os.Bundle
-import android.os.StrictMode
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.paypal.android.sdk.payments.*
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.model.cart.CartDTO
@@ -17,56 +17,33 @@ import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentCartBinding
-import com.phuong.myspa.ui.activity.MainActivity
 import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
 import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.ui.shop_service.DialogDetailService
-import com.phuong.myspa.utils.ShareViewModel
+import com.phuong.myspa.utils.Constants
 import com.phuong.myspa.utils.ToastUtils
-import com.phuong.myspa.utils.zalo.AppInfo
-import com.phuong.myspa.utils.zalo.CreateOrder
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONException
-import org.json.JSONObject
-import vn.momo.momo_partner.AppMoMoLib
-import vn.zalopay.sdk.Environment
-import vn.zalopay.sdk.ZaloPayError
-import vn.zalopay.sdk.ZaloPaySDK
-import vn.zalopay.sdk.listeners.PayOrderListener
+import dagger.hilt.android.internal.managers.ViewComponentManager
+import java.math.BigDecimal
 
 
 @AndroidEntryPoint
 class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
-    private val mViewModel  by viewModels<CartViewModel>()
+//    private val mViewModel  by viewModels<CartViewModel>()
+    private lateinit var mViewModel : CartViewModel
     private val mAdapter  by lazy { CartAdapter() }
     private var totalPrice =0
-    ///
-    private var amount: String? = "10000"
-    private val fee = "0"
-    var environment = 0 //developer default
-
-    private val merchantName = "Demo SDK"
-    private val merchantCode = "SCB01"
-    private val merchantNameLabel = "Nhà cung cấp"
-    private val description = "Thanh toán dịch vụ ABC"
+    private lateinit var configuration: PayPalConfiguration
     override fun getLayout(): Int {
         return  R.layout.fragment_cart
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
 
-        ZaloPaySDK.init(AppInfo.APP_ID, Environment.SANDBOX)
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     override fun initView() {
+        configuration = PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
+            .clientId(Constants.CLIENT_ID)
+        mViewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         mViewModel.getListCart()
         binding.rvCart.adapter = mAdapter
@@ -104,65 +81,20 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         binding.btnBuy.setOnClickListener {
             if (mAdapter.liveSelect.value?.isNotEmpty() == true){
                 val dialogConfirmSave = DialogConfirmPayment
-                    .setContent(getPrice(totalPrice.toString())).show()
+                    .setContent(mAdapter.mapToService(mAdapter.liveSelect.value!![0])).show()
                    dialogConfirmSave.listener = object : DialogConfirmPayment.IConfirmSave{
                        override fun onExit() {
                            totalPrice = 0
                        }
 
                        override fun onPositive() {
-                           requestPayment(mAdapter.liveSelect.value!![0]._id)
-
-                           val amount = 10000.toString()
-                           val orderApi = CreateOrder()
-                           try {
-                               val data: JSONObject = orderApi.createOrder(amount)
-                               val code = data.getString("returncode")
-                               if (code == "1") {
-                                   val token = data.getString("zptranstoken")
-                                   ZaloPaySDK.getInstance().payOrder(
-                                       requireActivity(),
-                                       token,
-                                       "demozpdk://app",
-                                       object : PayOrderListener {
-                                           override fun onPaymentSucceeded(
-                                               transactionId: String,
-                                               transToken: String,
-                                               appTransID: String
-                                           ) {
-                                               mViewModel.addHistory(mAdapter.liveSelect.value!!)
-
-                                               Toast.makeText(
-                                                   requireContext(),
-                                                   "Thanh toán thành công",
-                                                   Toast.LENGTH_SHORT
-                                               ).show()
-                                           }
-
-                                           override fun onPaymentCanceled(zpTransToken: String, appTransID: String) {
-                                               Toast.makeText(
-                                                   requireContext(),
-                                                   "Thanh toán bị hủy",
-                                                   Toast.LENGTH_SHORT
-                                               ).show()
-                                           }
-
-                                           override fun onPaymentError(
-                                               zaloPayError: ZaloPayError,
-                                               zpTransToken: String,
-                                               appTransID: String
-                                           ) {
-                                               Toast.makeText(
-                                                   requireContext(),
-                                                   "Thanh toán thất bại",
-                                                   Toast.LENGTH_SHORT
-                                               ).show()
-                                           }
-                                       })
-                               }
-                           } catch (e: Exception) {
-                               e.printStackTrace()
-                           }
+                           val payment = PayPalPayment(
+                               BigDecimal(java.lang.String.valueOf(1)),"USD","Thanh toan",
+                               PayPalPayment.PAYMENT_INTENT_SALE)
+                           val intent = Intent(requireContext(), PaymentActivity::class.java)
+                           intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration)
+                           intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payment)
+                           resultLauncher.launch(intent)
                        }
 
                    }
@@ -171,6 +103,26 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
             }
         }
     }
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val pay : PaymentConfirmation? = data?.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION)
+            if (pay != null){
+                try {
+                    val json = pay!!.toJSONObject().toString()
+                    mViewModel.addHistory(mAdapter.liveSelect.value!!)
+
+                }catch (e:Exception){
+                    Log.d("kkk", "initView: $e")
+                }
+            }
+        }
+    }
+    override fun onDestroy() {
+        requireActivity().stopService(Intent(requireContext(), PayPalService::class.java))
+        super.onDestroy()
+    }
+
 
     override fun initViewModel() {
         super.initViewModel()
@@ -198,9 +150,6 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
             }
         }
-        ShareViewModel.getInstance((requireContext() as MainActivity).application).get.observe(this){
-            ZaloPaySDK.getInstance().onResult(it)
-        }
     }
     private fun getPrice(time:String) : String{
         var price = ""
@@ -215,44 +164,13 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         }
         return price + " VND"
     }
-    private fun requestPayment(id : String) {
-        AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT)
-        AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN)
-
-        val eventValue: MutableMap<String, Any> = HashMap()
-        //client Required
-        eventValue["merchantname"] =
-            merchantName //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
-        eventValue["merchantcode"] =
-            merchantCode //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
-        eventValue["amount"] = totalPrice //Kiểu integer
-        eventValue["orderId"] = id //uniqueue id cho Bill order, giá trị duy nhất cho mỗi đơn hàng
-        eventValue["orderLabel"] = "Mã đơn hàng" //gán nhãn
-
-        //client Optional - bill info
-        eventValue["merchantnamelabel"] = "Dịch vụ" //gán nhãn
-        eventValue["fee"] = 0 //Kiểu integer
-        eventValue["description"] = description //mô tả đơn hàng - short description
-
-        //client extra data
-        eventValue["requestId"] = merchantCode + "merchant_billId_" + System.currentTimeMillis()
-        eventValue["partnerCode"] = merchantCode
-        //Example extra data
-        val objExtraData = JSONObject()
-        try {
-            objExtraData.put("site_code", "008")
-            objExtraData.put("site_name", "CGV Cresent Mall")
-            objExtraData.put("screen_code", 0)
-            objExtraData.put("screen_name", "Special")
-            objExtraData.put("movie_name", "Kẻ Trộm Mặt Trăng 3")
-            objExtraData.put("movie_format", "2D")
-        } catch (e: JSONException) {
-            e.printStackTrace()
+    private fun activityContext(context: Context): Context {
+        return if (context is ViewComponentManager.FragmentContextWrapper) {
+            context.baseContext
         }
-        eventValue["extraData"] = objExtraData.toString()
-        eventValue["extra"] = ""
-        AppMoMoLib.getInstance().requestMoMoCallBack(requireActivity(), eventValue)
+        else context
     }
+
 
 
 

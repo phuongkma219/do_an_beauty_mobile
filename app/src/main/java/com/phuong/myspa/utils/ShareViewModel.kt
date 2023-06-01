@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.phuong.myspa.data.api.response.DataResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 class ShareViewModel( app: Application): ViewModel() {
     private val _intent = MutableLiveData<Intent>()

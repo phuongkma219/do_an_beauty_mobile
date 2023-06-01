@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,6 +23,7 @@ import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentDetailShopBinding
+import com.phuong.myspa.ui.report.ReportFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -42,6 +44,9 @@ class DetailShopFragment:AbsBaseFragment<FragmentDetailShopBinding>(), OnMapRead
         binding.tvContact.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${binding.item!!.phone_number}"))
             startActivity(intent)
+        }
+        binding.tvReport.setOnClickListener {
+            findNavController().navigate(ReportFragmentDirections.actionGlobalReportFragment(data!!._id))
         }
         supportMapFragment =childFragmentManager
             .findFragmentById(R.id.ggMap) as SupportMapFragment

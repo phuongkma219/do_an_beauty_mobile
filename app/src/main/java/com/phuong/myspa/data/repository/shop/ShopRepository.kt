@@ -4,6 +4,7 @@ import com.phuong.myspa.MyApp
 import com.phuong.myspa.data.api.RemoteServices
 import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.api.model.cart.CartDTO
+import com.phuong.myspa.data.api.model.comment.UploadComment
 import com.phuong.myspa.data.api.model.shop.Shop
 import com.phuong.myspa.data.api.model.shop.ShopService
 import com.phuong.myspa.di.AppContext
@@ -53,6 +54,21 @@ class ShopRepository  @Inject constructor(@IoDispatcher private val dispatcher: 
             withContext(dispatcher){
                 val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
                 provideRemoteAPI.addCart(token,cartDTO)
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
+    }
+    suspend fun postReport(uploadComment: UploadComment): ApiResponse<Any>
+    ?{
+        return try {
+            withContext(dispatcher){
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+                provideRemoteAPI.uploadReport(token,uploadComment)
             }
         }
         catch (ex : UnknownHostException){

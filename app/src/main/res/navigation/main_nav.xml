@@ -197,4 +197,19 @@
         app:exitAnim="@android:anim/fade_out"
         app:popEnterAnim="@android:anim/fade_in"
         app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.phuong.myspa.ui.report.ReportFragment"
+        android:label="ReportFragment" >
+        <argument android:name="shopID"
+            app:argType="string"
+            app:nullable="false"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_reportFragment"
+        app:destination="@id/reportFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
 </navigation>
