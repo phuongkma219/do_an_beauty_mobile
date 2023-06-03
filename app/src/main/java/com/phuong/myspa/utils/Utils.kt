@@ -344,7 +344,19 @@ object Utils {
     fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
     }
-
+     fun getPrice(time:String) : String{
+        var price = ""
+        val test = time.reversed()
+        for (i in test.length-1 downTo 0) {
+            if (i%3 ==0 && i != 0){
+                price += "${test[i]}."
+            }
+            else{
+                price += test[i]
+            }
+        }
+        return price + " VND"
+    }
 }
 
 

@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
+import com.phuong.myspa.data.api.model.Category
 import com.phuong.myspa.data.api.model.QueryCategory
+import com.phuong.myspa.data.api.model.search.Search
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
@@ -22,6 +24,7 @@ import com.phuong.myspa.databinding.FragmentServiceBinding
 import com.phuong.myspa.ui.detail_category.DetailCategoryFragmentDirections
 import com.phuong.myspa.ui.detail_category.DetailCategoryViewModel
 import com.phuong.myspa.ui.detail_category.ShopAdapter
+import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.utils.showKeyBoard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,6 +37,7 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
     private var totalItemCount: Int = 0
     private var visibleThreshold = 1
     private var mLayoutManager : LinearLayoutManager? = null
+    private var listRaw = mutableListOf<Search>()
     override fun getLayout(): Int  = R.layout.fragment_search
 
     override fun initView() {
@@ -68,6 +72,44 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
             }
 
         }
+        binding.ivFilter.setOnClickListener {
+            val dialogFilter = BottomSheetFilter()
+            dialogFilter.listener = object :BottomSheetFilter.ISearchFilter{
+                override fun getFilter(cates: MutableList<Category>?,price:Pair<Int,Int>?, rate: Float?) {
+                    val data = mutableListOf<ShopInfor>()
+                    listRaw.forEach { list ->
+                        if (cates?.size!! > 0) {
+                            if ( list.shop.rate >= rate!!
+                                && (list.average_price >= price!!.first && list.average_price < price!!.second)){
+                                val check = printUnion(list.shop.category,cates,list.shop.category.size,cates.size)
+                                if (check){
+                                    data.add(list.shop)
+                                }
+                            }
+                        }
+                        else{
+                            if ( list.shop.rate >= rate!! &&(list.average_price >= price!!.first && list.average_price < price!!.second)){
+                                data.add(list.shop)
+                            }
+                        }
+                    }
+                    mAdapter.submit(data)
+                }
+
+            }
+            dialogFilter.show(childFragmentManager, BottomSheetFilter.TAG)
+
+        }
+    }
+   private fun printUnion(A: List<String>, B: MutableList<Category>, n: Int, m: Int):Boolean{
+        for (i in 0 until n) {
+            for (j in 0 until m) {
+                if (A[i] == B[j]._id) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     override fun initViewModel() {
@@ -77,7 +119,10 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                if (body != null){
-                   mAdapter.submitList(mViewModel.getPage()>0,body)
+                   mAdapter.submitListSearch(mViewModel.getPage()>0,body)
+                   body.forEach {
+                       listRaw.add(it.copy())
+                   }
                }
                 if (isBindingInitialized){
                     binding.searchView.clearFocus()

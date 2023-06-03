@@ -22,7 +22,7 @@ abstract class BaseAdapter<T : Any>(
     private lateinit var inflater: LayoutInflater
     private var annotationDrag: ItemTouchDrag? = null
 
-    protected var list = mutableListOf<T>()
+     var list = mutableListOf<T>()
     var listener: BaseListener? = null
     init {
         val annotations = this::class.java.declaredAnnotations

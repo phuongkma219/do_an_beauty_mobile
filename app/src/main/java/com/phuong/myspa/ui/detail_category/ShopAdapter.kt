@@ -5,6 +5,7 @@ import com.phuong.myspa.base.adapter.BaseAdapter
 import com.hola.ringtonmaker.ui.base.adapter.base.BaseListener
 import com.phuong.myspa.base.adapter.BaseViewHolder
 import com.phuong.myspa.R
+import com.phuong.myspa.data.api.model.search.Search
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.databinding.ItemShopBinding
 
@@ -33,6 +34,20 @@ class ShopAdapter(private val showAction :Boolean): BaseAdapter<ShopInfor>(R.lay
             notifyItemInserted(list.size)
         } else {
             this.list = newData.toMutableList()
+            notifyDataSetChanged()
+        }
+
+    }
+    fun submitListSearch(isAddMore: Boolean, newData: MutableList<Search>) {
+        val data = mutableListOf<ShopInfor>()
+        newData.forEach {
+            data.add(it.shop)
+        }
+        if (isAddMore) {
+            this.list.addAll(data)
+            notifyItemInserted(list.size)
+        } else {
+            this.list = data
             notifyDataSetChanged()
         }
 

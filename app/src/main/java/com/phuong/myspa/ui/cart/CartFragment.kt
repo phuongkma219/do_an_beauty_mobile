@@ -20,10 +20,8 @@ import com.phuong.myspa.databinding.FragmentCartBinding
 import com.phuong.myspa.ui.detail_shop.ShopFragmentDirections
 import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.ui.shop_service.DialogDetailService
-import com.phuong.myspa.utils.BottomToastUtils
-import com.phuong.myspa.utils.Constants
-import com.phuong.myspa.utils.SnapbarBottom
-import com.phuong.myspa.utils.ToastUtils
+import com.phuong.myspa.utils.*
+import com.phuong.myspa.utils.Utils.getPrice
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.internal.managers.ViewComponentManager
 import java.math.BigDecimal
@@ -78,7 +76,7 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                 sumPrice += it.price.toInt()
             }
             totalPrice =sumPrice
-            binding.tvSumPrice.text = getPrice(totalPrice.toString())
+            binding.tvSumPrice.text = Utils.getPrice(totalPrice.toString())
         }
         binding.btnBuy.setOnClickListener {
             if (mAdapter.liveSelect.value?.isNotEmpty() == true){
@@ -169,19 +167,7 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
             }
         }
     }
-    private fun getPrice(time:String) : String{
-        var price = ""
-        val test = time.reversed()
-        for (i in test.length-1 downTo 0) {
-            if (i%3 ==0 && i != 0){
-                price += "${test[i]}."
-            }
-            else{
-                price += test[i]
-            }
-        }
-        return price + " VND"
-    }
+
     private fun activityContext(context: Context): Context {
         return if (context is ViewComponentManager.FragmentContextWrapper) {
             context.baseContext

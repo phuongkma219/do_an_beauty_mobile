@@ -144,5 +144,9 @@
     <string name="payment_successfull">Payment successfull</string>
     <string name="payment_failed">Payment Failed</string>
     <string name="error_pro_payment">Error processing payment</string>
+    <string name="search_filter">Search Filter</string>
+    <string name="category">Category</string>
+    <string name="apply">AppLy</string>
+    <string name="close">Close</string>
 
 </resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.phuong.myspa.data.api.model.Category"/>
+        <variable
+            name="item"
+            type="Category"
+             />
+        <variable
+            name="itemPosition"
+            type="Integer" />
+        <variable
+            name="itemListener"
+            type="com.phuong.myspa.ui.search.CateAdapter.IClickFilter" />
+        <import type="androidx.lifecycle.MutableLiveData" />
+
+        <import type="java.util.Stack" />
+        <variable
+            name="liveSelect"
+            type="MutableLiveData&lt;Stack&lt;Category>>" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:onClick="@{ () -> itemListener.onClickCate(itemPosition,item)}"
+        android:layout_marginTop="@dimen/dp_6"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@{item.name}"
+            style="@style/RegularBody1"
+            android:gravity="center"
+            android:textColor="@color/text_back"
+            android:padding="@dimen/dp_8"
+            android:background="@{liveSelect.search(item) != -1 ? @drawable/ic_select_cate : @drawable/ic_un_select_cate}"
+            />
+
+    </RelativeLayout>
+</layout>

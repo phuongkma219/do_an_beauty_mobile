@@ -13,6 +13,7 @@ import com.phuong.myspa.data.api.model.login.UserDTO
 import com.phuong.myspa.data.api.model.login.UserLogin
 import com.phuong.myspa.data.api.model.login.UserSignUp
 import com.phuong.myspa.data.api.model.remote.ApiResponse
+import com.phuong.myspa.data.api.model.search.DataSearch
 import com.phuong.myspa.data.api.model.shop.*
 import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.data.api.model.user.User
@@ -62,7 +63,7 @@ interface RemoteServices {
     suspend fun getListFavorite(@Header("Authorization") token: String):ApiResponse<MutableList<ShopInfor>>
 
     @GET("/v1/shops/get_list")
-    suspend fun searchShops(@Query("keyword") keyword : String?,@Query("page") page: String):ApiResponse<DataShop>
+    suspend fun searchShops(@Query("keyword") keyword : String?,@Query("page") page: String):ApiResponse<DataSearch>
 
     @POST("/v1/shops/upload_comment")
     suspend fun uploadComment(@Header("Authorization") token: String,@Body uploadComment: UploadComment):ApiResponse<Any>

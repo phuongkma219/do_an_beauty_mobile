@@ -26,18 +26,37 @@
             app:titleTextColor="@color/text_back"
             app:navigationIcon="@drawable/ic_arrow_left"
             android:elevation="@dimen/dp_6" >
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:background="@color/white"
-                app:queryBackground="@color/white"
-                app:closeIcon="@drawable/ic_close_black"
-                android:focusable="true"
-                app:iconifiedByDefault="false"
-                app:searchIcon="@null"
-                />
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    app:queryBackground="@color/white"
+                    app:closeIcon="@drawable/ic_close_black"
+                    android:focusable="true"
+                    app:iconifiedByDefault="false"
+                    app:searchIcon="@null"
+                    android:layout_marginEnd="@dimen/dp_4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivFilter"
+                    />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_filter"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </androidx.appcompat.widget.Toolbar>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvShop"

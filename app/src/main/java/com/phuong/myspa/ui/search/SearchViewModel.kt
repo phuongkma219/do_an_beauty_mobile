@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.phuong.myspa.base.BaseLoadingDataViewModel
+import com.phuong.myspa.data.api.model.search.DataSearch
+import com.phuong.myspa.data.api.model.search.Search
 import com.phuong.myspa.data.api.model.shop.DataShop
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.response.DataResponse
@@ -20,8 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher
                                            , private val searchRepository: SearchRepository
-) : BaseLoadingDataViewModel<MutableList<ShopInfor>?>() {
-    var dataVM : DataShop? = null
+) : BaseLoadingDataViewModel<MutableList<Search>?>() {
+    var dataVM : DataSearch? = null
     private var keyword :String? =""
     fun setKeyword(key: String?){
         keyword = key
@@ -67,7 +69,7 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
                     if (shops?.size != 0 ){
                         dataVM = responseData.data
                         shops?.forEach{ sh ->
-                            sh.avatar = Constants.BASE_URL +  sh.avatar.replace("\\", "/")
+                            sh.shop.avatar = Constants.BASE_URL +  sh.shop.avatar.replace("\\", "/")
                         }
                         dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop))
                     }

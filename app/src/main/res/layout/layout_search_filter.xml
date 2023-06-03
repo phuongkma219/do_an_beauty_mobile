@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_24"
+        android:background="@drawable/bg_bottom_sheet">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/SemiBoldH5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:gravity="center"
+            android:text="@string/search_filter"
+            android:textColor="@color/text_back"
+            android:textSize="22sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCate"
+            style="@style/SemiBoldBody1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textColor="@color/text_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            app:layout_constraintTop_toBottomOf="@id/tvCate" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/rvCategory">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
+                style="@style/SemiBoldBody1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"
+                android:textColor="@color/text_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPMin"
+                style="@style/MediumBody1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPrice" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/rangSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintEnd_toStartOf="@id/tvPMax"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/tvPMin"
+                app:layout_constraintTop_toBottomOf="@id/tvPMin" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPMax"
+                style="@style/MediumBody1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPrice" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/constRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/constPrice">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRate"
+                style="@style/SemiBoldBody1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"
+                android:textColor="@color/text_back" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <RelativeLayout
+                    android:id="@+id/rate1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:padding="@dimen/dp_4"
+                    android:layout_weight="1">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/RegularBody2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableStart="@drawable/baseline_star_rate_24"
+                        android:gravity="center_vertical"
+                        android:text="1+" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rate2"
+                    android:padding="@dimen/dp_4"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/RegularBody2"
+                    android:drawableStart="@drawable/baseline_star_rate_24"
+                    android:gravity="center_vertical"
+                    android:text="2+" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rate3"
+                    android:padding="@dimen/dp_4"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/RegularBody2"
+                    android:drawableStart="@drawable/baseline_star_rate_24"
+                    android:gravity="center_vertical"
+                    android:text="3+" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rate4"
+                    android:padding="@dimen/dp_4"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/RegularBody2"
+                    android:drawableStart="@drawable/baseline_star_rate_24"
+                    android:gravity="center_vertical"
+                    android:text="4+" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rate5"
+                    android:padding="@dimen/dp_4"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/RegularBody2"
+                    android:drawableStart="@drawable/baseline_star_rate_24"
+                    android:gravity="center_vertical"
+                    android:text="5+" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_18"
+            android:backgroundTint="@color/accent_primary"
+            android:minHeight="@dimen/dp_48"
+            android:text="@string/apply"
+            app:cornerRadius="@dimen/dp_16"
+            app:layout_constraintTop_toBottomOf="@id/constRate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
