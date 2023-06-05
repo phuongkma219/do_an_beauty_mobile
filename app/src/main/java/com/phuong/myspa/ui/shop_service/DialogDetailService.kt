@@ -52,8 +52,8 @@ class DialogDetailService:BaseFullDialog<DialogShopServiceBinding>() {
         }
     }
         mViewModel.isSucess.observe(this){
+            Log.d(TAG, "initView: $it")
             if (it){
-                Log.d(TAG, "initView: ")
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.add_to_cart))
             }
             else{

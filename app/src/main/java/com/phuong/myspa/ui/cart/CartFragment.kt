@@ -33,6 +33,7 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
     private lateinit var mViewModel : CartViewModel
     private val mAdapter  by lazy { CartAdapter() }
     private var totalPrice =0
+    private var positon = 0
     private lateinit var configuration: PayPalConfiguration
     override fun getLayout(): Int {
         return  R.layout.fragment_cart
@@ -44,7 +45,7 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         configuration = PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
             .clientId(Constants.CLIENT_ID)
         mViewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
-        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigate(R.id.action_global_mainFragment)}
         mViewModel.getListCart()
         binding.rvCart.adapter = mAdapter
         binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
@@ -54,8 +55,9 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                 dialogDetailService.show(childFragmentManager, DialogDetailService.TAG)
             }
 
-            override fun onDeleteItem(item: DataModel.DataItem) {
+            override fun onDeleteItem(position:Int,item: DataModel.DataItem) {
                 mAdapter.removeItem(item)
+                mAdapter.notifyItemRemoved(position)
                 mViewModel.deleteCart(CartDTO(item.shop_id,item._id))
             }
 
@@ -64,6 +66,10 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                     item.category,item.created_at,item.description,item.email,item.end_time
                     ,item.name,item.phone_number,item.rate,item.start_time,item.updated_at)
               findNavController().navigate(ShopFragmentDirections.actionGlobalShopFragment(shop))
+            }
+
+            override fun onPositionBuy(position: Int) {
+              positon = position
             }
 
         }
@@ -159,8 +165,9 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
         mViewModel.liveDataAddHistory.observe(viewLifecycleOwner){
             if (it.loadingStatus == LoadingStatus.Success){
                 mViewModel.deleteListCart(mAdapter.liveSelect.value!!)
+                mAdapter.notifyItemRemoved(positon)
                 mAdapter.clearAll()
-                findNavController().navigate(CartFragmentDirections.actionGlobalHistoryFragment())
+
             }
             else if (it.loadingStatus == LoadingStatus.Error){
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))

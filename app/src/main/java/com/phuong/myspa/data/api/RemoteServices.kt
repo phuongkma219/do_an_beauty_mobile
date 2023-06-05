@@ -103,4 +103,7 @@ interface RemoteServices {
 
     @POST("/v1/shops/post/report")
     suspend fun uploadReport(@Header("Authorization") token: String,@Body uploadComment: UploadComment):ApiResponse<Any>
+    @GET("/v1/shops/get_count_cart")
+    suspend fun getCountCart(@Header("Authorization") token: String):ApiResponse<Int>
+
 }

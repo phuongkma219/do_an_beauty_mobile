@@ -46,8 +46,8 @@ class ShopViewModel  @Inject constructor(@IoDispatcher private val dispatcher: C
     }
     fun addCart(card: CartDTO){
         viewModelScope.launch (dispatcher){
-            val response =   shopRepository.addCart(card)?.success
-            if (response == true){
+            val response =   shopRepository.addCart(card)
+            if (response?.success == true){
             isSucess.postValue(true)
             }
             else{ isSucess.postValue(false)

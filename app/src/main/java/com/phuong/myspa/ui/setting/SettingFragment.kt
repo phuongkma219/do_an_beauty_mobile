@@ -10,6 +10,7 @@ import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentSettingBinding
+import com.phuong.myspa.ui.history.HistoryFragmentDirections
 import com.phuong.myspa.ui.login.LoginFragmentDirections
 import com.phuong.myspa.ui.login.SignUpFragmentDirections
 import com.phuong.myspa.ui.main.MainFragment
@@ -85,7 +86,7 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
             findNavController().navigate(SettingFragmentDirections.actionGlobalLoginFragment())
         }
         binding.tvHistory.setOnClickListener {
-            findNavController().navigate(SettingFragmentDirections.actionGlobalHistoryFragment())
+            findNavController().navigate(HistoryFragmentDirections.actionGlobalHistoryFragment())
 
         }
 

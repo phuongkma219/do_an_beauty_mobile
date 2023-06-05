@@ -25,4 +25,5 @@ class HomeUseCase  @Inject constructor(private val homeRepository: HomeRepositor
                 emit(DataResponse.DataError())
         }
     }
+
 }

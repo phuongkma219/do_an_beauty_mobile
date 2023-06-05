@@ -1,5 +1,7 @@
 package com.phuong.myspa.ui.home
 
+import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -59,6 +61,16 @@ class HomeFragment : AbsBaseFragment<FragmentHomeBinding>() {
         binding.rlCartHome.setOnClickListener {
             findNavController().navigate(CartFragmentDirections.actionGlobalCartFragment())
         }
+        mViewModel.countCart.observe(this){
+            if (it != null && it!=0){
+                binding.tvCountCart.visibility = View.VISIBLE
+                binding.tvCountCart.setText(it.toString())
+            }
+            else{
+                binding.tvCountCart.visibility = View.INVISIBLE
+                binding.tvCountCart.setText("")
+            }
+        }
 
     }
 
@@ -76,6 +88,7 @@ class HomeFragment : AbsBaseFragment<FragmentHomeBinding>() {
             }
         }
     }
+
 
     override fun getLayout(): Int = R.layout.fragment_home
 

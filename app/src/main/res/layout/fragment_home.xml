@@ -60,29 +60,20 @@
                     android:padding="@dimen/dp_4"
                     android:src="@drawable/ic_baseline_shopping_cart_24" />
 
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-12dp"
-            android:layout_toEndOf="@id/iv_cart"
-            android:layout_alignParentTop="true"
-            app:cardBackgroundColor="@color/md_red_500"
-            app:cardCornerRadius="@dimen/dp_8">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/tvCountCart"
+                    android:layout_marginStart="-12dp"
+                    android:layout_toEndOf="@id/iv_cart"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bg_number_card"
+                    android:text="3"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingEnd="@dimen/dp_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     style="@style/RegularBody2"
                     android:gravity="center"
                     android:textColor="@color/white" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
         </RelativeLayout>

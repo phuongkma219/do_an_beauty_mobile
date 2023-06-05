@@ -22,13 +22,13 @@ class SharedPreferenceUtils private constructor(context: Context) {
         return getBooleanValue("isAcceptPolicy")
     }
 
-    fun putStringValue(key: String?, value: String?) {
+    fun putInt(key: String, value: Int) {
         val editor = sharedPreferences.edit()
-        editor.putString(key, value).apply()
+        editor.putInt(key, value).apply()
     }
 
-    fun getStringValue(key: String?): String? {
-        return sharedPreferences.getString(key, "")
+    fun getInt(key: String): Int {
+        return sharedPreferences.getInt(key, 0)
     }
 
     fun putBooleanValue(key: String, value: Boolean) {

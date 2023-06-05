@@ -55,10 +55,10 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     }
     class ItemContentViewHolder(val binding:ItemProductCartBinding,val inner:ItemCartListener):RecyclerView.ViewHolder(binding.root){
 
-        fun bind(model: DataModel.DataItem){
+        fun bind(position: Int,model: DataModel.DataItem){
             binding.item = model
             binding.ivAvatar.loadImageFromUrl(model.avatar)
-            binding.btnDelete.setOnClickListener { inner.onDeleteItem(model) }
+            binding.btnDelete.setOnClickListener { inner.onDeleteItem(position,model) }
             binding.root.setOnClickListener { inner.onClickItemService(model) }
         }
 
@@ -73,11 +73,12 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         }
         if (TYPE_CONTENT == holder.itemViewType) {
             if (holder is ItemContentViewHolder) {
-                holder.bind(listData[position] as DataModel.DataItem)
+                holder.bind(position,listData[position] as DataModel.DataItem)
                 holder.binding.liveSelect = liveSelect
                 holder.binding.ivSelect.setOnClickListener {
                     clearAll()
                     select(listData[position] as DataModel.DataItem)
+                    inner?.onPositionBuy(position)
                 }
             }
         }
@@ -143,7 +144,8 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     }
     interface ItemCartListener : BaseListener{
         fun onClickItemService(item: DataModel.DataItem)
-        fun onDeleteItem(item: DataModel.DataItem)
+        fun onDeleteItem(position: Int,item: DataModel.DataItem)
         fun onClickTitle(item:DataModel.DataHeader)
+        fun onPositionBuy(position: Int)
     }
 }
