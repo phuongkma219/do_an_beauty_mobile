@@ -100,6 +100,8 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
         super.initViewModel()
         mViewModel.fetchData(shopId!!, false)
         mViewModel.dataLiveData.observe(viewLifecycleOwner) {
+            Log.d("kkk", "initViewModel: ${it.loadingStatus}")
+
             if (it.loadingStatus == LoadingStatus.Success) {
                 val body = (it as DataResponse.DataSuccess).body
                 mAdapter.submitList(mViewModel.getPage(shopId!!) > 0, body)
@@ -107,6 +109,14 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
                     binding.ivImage.visibility = View.GONE
                     binding.ivClose.visibility = View.GONE
                     imageFile = null
+                }
+            }
+            else if (it.loadingStatus == LoadingStatus.Idle){
+                if (mAdapter.list.size == 0){
+                    binding.tvEmpty.visibility = View.VISIBLE
+                }
+                else{
+                    binding.tvEmpty.visibility = View.INVISIBLE
                 }
             }
 

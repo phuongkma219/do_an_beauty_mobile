@@ -1,8 +1,10 @@
 package com.phuong.myspa.ui.updateUser
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.phuong.myspa.base.BaseLoadingDataViewModel
+import com.phuong.myspa.data.api.model.ChangePassDTO
 import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.api.model.user.User
 import com.phuong.myspa.data.api.response.DataResponse
@@ -26,7 +28,8 @@ class UpdateUserViewModel @Inject constructor(
     private val updateUseCase: GetMyUserUseCase):
     BaseLoadingDataViewModel<ApiResponse<User>>(){
     var isUploadAvt = MutableLiveData<DataResponse<String>>(DataResponse.DataIdle())
-    var updateUser = MutableLiveData<DataResponse<User>>(DataResponse.DataIdle())
+    var updateUser = MutableLiveData<DataResponse<String>>(DataResponse.DataIdle())
+    var isChangePass =  MutableLiveData<DataResponse<Boolean>>(DataResponse.DataIdle())
     fun getMyUser(){
         viewModelScope.launch (dispatcher){
             updateUseCase.invoke("").collect {
@@ -65,10 +68,15 @@ class UpdateUserViewModel @Inject constructor(
             val data = userRepository.updateUser(user)
            try {
                if (data?.success == true){
-                   updateUser.postValue(DataResponse.DataSuccess(data.data!!))
+                   updateUser.postValue(DataResponse.DataSuccess("SUCCESS"))
+               }
+               else{
+                   updateUser.postValue(DataResponse.DataError())
+
                }
               
            }catch (e:Exception){
+              e.printStackTrace()
                updateUser.postValue(DataResponse.DataError())
            }
         }
@@ -78,6 +86,17 @@ class UpdateUserViewModel @Inject constructor(
         val file = File(filePath)
         val reqFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("avatar", file.name, reqFile)
+    }
+     fun changePass(changePassDTO: ChangePassDTO){
+        viewModelScope.launch(dispatcher){
+            val response = userRepository.changePass(changePassDTO)
+            if (response?.success == true){
+                isChangePass.postValue(DataResponse.DataSuccess(true))
+            }
+            else{
+                isChangePass.postValue(DataResponse.DataError())
+            }
+        }
     }
 
 }

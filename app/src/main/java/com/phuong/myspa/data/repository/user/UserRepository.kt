@@ -2,6 +2,7 @@ package com.phuong.myspa.data.repository.user
 
 import com.phuong.myspa.MyApp
 import com.phuong.myspa.data.api.RemoteServices
+import com.phuong.myspa.data.api.model.ChangePassDTO
 import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.api.model.user.ImageUpload
 import com.phuong.myspa.data.api.model.user.User
@@ -56,6 +57,21 @@ private val dispatcher: CoroutineDispatcher, private val provideRemoteAPI: Remot
             withContext(Dispatchers.Default){
                 val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
                 provideRemoteAPI.updateUser(token, user)
+            }
+        }
+        catch (ex : UnknownHostException){
+            null
+        }
+        catch (ex : Exception){
+            null
+        }
+    }
+    suspend fun changePass(changePassDTO: ChangePassDTO):ApiResponse<Any>
+    ?{
+        return try {
+            withContext(Dispatchers.Default){
+                val token = Constants.PREFIX_TOKEN + SharedPreferenceUtils.getInstance(app).getData()!!.access_token
+                provideRemoteAPI.changePass(token, changePassDTO)
             }
         }
         catch (ex : UnknownHostException){

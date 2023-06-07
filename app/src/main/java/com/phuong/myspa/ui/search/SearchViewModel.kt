@@ -16,6 +16,7 @@ import com.phuong.myspa.di.IoDispatcher
 import com.phuong.myspa.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -66,7 +67,7 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
                 val responseData = searchRepository.searchShops(keyword,requestPage.toString())
                 if (responseData?.success == true){
                     val shops = responseData.data?.list_shop
-                    if (shops?.size != 0 ){
+                    if (shops != null){
                         dataVM = responseData.data
                         shops?.forEach{ sh ->
                             sh.shop.avatar = Constants.BASE_URL +  sh.shop.avatar.replace("\\", "/")

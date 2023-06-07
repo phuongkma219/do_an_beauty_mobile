@@ -46,6 +46,7 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
               listener?.getFilter(mAdapter.liveSelect.value,price,rate)
 
           }
+            dismiss()
         }
 
     }

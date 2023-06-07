@@ -1,6 +1,7 @@
 package com.phuong.myspa.data.api
 
 import com.phuong.myspa.data.api.model.Category
+import com.phuong.myspa.data.api.model.ChangePassDTO
 import com.phuong.myspa.data.api.model.FavoriteDT0
 import com.phuong.myspa.data.api.model.QueryCategory
 import com.phuong.myspa.data.api.model.cart.CartDTO
@@ -105,5 +106,6 @@ interface RemoteServices {
     suspend fun uploadReport(@Header("Authorization") token: String,@Body uploadComment: UploadComment):ApiResponse<Any>
     @GET("/v1/shops/get_count_cart")
     suspend fun getCountCart(@Header("Authorization") token: String):ApiResponse<Int>
-
+    @GET("/v1/auth/change_password")
+    suspend fun changePass(@Header("Authorization") token: String,@Body changePassDTO: ChangePassDTO):ApiResponse<Any>
 }

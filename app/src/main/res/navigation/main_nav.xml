@@ -212,4 +212,15 @@
         app:exitAnim="@android:anim/fade_out"
         app:popEnterAnim="@android:anim/fade_in"
         app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/changePassFragment"
+        android:name="com.phuong.myspa.ui.setting.ChangePassFragment"
+        android:label="ChangePassFragment" />
+    <action
+        android:id="@+id/action_global_changePassFragment"
+        app:destination="@id/changePassFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@anim/slide_out_right"/>
 </navigation>

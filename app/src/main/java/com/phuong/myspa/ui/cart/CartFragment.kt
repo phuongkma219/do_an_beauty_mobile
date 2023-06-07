@@ -148,7 +148,8 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
 
     override fun initViewModel() {
         super.initViewModel()
-        mViewModel.listCart.observe(viewLifecycleOwner){
+        binding.viewModel = mViewModel
+        mViewModel.dataLiveData.observe(viewLifecycleOwner){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 mAdapter.submit(body)

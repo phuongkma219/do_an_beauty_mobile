@@ -32,7 +32,7 @@
             android:lines="1"
             android:fontFamily="@font/sf_pro_regular"
             android:textColor="@color/text_back"
-            android:text="@{item.title}"
+            android:text="@string/action_delete"
             android:textAppearance="?textAppearanceBody1"/>
 
     </LinearLayout>

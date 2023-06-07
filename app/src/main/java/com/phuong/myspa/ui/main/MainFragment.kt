@@ -45,6 +45,7 @@ class MainFragment : AbsBaseFragment<FragmentMainBinding>() {
                         binding.navBottom.menu.findItem(R.id.favoriteFragment)
                     }
                     2 -> {
+                        mAdapter.refreshFragment(position)
                         binding.navBottom.menu.findItem(R.id.settingFragment)
                     }
                 }

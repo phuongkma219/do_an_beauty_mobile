@@ -40,6 +40,7 @@
                     android:focusable="true"
                     app:iconifiedByDefault="false"
                     app:searchIcon="@null"
+                    app:queryHint="@string/search"
                     android:layout_marginEnd="@dimen/dp_4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivFilter"

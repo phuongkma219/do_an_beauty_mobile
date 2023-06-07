@@ -33,9 +33,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getFragmentID(): Int = R.id.navContainerViewMain
 
     override fun getLayoutId(): Int  = R.layout.activity_main
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        ShareViewModel.getInstance(this.application).set(intent)
-    }
+
 
 }

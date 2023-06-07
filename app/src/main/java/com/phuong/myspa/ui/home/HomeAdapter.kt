@@ -5,6 +5,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.phuong.myspa.data.Advertisement
 import com.phuong.myspa.data.api.model.Category
 import com.phuong.myspa.databinding.ItemCategoryBinding
@@ -51,6 +52,7 @@ class HomeAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
     class BannerViewHolder( val binding:LayoutBannerBinding,val inner:IOnClickItem):RecyclerView.ViewHolder(binding.root){
        fun bind(position: Int){
+           binding.viewPager.offscreenPageLimit = ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
            binding.viewPager.adapter = BannerApdapter(DataUtils.listBanner)
            binding.viewPager.setPageTransformer(true,
                ZoomOutPageTransformer())
@@ -72,12 +74,16 @@ class HomeAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     currentItem = holder.getCurrentItem()
                     currentItem++
                     if (currentItem>=  holder.getCount()){
-                          currentItem  =0
+                        holder.bind(0)
+
                     }
-                    holder.bind(currentItem)
-                handler.postDelayed(this.runnable,8000)
+                    else{
+                        holder.bind(currentItem)
+                    }
+
+                handler.postDelayed(this.runnable,6000)
                 }
-                handler.postDelayed(runnable,8000)
+                handler.postDelayed(runnable,300)
             }
         }
         if (TYPE_CATEGORY == holder.itemViewType){

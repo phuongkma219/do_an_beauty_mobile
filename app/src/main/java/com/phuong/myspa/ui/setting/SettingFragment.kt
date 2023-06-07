@@ -15,6 +15,7 @@ import com.phuong.myspa.ui.login.LoginFragmentDirections
 import com.phuong.myspa.ui.login.SignUpFragmentDirections
 import com.phuong.myspa.ui.main.MainFragment
 import com.phuong.myspa.ui.updateUser.UpdateUserViewModel
+import com.phuong.myspa.utils.ShareViewModel
 import com.phuong.myspa.utils.SharedPreferenceUtils
 import com.phuong.myspa.utils.loadImageFromUrl
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +25,11 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
     private val mViewModel by viewModels<UpdateUserViewModel>()
 
     override fun initView() {
+        ShareViewModel.getInstance(requireActivity().application).get.observe(this){
+            if (it == LoadingStatus.Loading){
+                mViewModel.getMyUser()
+            }
+        }
         val user = SharedPreferenceUtils.getInstance(requireContext()).getData()
         mViewModel.getMyUser()
         if ( user== null){
@@ -88,6 +94,9 @@ class SettingFragment:AbsBaseFragment<FragmentSettingBinding>() {
         binding.tvHistory.setOnClickListener {
             findNavController().navigate(HistoryFragmentDirections.actionGlobalHistoryFragment())
 
+        }
+        binding.tvForgotPass.setOnClickListener {
+            findNavController().navigate(R.id.action_global_changePassFragment)
         }
 
     }

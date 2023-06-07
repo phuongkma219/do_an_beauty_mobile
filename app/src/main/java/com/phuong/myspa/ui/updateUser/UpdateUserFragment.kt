@@ -22,10 +22,7 @@ import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentUpdateUserBinding
 import com.phuong.myspa.ui.main.MainFragmentDirections
 import com.phuong.myspa.ui.pickphoto.PickPhotoDialog
-import com.phuong.myspa.utils.SharedPreferenceUtils
-import com.phuong.myspa.utils.ToastUtils
-import com.phuong.myspa.utils.Utils
-import com.phuong.myspa.utils.loadImageFromUrl
+import com.phuong.myspa.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
@@ -37,6 +34,7 @@ private val mViewModel by viewModels<UpdateUserViewModel>()
     private var gender:String =""
     override fun initView() {
         binding.toolbar.setNavigationOnClickListener {
+            ShareViewModel.getInstance(requireActivity().application).setLoadSetting(LoadingStatus.Loading)
             findNavController().navigateUp()
         }
         binding.ivAvatar.setOnClickListener {
@@ -117,7 +115,7 @@ private val mViewModel by viewModels<UpdateUserViewModel>()
             val date = binding.edtBirDay.text.toString()
             var user :User? = null
            if (date.isNotEmpty()){
-               val birthDay =  SimpleDateFormat("dd/MM/yyyy").parse(date)
+               val birthDay =  SimpleDateFormat("dd-MM-yyyy").parse(date)
                 user = User(gender = gender, phone_number = phone, first_name = firstName, last_name = lastName, birthday = birthDay)
 
            }
@@ -172,7 +170,6 @@ private val mViewModel by viewModels<UpdateUserViewModel>()
                 LoadingStatus.Error ->{
                     binding.rlLoading.visibility = View.GONE
                     ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
-
                 }
                 LoadingStatus.Loading ->{
                     binding.rlLoading.visibility = View.VISIBLE

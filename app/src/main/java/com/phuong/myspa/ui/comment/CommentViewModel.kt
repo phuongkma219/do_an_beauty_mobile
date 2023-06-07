@@ -60,7 +60,7 @@ class CommentViewModel @Inject constructor(@IoDispatcher private val dispatcher:
                 val responseData = commentRepository.getComments(id,requestPage.toString())
                 if (responseData?.success == true){
                     val comments = responseData.data?.comments
-                    if (comments?.size != 0 ){
+                    if (comments?.size!! > 0 ){
                         dataVM = responseData.data
                         comments?.forEach{ sh ->
                             sh.user?.avatar = Constants.BASE_URL +  sh.user?.avatar?.replace("\\", "/")

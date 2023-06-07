@@ -30,6 +30,7 @@
     <string name="app_infor">App infor</string>
     <string name="share">Share</string>
     <string name="plase_enter_your_password">Please enter your password</string>
+    <string name="plase_enter_your_password_old">Please enter your old password</string>
     <string name="plase_enter_your_mail">Please enter your email</string>
     <string name="incorrect_account_or_password">Incorrect account or password</string>
     <string name="invalid_email_address">Invalid email address</string>
@@ -148,5 +149,8 @@
     <string name="category">Category</string>
     <string name="apply">AppLy</string>
     <string name="close">Close</string>
+    <string name="change_password">Change Password</string>
+    <string name="enter_a_new_password_below_to_change_your_password">Enter a new password below to change your password</string>
+    <string name="old_password">Old password</string>
 
 </resources>

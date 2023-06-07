@@ -1,5 +1,6 @@
 package com.phuong.myspa.ui.login
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -7,6 +8,7 @@ import android.util.Patterns
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.phuong.myspa.R
@@ -24,6 +26,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment:AbsBaseFragment<FragmentLoginBinding>() {
     private val mViewModel by viewModels<LoginViewModel>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
     override fun initView() {
         binding.viewModel = mViewModel
         binding.edtEmail.addTextChangedListener(object : TextWatcher {
@@ -122,6 +134,20 @@ class LoginFragment:AbsBaseFragment<FragmentLoginBinding>() {
             }
         }
         hideKeyBoard(requireContext(),binding.edtPassword)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val emailAddress: String = binding.edtEmail.text.toString().trim()
+        val password = binding.edtPassword.text.toString().trim()
+        if (password.isEmpty()){
+            binding.textLayoutPass.isErrorEnabled = false
+            binding.textLayoutPass.error = null
+        }
+        if (emailAddress.isEmpty() ){
+            binding.textLayoutEmail.isErrorEnabled = false
+            binding.textLayoutEmail.error = null
+        }
     }
     override fun getLayout(): Int  = R.layout.fragment_login
 

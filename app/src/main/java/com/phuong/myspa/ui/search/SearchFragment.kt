@@ -1,6 +1,6 @@
 package com.phuong.myspa.ui.search
 
-import android.os.Bundle
+import android.os.*
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,6 +27,8 @@ import com.phuong.myspa.ui.detail_category.ShopAdapter
 import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.utils.showKeyBoard
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Timer
+import java.util.TimerTask
 
 @AndroidEntryPoint
 class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
@@ -38,6 +40,19 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
     private var visibleThreshold = 1
     private var mLayoutManager : LinearLayoutManager? = null
     private var listRaw = mutableListOf<Search>()
+    val timer = object: CountDownTimer(1000,500) {
+        override fun onTick(millisUntilFinished: Long) {
+
+        }
+
+        override fun onFinish() {
+            mAdapter.clearData()
+            binding.rvShop.visibility = View.VISIBLE
+            mViewModel.dataVM = null
+            mViewModel.setKeyword(binding.searchView.query.toString().trim())
+            mViewModel.fetchData(false)
+        }
+    }
     override fun getLayout(): Int  = R.layout.fragment_search
 
     override fun initView() {
@@ -124,9 +139,9 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
                        listRaw.add(it.copy())
                    }
                }
-                if (isBindingInitialized){
-                    binding.searchView.clearFocus()
-                }
+//                if (isBindingInitialized){
+//                    binding.searchView.clearFocus()
+//                }
             }
             else if (it.loadingStatus == LoadingStatus.Error){
                 if (isBindingInitialized){
@@ -135,6 +150,8 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
             }
         }
     }
+
+
 
     private fun setupToolbar() {
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
@@ -149,15 +166,23 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.equals("")){
-                    binding.rvShop.visibility = View.INVISIBLE
                     mAdapter.clearData()
+                    binding.rvShop.visibility = View.INVISIBLE
                 }
-                newText?.let { mViewModel.setKeyword(newText.trim()) }
+              else{
+
+                        timer.cancel()
+                    timer.start()
+
+
+                }
+
                 return false
             }
 
         })
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -85,7 +85,8 @@
                             android:layout_height="@dimen/dp_36"
                             android:text="@string/edit_profile"
                             android:backgroundTint="#4CAF50"
-                            android:padding="0dp"
+                            android:paddingTop="0dp"
+                            android:paddingBottom="0dp"
                             android:textColor="@color/white"
                             style="@style/RegularBody1"/>
                     </LinearLayout>
@@ -166,7 +167,36 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvHistory" />
+                <TextView
+                    android:id="@+id/tvForgotPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_16"
+                    android:paddingBottom="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:background="?attr/selectableItemBackground"
+                    android:fontFamily="@font/sf_pro_regular"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_12"
+                    android:text="@string/change_password"
+                    android:textAppearance="?textAppearanceBody2"
+                    android:textColor="@color/black"
+                    app:drawableRightCompat="@drawable/ic_chevron_right"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider_0" />
 
+                <View
+                    android:id="@+id/view_divider_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:background="@color/background_guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvForgotPass" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

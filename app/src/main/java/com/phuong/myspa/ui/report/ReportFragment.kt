@@ -26,6 +26,9 @@ class ReportFragment : AbsBaseFragment<FragmentReportBinding>(){
     }
 
     override fun initView() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
        binding.rcReport.layoutManager = LinearLayoutManager(requireContext())
         binding.rcReport.adapter = mAdapter
         mAdapter.submit(DataUtils.listReport)

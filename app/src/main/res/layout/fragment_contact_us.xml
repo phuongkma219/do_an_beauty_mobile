@@ -45,6 +45,7 @@
             app:layout_constraintTop_toBottomOf="@id/image"
             >
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="@dimen/dp_8"
@@ -84,6 +85,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="@dimen/dp_8"
@@ -125,6 +127,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvFb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="@dimen/dp_8"

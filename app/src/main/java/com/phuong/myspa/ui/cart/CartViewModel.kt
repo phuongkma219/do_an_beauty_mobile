@@ -3,6 +3,7 @@ package com.phuong.myspa.ui.cart
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.phuong.myspa.base.BaseLoadingDataViewModel
 import com.phuong.myspa.data.api.model.cart.CartDTO
 import com.phuong.myspa.data.api.model.cart.DataCart
 import com.phuong.myspa.data.api.model.history.HistoryDTO
@@ -21,13 +22,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(@IoDispatcher private val dispatcher: CoroutineDispatcher
-, private val cartRepository: CartRepository ):ViewModel(){
-    var listCart = MutableLiveData<DataResponse<MutableList<DataCart>?>>(DataResponse.DataIdle())
+, private val cartRepository: CartRepository ):BaseLoadingDataViewModel<MutableList<DataCart>?>(){
     var isDelete= MutableLiveData<DataResponse<Boolean>>(DataResponse.DataIdle())
     var liveDataAddHistory= MutableLiveData<DataResponse<Boolean>>(DataResponse.DataIdle())
 
     fun getListCart(){
        viewModelScope.launch (dispatcher){
+           dataMutableLiveData.postValue(DataResponse.DataLoading(LoadingStatus.Loading))
         val response =  cartRepository.getListCart()
            if (response?.success == true){
                var list = response.data
@@ -36,10 +37,10 @@ class CartViewModel @Inject constructor(@IoDispatcher private val dispatcher: Co
                        it.serviceDetail.avatar = Constants.BASE_URL +   it.serviceDetail.avatar?.replace("\\", "/")
                    }
                }
-               listCart.postValue(DataResponse.DataSuccess(list))
+               dataMutableLiveData.postValue(DataResponse.DataSuccess(list))
            }
            else{
-               listCart.postValue(DataResponse.DataError())
+               dataMutableLiveData.postValue(DataResponse.DataError())
 
            }
        }

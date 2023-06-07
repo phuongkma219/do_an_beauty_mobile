@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             style="@style/SemiBoldBody1"
-            app:title="Favorite"
+            app:title="@string/favorite"
             app:titleTextColor="@color/text_back"
             android:elevation="@dimen/dp_6" />
         <androidx.recyclerview.widget.RecyclerView
