@@ -49,6 +49,7 @@ class HistoryFragment: AbsBaseFragment<FragmentHistoryBinding>() {
     }
 
     override fun initView() {
+        binding.viewModel = mViewModel
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         mViewModel.getListHistory()
         binding.rvCart.adapter = mAdapter

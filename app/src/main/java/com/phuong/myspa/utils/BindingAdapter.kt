@@ -61,7 +61,7 @@ fun TextView.setTime(time:String?){
        val sdf =  SimpleDateFormat("hh:mm")
        val date =    SimpleDateFormat("hh:mm:ss").parse(time)
        val string = sdf.format(date)
-       text = " : $string "  +  MyApp.resource().getString(R.string.hours)
+       text = " : $string "
    }
 }
 @BindingAdapter("setPrice")

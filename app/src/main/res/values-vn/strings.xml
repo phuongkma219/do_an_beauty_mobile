@@ -2,18 +2,18 @@
 <resources>
     <string name="term_of_service">Điều khoản dịch vụ</string>
     <string name="privacy_policy">Chính sách bảo mật</string>
-    <string name="login">Đăng ký</string>
+    <string name="login">Đăng nhập</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
+    <string name="password">Mật khẩu</string>
     <string name="forgot_your_pasword">Quên mật khẩu?</string>
-    <string name="login_continue">Continue</string>
-    <string name="enter_as_a_visitor">Đăbg nhập với tư cách khách</string>
+    <string name="login_continue">Tiếp tục</string>
+    <string name="enter_as_a_visitor">Đăng nhập với tư cách khách</string>
     <string name="don_t_have_an_account">Bạn chưa có tài khoản?</string>
     <string name="sign_up">Đăng ký</string>
     <string name="name">Tên</string>
     <string name="mobile_number">Số điện thoại</string>
     <string name="confirm_new_password">Nhập lại mật khẩu</string>
-    <string name="i_have_agree_term_of_service_and_policy">Tôi đã đọc và đồng ý với <font color="#303030" textStyle="bold">Điều khoản dịch vụ</font>\n  <font color="#303030" textStyle="bold"> Chính sách bảo mật.</font></string>
+    <string name="i_have_agree_term_of_service_and_policy">Tôi đã đọc và đồng ý với <font color="#303030" textStyle="bold">Điều khoản dịch vụ</font>và  <font color="#303030" textStyle="bold"> Chính sách bảo mật.</font></string>
     <string name="home">Home</string>
     <string name="favorite">Yêu thích</string>
     <string name="personal">Personal</string>
@@ -35,7 +35,7 @@
     <string name="user_name_has_been_exist">Tên tài khoản đã tồn tại</string>
     <string name="email_address_has_been_exist">Ematl đã tồn tại</string>
     <string name="phone_number_has_been_exist">Số điện thoại đã tồn tại</string>
-    <string name="user_name">User name</string>
+    <string name="user_name">Tài khoản</string>
     <string name="log_out">Đăng xuất</string>
     <string name="mobile_number_must_have_10_digits">Số di động phải có 10 chữ số</string>
     <string name="no_internet_title">Không có internet</string>
@@ -131,4 +131,5 @@
     <string name="enter_a_new_password_below_to_change_your_password">Nhập mật khẩu mới bên dưới để thay đổi mật khẩu của bạn</string>
     <string name="old_password">Mật khẩu cũ</string>
     <string name="plase_enter_your_password_old">Vui lòng nhập mật khẩu cũ</string>
+    <string name="new_password">Mật khẩu mới</string>
 </resources>

@@ -6,7 +6,10 @@
         <variable
             name="item"
             type="com.phuong.myspa.data.api.model.history.History" />
-
+        <variable
+            name="viewModel"
+            type="com.phuong.myspa.ui.history.DetailHistoryViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,6 +75,7 @@
                 style="@style/RegularBody2"/>
               />
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/address"
@@ -81,12 +85,14 @@
                 app:layout_constraintTop_toBottomOf="@id/tvTitleTime"
                 app:layout_constraintStart_toStartOf="parent"/>
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvAddress"
                 app:layout_constraintTop_toBottomOf="@id/tvTime"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:text="@{item.shop.address}"
                 android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginStart="@dimen/dp_12"
                 android:textColor="@color/text_back"
                 style="@style/RegularBody2"/>
             />
@@ -183,7 +189,22 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <include
+            android:id="@+id/layoutLoading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            layout="@layout/layout_loading"
+            android:visibility="@{viewModel.isLoading()? View.VISIBLE:View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <include
+            android:id="@+id/layoutNoInternet"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            layout="@layout/no_internet_layout"
+            android:visibility="@{viewModel.isEmpty()? View.VISIBLE:View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -11,6 +11,7 @@ import com.phuong.myspa.data.api.model.history.History
 import com.phuong.myspa.data.api.model.history.HistoryDTO
 import com.phuong.myspa.data.api.model.remote.ApiResponse
 import com.phuong.myspa.data.api.response.DataResponse
+import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.data.repository.cart.CartRepository
 import com.phuong.myspa.data.repository.home.HomeUseCase
 import com.phuong.myspa.di.AppContext
@@ -30,6 +31,7 @@ class HistoryViewModel @Inject constructor(@IoDispatcher private val dispatcher:
     var isDelete= MutableLiveData<DataResponse<Boolean>>(DataResponse.DataIdle())
 
     fun getListHistory(){
+        dataMutableLiveData.postValue(DataResponse.DataLoading(LoadingStatus.Loading))
         viewModelScope.launch(dispatcher) {
             viewModelScope.launch (dispatcher){
                 val response =  cartRepository.getListHistory()
@@ -38,7 +40,7 @@ class HistoryViewModel @Inject constructor(@IoDispatcher private val dispatcher:
                     list?.forEach{ sh ->
                             sh.service?.avatar = Constants.BASE_URL +   sh.service.avatar?.replace("\\", "/")
                         }
-                    dataMutableLiveData.postValue(DataResponse.DataSuccess(list))
+                    dataMutableLiveData.postValue(DataResponse.DataSuccess(list?.asReversed()))
 
                 }
 

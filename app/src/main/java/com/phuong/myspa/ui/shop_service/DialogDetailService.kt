@@ -49,10 +49,13 @@ class DialogDetailService:BaseFullDialog<DialogShopServiceBinding>() {
                 binding!!.item = body
 
             }
+            binding!!.layoutLoading.root.visibility = View.INVISIBLE
+        }
+        else {
+            binding!!.layoutLoading.root.visibility = View.VISIBLE
         }
     }
         mViewModel.isSucess.observe(this){
-            Log.d(TAG, "initView: $it")
             if (it){
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.add_to_cart))
             }

@@ -22,9 +22,10 @@ class DetailHistoryFragment : AbsBaseFragment<FragmentHistoryDetailBinding>() {
     }
 
     override fun initView() {
+        binding.viewModel = mViewModel
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         mViewModel.getHistoryDetail(args.history._id, HistoryDTO(args.history.service.shop_id,args.history.service._id))
-        mViewModel.historyLiveData.observe(this){
+        mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 binding.item = body

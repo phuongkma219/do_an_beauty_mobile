@@ -2,6 +2,8 @@ package com.phuong.myspa.ui.comment
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -82,7 +84,26 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
             binding.ivClose.visibility = View.GONE
             imageFile = null
         }
+        binding.edtContent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.isEmpty()){
+                   binding.ivSend.visibility = View.GONE
+                }
+                else{
+                    binding.ivSend.visibility = View.VISIBLE
+                }
+            }
 
+            override fun afterTextChanged(s: Editable) {}
+        })
+        binding.ivSend.setOnClickListener {
+            if (!binding.edtContent.text!!.isEmpty()){
+                uploadComment()
+            }
+
+            hideKeyBoard(requireContext(),binding.edtContent)
+        }
     }
 
     private fun uploadComment() {
@@ -100,9 +121,8 @@ class CommentFragment : AbsBaseFragment<FragmentCommentBinding>() {
         super.initViewModel()
         mViewModel.fetchData(shopId!!, false)
         mViewModel.dataLiveData.observe(viewLifecycleOwner) {
-            Log.d("kkk", "initViewModel: ${it.loadingStatus}")
-
             if (it.loadingStatus == LoadingStatus.Success) {
+                binding.tvEmpty.visibility = View.INVISIBLE
                 val body = (it as DataResponse.DataSuccess).body
                 mAdapter.submitList(mViewModel.getPage(shopId!!) > 0, body)
                 if (imageFile != null){

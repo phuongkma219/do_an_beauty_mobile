@@ -90,6 +90,7 @@ class UpdateUserViewModel @Inject constructor(
      fun changePass(changePassDTO: ChangePassDTO){
         viewModelScope.launch(dispatcher){
             val response = userRepository.changePass(changePassDTO)
+            Log.d("kkk", "changePass: $response")
             if (response?.success == true){
                 isChangePass.postValue(DataResponse.DataSuccess(true))
             }

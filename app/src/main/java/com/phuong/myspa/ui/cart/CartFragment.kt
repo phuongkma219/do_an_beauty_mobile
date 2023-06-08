@@ -121,7 +121,7 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                     snapbarBottom.showToast(SnapbarBottom.MessageType.Success
                         ,resources.getString(R.string.success),resources.getString(R.string.payment_successfull))
 
-                    mViewModel.addHistory(mAdapter.liveSelect.value!!)
+                    mViewModel.addHistory(mAdapter.liveSelect.value!![0])
 
                 }catch (e:Exception){
                   e.printStackTrace()
@@ -149,13 +149,13 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
     override fun initViewModel() {
         super.initViewModel()
         binding.viewModel = mViewModel
-        mViewModel.dataLiveData.observe(viewLifecycleOwner){
+        mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 mAdapter.submit(body)
             }
         }
-        mViewModel.isDelete.observe(viewLifecycleOwner){
+        mViewModel.isDelete.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.delete_success))
             }
@@ -163,12 +163,10 @@ class CartFragment:AbsBaseFragment<FragmentCartBinding>() {
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))
             }
         }
-        mViewModel.liveDataAddHistory.observe(viewLifecycleOwner){
+        mViewModel.liveDataAddHistory.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
-                mViewModel.deleteListCart(mAdapter.liveSelect.value!!)
-                mAdapter.notifyItemRemoved(positon)
-                mAdapter.clearAll()
 
+                mAdapter.clearAll()
             }
             else if (it.loadingStatus == LoadingStatus.Error){
                 ToastUtils.getInstance(requireContext()).showToast(resources.getString(R.string.error_please_try_again))

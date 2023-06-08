@@ -232,8 +232,8 @@ private val mViewModel by viewModels<SignUpViewModel>()
         spannableString.setSpan(clickPrivacyPolicy, 47, 62, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString.setSpan(clickTermsOfService, 26, 41, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        binding.cbServiceAndPolicy.setText(spannableString, TextView.BufferType.SPANNABLE)
-        binding.cbServiceAndPolicy.movementMethod = LinkMovementMethod.getInstance()
+        binding.tvCheck.setText(spannableString, TextView.BufferType.SPANNABLE)
+        binding.tvCheck.movementMethod = LinkMovementMethod.getInstance()
 
 
     }

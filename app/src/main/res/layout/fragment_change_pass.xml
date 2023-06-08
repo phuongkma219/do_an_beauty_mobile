@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
                     android:textCursorDrawable="@color/accent_primary"
-                    android:hint="@string/password"
+                    android:hint="@string/new_password"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword" />
 

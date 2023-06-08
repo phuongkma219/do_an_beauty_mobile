@@ -7,6 +7,10 @@
                 name="item"
                 type="com.phuong.myspa.data.api.model.shop.ShopService" />
     </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,7 +71,15 @@
                 style="@style/MediumBody1"
                 setTime="@{item.time}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                app:layout_constraintStart_toEndOf="@id/tvTime"
+                style="@style/MediumBody1"
+                android:text="@string/hours"
                 android:layout_marginTop="@dimen/dp_16"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/titleDes"
@@ -108,9 +120,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tvDescription"
                 style="@style/MediumBody1"
+                android:textColor="@color/text_back"
                 app:layout_constraintStart_toEndOf="@id/tvTitlePrice"
                 android:paddingStart="@dimen/dp_16"
-                android:textSize="@dimen/sp_18"
                 setPrice="@{item.price}"
                 />
             <com.google.android.material.button.MaterialButton
@@ -129,5 +141,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
+        <include
+            android:id="@+id/layoutLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/layout_loading"
+          />
+    </RelativeLayout>
 </layout>

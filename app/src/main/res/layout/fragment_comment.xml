@@ -83,8 +83,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/btnImages"
-                android:layout_width="@dimen/dp_48"
-                android:layout_height="@dimen/dp_48"
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_36"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/dp_4"
@@ -95,8 +95,8 @@
                 />
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginStart="@dimen/dp_12"
+                android:layout_height="@dimen/dp_36"
+                android:layout_marginStart="@dimen/dp_6"
                 android:layout_marginEnd="@dimen/dp_12"
                 android:layout_marginBottom="@dimen/dp_4"
                 app:boxCornerRadiusTopEnd="@dimen/dp_12"
@@ -104,7 +104,7 @@
                 app:boxCornerRadiusBottomEnd="@dimen/dp_12"
                 app:boxCornerRadiusBottomStart="@dimen/dp_12"
                 app:layout_constraintStart_toEndOf="@id/btnImages"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivSend"
                 app:layout_constraintBottom_toBottomOf="parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 >
@@ -119,6 +119,16 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSend"
+                android:src="@drawable/baseline_send_24"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_36"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/dp_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

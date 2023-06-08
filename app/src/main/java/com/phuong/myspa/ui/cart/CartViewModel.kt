@@ -50,7 +50,6 @@ class CartViewModel @Inject constructor(@IoDispatcher private val dispatcher: Co
             val response = cartRepository.deteleCart(cartDTO)
             if (response?.success == true){
                 isDelete.postValue(DataResponse.DataSuccess(true))
-                getListCart()
             }
             else{
                 isDelete.postValue(DataResponse.DataError())
@@ -75,15 +74,20 @@ class CartViewModel @Inject constructor(@IoDispatcher private val dispatcher: Co
 
 
     }
-    fun addHistory(data:MutableList<DataModel.DataItem>) {
+    fun addHistory(data:DataModel.DataItem) {
         liveDataAddHistory.postValue(DataResponse.DataLoading(LoadingStatus.Loading))
        try {
-           data.forEach {
                viewModelScope.launch (dispatcher){
-                   val response = cartRepository.addHistory(HistoryDTO(it.shop_id,it._id))
+                   val response = cartRepository.addHistory(HistoryDTO(data.shop_id,data._id))
+               if (response?.success == true){
+                   liveDataAddHistory.postValue(DataResponse.DataSuccess(true))
+                   getListCart()
+               }
+                   else{
+                   liveDataAddHistory.postValue(DataResponse.DataError())
+
                }
            }
-           liveDataAddHistory.postValue(DataResponse.DataSuccess(true))
 
        }
        catch (e:Exception){
