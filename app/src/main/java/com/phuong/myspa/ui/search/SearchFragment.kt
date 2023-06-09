@@ -39,6 +39,7 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
     private var totalItemCount: Int = 0
     private var visibleThreshold = 1
     private var mLayoutManager : LinearLayoutManager? = null
+    private var isFilter = false
     private var listRaw = mutableListOf<Search>()
     val timer = object: CountDownTimer(1000,500) {
         override fun onTick(millisUntilFinished: Long) {
@@ -70,7 +71,9 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
                     firstVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
                     if (dy > 0 && totalItemCount - visibleItemCount <= firstVisibleItem + visibleThreshold) {
                         if (mViewModel.dataVM != null){
-                            mViewModel.fetchData( true)
+                            if (!isFilter){
+                                mViewModel.fetchData( true)
+                            }
                         }
                     }
                 }
@@ -94,21 +97,22 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
                     val data = mutableListOf<ShopInfor>()
                     listRaw.forEach { list ->
                         if (cates?.size!! > 0) {
+                            val check = printUnion(list.shop.category,cates,list.shop.category.size,cates.size)
                             if ( list.shop.rate >= rate!!
-                                && (list.average_price >= price!!.first && list.average_price < price!!.second)){
-                                val check = printUnion(list.shop.category,cates,list.shop.category.size,cates.size)
-                                if (check){
-                                    data.add(list.shop)
-                                }
+                                && (list.average_price >= price!!.first ) && check){
+                                data.add(list.shop)
                             }
                         }
                         else{
                             if ( list.shop.rate >= rate!! &&(list.average_price >= price!!.first && list.average_price < price!!.second)){
                                 data.add(list.shop)
+
                             }
                         }
                     }
-                    mAdapter.submit(data)
+                    isFilter = true
+                  val a =  data.toList().distinctBy { Pair(it._id, it._id) }
+                    mAdapter.submit(a)
                 }
 
             }
@@ -133,7 +137,7 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
         mViewModel.dataLiveData.observe(this){
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
-               if (body != null){
+               if (body != null && mViewModel.dataVM != null){
                    mAdapter.submitListSearch(mViewModel.getPage()>0,body)
                    body.forEach {
                        listRaw.add(it.copy())
@@ -170,13 +174,12 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
                     binding.rvShop.visibility = View.INVISIBLE
                 }
               else{
-
                         timer.cancel()
                     timer.start()
 
 
                 }
-
+                isFilter = false
                 return false
             }
 

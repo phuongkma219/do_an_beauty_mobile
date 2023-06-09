@@ -26,6 +26,7 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
 ) : BaseLoadingDataViewModel<MutableList<Search>?>() {
     var dataVM : DataSearch? = null
     private var keyword :String? =""
+    private var page =0
     fun setKeyword(key: String?){
         keyword = key
     }
@@ -50,13 +51,15 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
                 dataMutableLiveData.value = DataResponse.DataLoading(LoadingStatus.LoadingMore)
             }
             viewModelScope.launch (dispatcher){
+                Log.d("kkk", "123123: $dataVM")
                 val requestPage =
                     if (dataVM != null) {
                         if (dataMutableLiveData.value!!.loadingStatus == LoadingStatus.Refresh) {
                             0
                         } else {
-                            if (dataVM!!.list_shop != null) {
-                                getPage()
+                            if (dataVM!!.list_shop?.size!!>0) {
+                                page += 1
+                                page
                             } else {
                                 0
                             }
@@ -75,7 +78,7 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
                         dataMutableLiveData.postValue(DataResponse.DataSuccess(responseData.data!!.list_shop))
                     }
                     else{
-                        dataMutableLiveData.postValue(DataResponse.DataSuccess(null))
+                        dataMutableLiveData.postValue(DataResponse.DataIdle())
                         dataVM = null
                     }
 
@@ -89,6 +92,14 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
         }
     }
     fun getPage():Int {
-        return dataVM!!.next_page.replace("get_list?keyword=$keyword?page=", "").toInt()
+        try {
+            //get_list?keyword=Hà?page=3
+//            return dataVM!!.next_page.replace("get_list?keyword=$keyword?page=", "").toInt()
+        return page
+        }
+        catch (e:Exception){
+            e.printStackTrace()
+            return 0
+        }
     }
 }

@@ -17,7 +17,7 @@ import java.util.*
 class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBinding>() {
     private val mAdapter by lazy { CateAdapter() }
      var listener : ISearchFilter? = null
-    private var price: Pair<Int, Int> =Pair(0,2000000)
+    private var price: Pair<Int, Int> =Pair(0,200000)
     private var rate = 0f
     override fun onDismiss() {
 

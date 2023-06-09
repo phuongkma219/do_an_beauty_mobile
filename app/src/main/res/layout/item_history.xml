@@ -140,7 +140,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tvTitlePrice"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textColor="@color/white"
-                    android:text="Repurchase"
+                    android:text="@string/buy_again"
                     android:onClick="@{ () -> itemListener.onBuyItem(itemPosition,item)}"
                     android:layout_marginEnd="@dimen/dp_12"
                     android:layout_marginBottom="@dimen/dp_8"
