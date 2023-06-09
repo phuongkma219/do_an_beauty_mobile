@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.phuong.myspa.MyApp
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.model.comment.Content
@@ -31,7 +32,12 @@ class ReportFragment : AbsBaseFragment<FragmentReportBinding>(){
         }
        binding.rcReport.layoutManager = LinearLayoutManager(requireContext())
         binding.rcReport.adapter = mAdapter
-        mAdapter.submit(DataUtils.listReport)
+        val listReport = mutableListOf(
+            Content(text = resources.getString(R.string.address_with)),
+            Content(text = resources.getString(R.string.there_are_images)),
+            Content(text = resources.getString(R.string.wrong_info))
+        )
+        mAdapter.submit(listReport)
         mAdapter.listener = object :ReportAdapter.ISelect{
             override fun onSelectItem(position: Int, item: Content) {
                 mAdapter.cleanAll()

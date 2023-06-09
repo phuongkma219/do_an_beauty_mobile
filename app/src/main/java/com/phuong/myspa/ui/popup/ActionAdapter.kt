@@ -40,7 +40,7 @@ class ActionAdapter(
     }
 
     interface OnActionClickListener {
-        fun onItemActionClick(position: Int)
+        fun onItemActionClick(position1: Int)
     }
 
 }

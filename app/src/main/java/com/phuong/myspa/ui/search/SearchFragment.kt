@@ -1,11 +1,9 @@
 package com.phuong.myspa.ui.search
 
-import android.os.*
+import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,21 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.phuong.myspa.R
 import com.phuong.myspa.base.AbsBaseFragment
 import com.phuong.myspa.data.api.model.Category
-import com.phuong.myspa.data.api.model.QueryCategory
 import com.phuong.myspa.data.api.model.search.Search
 import com.phuong.myspa.data.api.model.shop.ShopInfor
 import com.phuong.myspa.data.api.response.DataResponse
 import com.phuong.myspa.data.api.response.LoadingStatus
 import com.phuong.myspa.databinding.FragmentSearchBinding
-import com.phuong.myspa.databinding.FragmentServiceBinding
 import com.phuong.myspa.ui.detail_category.DetailCategoryFragmentDirections
-import com.phuong.myspa.ui.detail_category.DetailCategoryViewModel
 import com.phuong.myspa.ui.detail_category.ShopAdapter
-import com.phuong.myspa.ui.dialog.DialogConfirmPayment
 import com.phuong.myspa.utils.showKeyBoard
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Timer
-import java.util.TimerTask
 
 @AndroidEntryPoint
 class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
@@ -95,12 +87,15 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
             dialogFilter.listener = object :BottomSheetFilter.ISearchFilter{
                 override fun getFilter(cates: MutableList<Category>?,price:Pair<Int,Int>?, rate: Float?) {
                     val data = mutableListOf<ShopInfor>()
+
                     listRaw.forEach { list ->
                         if (cates?.size!! > 0) {
-                            val check = printUnion(list.shop.category,cates,list.shop.category.size,cates.size)
                             if ( list.shop.rate >= rate!!
-                                && (list.average_price >= price!!.first ) && check){
-                                data.add(list.shop)
+                                && (list.average_price >= price!!.first && list.average_price < price!!.second)){
+                                val check = findCommonElements(list.shop.category.toMutableList(),cates)
+                                if (check){
+                                    data.add(list.shop)
+                                }
                             }
                         }
                         else{
@@ -129,6 +124,29 @@ class SearchFragment : AbsBaseFragment<FragmentSearchBinding>() {
             }
         }
         return false
+    }
+    fun findCommonElements(
+        arr1: MutableList<String>,
+        arr2: MutableList<Category>
+    ) :Boolean{
+        // create hashsets
+        val set1: MutableSet<String> = HashSet()
+        val set2: MutableSet<String> = HashSet()
+
+        // Adding elements from array1
+        for (i in arr1) {
+            set1.add(i)
+        }
+
+        // Adding elements from array2
+        for (i in arr2) {
+            set2.add(i._id)
+        }
+
+        // use retainAll() method to
+        // find common elements
+        set1.retainAll(set2)
+        return set1.size>0
     }
 
     override fun initViewModel() {

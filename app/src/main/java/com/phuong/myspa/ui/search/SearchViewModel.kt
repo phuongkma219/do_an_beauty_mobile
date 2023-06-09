@@ -51,13 +51,12 @@ class SearchViewModel  @Inject constructor(@IoDispatcher private val dispatcher:
                 dataMutableLiveData.value = DataResponse.DataLoading(LoadingStatus.LoadingMore)
             }
             viewModelScope.launch (dispatcher){
-                Log.d("kkk", "123123: $dataVM")
                 val requestPage =
                     if (dataVM != null) {
                         if (dataMutableLiveData.value!!.loadingStatus == LoadingStatus.Refresh) {
                             0
                         } else {
-                            if (dataVM!!.list_shop?.size!!>0) {
+                            if (dataVM != null) {
                                 page += 1
                                 page
                             } else {

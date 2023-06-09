@@ -36,7 +36,7 @@ class FavoriteFragment : AbsBaseFragment<FragmentFavouriteBinding>(){
 
             override fun onItemMoreAction(view: View, item: ShopInfor, position: Int) {
                 listActionPopup.showPopup(view,Constants.actionsPopup,object :ActionAdapter.OnActionClickListener{
-                    override fun onItemActionClick(position: Int) {
+                    override fun onItemActionClick(position1: Int) {
                         mAdapter.deleteItem(position)
                         mViewModel.deleteFavorite(item._id)
                     }

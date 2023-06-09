@@ -114,7 +114,7 @@
     <string name="payment_time">Thời gian thanh toán:</string>
     <string name="invoice_information">Thông tin hóa đơn</string>
     <string name="view_shop">Ghé thăm</string>
-    <string name="report">Báo cáo</string>
+    <string name="report">Báo cáo địa điểm</string>
     <string name="send">Gửi</string>
     <string name="payment_successfull">Thanh toán thành công</string>
     <string name="search_filter">Lọc tìm kiếm</string>
@@ -133,4 +133,7 @@
     <string name="plase_enter_your_password_old">Vui lòng nhập mật khẩu cũ</string>
     <string name="new_password">Mật khẩu mới</string>
     <string name="buy_again">Mua laị</string>
+    <string name="address_with">Địa chỉ có dấu hiệu lừa đảo</string>
+    <string name="there_are_images">Có hình ảnh, nội dung phản cảm</string>
+    <string name="wrong_info">Thông tin sai</string>
 </resources>

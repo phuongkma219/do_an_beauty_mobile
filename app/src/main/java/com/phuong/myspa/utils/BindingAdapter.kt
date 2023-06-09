@@ -58,9 +58,7 @@ fun TextView.setHours(item: ShopInfor?) {
 @BindingAdapter("setTime")
 fun TextView.setTime(time:String?){
    if (time!= null){
-       val sdf =  SimpleDateFormat("hh:mm")
-       val date =    SimpleDateFormat("hh:mm:ss").parse(time)
-       val string = sdf.format(date)
+       val string = time.substring(0,time.length-3)
        text = " : $string "
    }
 }

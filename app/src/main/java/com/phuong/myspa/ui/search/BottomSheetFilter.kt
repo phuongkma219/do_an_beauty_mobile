@@ -17,7 +17,7 @@ import java.util.*
 class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBinding>() {
     private val mAdapter by lazy { CateAdapter() }
      var listener : ISearchFilter? = null
-    private var price: Pair<Int, Int> =Pair(0,200000)
+    private var price: Pair<Int, Int> =Pair(0,500000)
     private var rate = 0f
     override fun onDismiss() {
 
@@ -51,10 +51,10 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
 
     }
     private fun onSelectPrice(){
-        binding.rangSlider.stepSize = 100000F
+        binding.rangSlider.stepSize = 500000F
         binding.rangSlider.valueFrom =0F
-        binding.rangSlider.valueTo = 2000000F
-        binding.rangSlider.setValues(0f,200000F)
+        binding.rangSlider.valueTo = 5000000F
+        binding.rangSlider.setValues(0f,500000F)
         binding.rangSlider.setLabelFormatter { value: Float ->
             val format = NumberFormat.getCurrencyInstance()
             format.maximumFractionDigits = 0
@@ -62,11 +62,11 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
             format.format(value.toDouble())
         }
         binding.tvPMin.setText(Utils.getPrice("0"))
-        binding.tvPMax.setText(Utils.getPrice("200000"))
+        binding.tvPMax.setText(Utils.getPrice("5000000"))
         binding.rangSlider.addOnChangeListener { rangeSlider, value, fromUser ->
             binding.tvPMin.setText(Utils.getPrice(rangeSlider.values[0].toInt().toString()))
             binding.tvPMax.setText(Utils.getPrice(rangeSlider.values[1].toInt().toString()))
-
+            price = Pair(rangeSlider.values[0].toInt(),rangeSlider.values[1].toInt())
         }
         binding.rangSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: RangeSlider) {
@@ -74,13 +74,12 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
             }
 
             override fun onStopTrackingTouch(slider: RangeSlider) {
-                price = Pair(slider.valueFrom.toInt(),slider.valueTo.toInt())
             }
         })
     }
     private fun onClickRate(){
         binding.rate1.setOnClickListener {
-            rate = 1f
+            rate = 0.9f
             binding.rate1.setBackgroundResource(R.drawable.bg_btn_rate)
             binding.rate2.setBackgroundResource(R.color.white)
             binding.rate3.setBackgroundResource(R.color.white)
@@ -88,7 +87,7 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
             binding.rate5.setBackgroundResource(R.color.white)
         }
         binding.rate2.setOnClickListener {
-            rate = 2f
+            rate = 1.9f
             binding.rate2.setBackgroundResource(R.drawable.bg_btn_rate)
             binding.rate1.setBackgroundResource(R.color.white)
             binding.rate3.setBackgroundResource(R.color.white)
@@ -96,7 +95,7 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
             binding.rate5.setBackgroundResource(R.color.white)
         }
         binding.rate3.setOnClickListener {
-            rate = 3f
+            rate = 2.9f
             binding.rate3.setBackgroundResource(R.drawable.bg_btn_rate)
             binding.rate1.setBackgroundResource(R.color.white)
             binding.rate2.setBackgroundResource(R.color.white)
@@ -104,7 +103,7 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
             binding.rate5.setBackgroundResource(R.color.white)
         }
         binding.rate4.setOnClickListener {
-            rate = 4f
+            rate = 3.9f
             binding.rate4.setBackgroundResource(R.drawable.bg_btn_rate)
             binding.rate1.setBackgroundResource(R.color.white)
             binding.rate3.setBackgroundResource(R.color.white)
@@ -112,7 +111,7 @@ class BottomSheetFilter : BaseBottomSheetDialogFragment<LayoutSearchFilterBindin
             binding.rate5.setBackgroundResource(R.color.white)
         }
         binding.rate5.setOnClickListener {
-            rate = 5f
+            rate = 4.9f
             binding.rate5.setBackgroundResource(R.drawable.bg_btn_rate)
             binding.rate1.setBackgroundResource(R.color.white)
             binding.rate3.setBackgroundResource(R.color.white)

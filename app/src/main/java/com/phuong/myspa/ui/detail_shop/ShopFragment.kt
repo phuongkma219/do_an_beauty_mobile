@@ -72,6 +72,10 @@ class ShopFragment:AbsBaseFragment<FragmentShopBinding>() {
             }
         })
         favoriteViewModel.isSuccess.observe(viewLifecycleOwner){
+
+            if (it.loadingStatus == LoadingStatus.Loading){
+                binding.toolbar.menu.clear()
+            }
             if (it.loadingStatus == LoadingStatus.Success){
                 val body = (it as DataResponse.DataSuccess).body
                 if (body) {
